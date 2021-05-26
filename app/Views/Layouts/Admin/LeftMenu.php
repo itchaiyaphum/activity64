@@ -19,8 +19,8 @@
                                     <li class="has-children">
                                         <a href="#"><i class="fa fa-file-text"></i> <span>กิจกรรมโฮมรูม</span> <i class="fa fa-angle-right arrow"></i></a>
                                         <ul class="child-nav">
-                                            <li><a href="manage-students-listall.php"><i class="fa fa-bars"></i> <span>เช็คชื่อกิจกรรมโฮมรูม</span></a></li>
-                                            <li><a href="add-activity-homeroom.php"><i class="fa fa fa-server"></i> <span>บันทึกกิจกรรมโฮมรูม</span></a></li>
+                                            <li><a href="<?php echo base_url('admin/homeroom');?>"><i class="fa fa-bars"></i> <span>เช็คชื่อกิจกรรมโฮมรูม</span></a></li>
+                                            <li><a href="<?php echo base_url('admin/homeroom/activity');?>"><i class="fa fa fa-server"></i> <span>บันทึกกิจกรรมโฮมรูม</span></a></li>
                                             <li><a href="#"><i class="fa fa fa-server"></i> <span>จัดการกิจกรรมโฮมรูม</span></a></li>
                                         </ul>
                                     </li>
@@ -56,8 +56,8 @@
                                             <li><a href="manage-time.php"><i class="fa fa fa-server"></i> <span>Manage Time</span></a></li>
                                            
                                         </ul>
-                                        <li><a href="change-profile.php"><i class="fa fa fa-users"></i> <span> Admin Change Profile</span></a></li>
-                                        <li><a href="change-password.php"><i class="fa fa fa-server"></i> <span> Admin Change Password</span></a></li>  
+                                        <li><a href="<?php echo base_url('admin/user/changeprofile');?>"><i class="fa fa fa-users"></i> <span> Admin Change Profile</span></a></li>
+                                        <li><a href="<?php echo base_url('admin/user/changepassword');?>"><i class="fa fa fa-server"></i> <span> Admin Change Password</span></a></li>  
                                     </li>
                             </div>
                             <!-- /.sidebar-nav -->

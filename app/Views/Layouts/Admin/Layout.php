@@ -2,18 +2,18 @@
 <html>
 <head>
 	<title><?php echo $title; ?></title>
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/bootstrap.min.css');?>">
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/font/fontawesome/css/all.css');?>">
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/js/ui/amcharts/plugins/export/export.css');?>">
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/bootstrap.min.css');?>" media="screen">
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/font/fontawesome/css/all.css');?> " media="screen">
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/js/ui/amcharts/plugins/export/export.css');?>" media="screen">
 	
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/ui/font-awesome.min.css');?>">
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/ui/animate-css/animate.min.css');?>">
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/ui/lobipanel/lobipanel.min.css');?>">
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/ui/toastr/toastr.min.css');?>">
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/ui/icheck/skins/line/blue.css');?>">
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/ui/icheck/skins/line/red.css');?>">
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/ui/icheck/skins/line/green.css');?>">
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/ui/main.css');?>">
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/ui/font-awesome.min.css');?>" media="screen">
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/ui/animate-css/animate.min.css');?>" media="screen">
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/ui/lobipanel/lobipanel.min.css');?>" media="screen">
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/ui/toastr/toastr.min.css');?>" media="screen">
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/ui/icheck/skins/line/blue.css');?>" media="screen">
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/ui/icheck/skins/line/red.css');?>" media="screen">
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/ui/icheck/skins/line/green.css');?>" media="screen">
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/ui/main.css');?>" media="screen">
         
 </head>
 <body class="top-navbar-fixed">
