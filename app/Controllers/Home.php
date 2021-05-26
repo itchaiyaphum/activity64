@@ -6,6 +6,14 @@ class Home extends BaseController
 {
 	public function index()
 	{
-		return view('welcome_message');
+	    $db = db_connect();
+	    
+	    $query = $db->query("SELECT * FROM items");
+	    
+	    foreach ($query->getResult() as $row)
+	    {
+	        echo $row->title;
+	        echo "<hr/>";
+	    }
 	}
 }
