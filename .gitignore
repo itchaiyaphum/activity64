@@ -20,3 +20,4 @@ application/logs/*
 /.project
 /.settings/
 /.env
+/writable/
