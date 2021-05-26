@@ -1,5 +1,7 @@
-<div class="container">
-		<div class="row">
+<?= $this->extend('Layouts/Default/Layout') ?>
+
+<?= $this->section('content') ?>
+	<div class="row">
 			<div class="col-md-6" style="margin-top: 10px;">
 				<center><p style="font-size: 55px;"><strong>ระบบกิจกรรม</strong>
 						<strong><p style="font-size: 58px; margin-top: -20px;">นักเรียน นักศึกษา</p></strong>
@@ -48,10 +50,10 @@
 										<input class="form-control" type="text" name="user_email" placeholder="Email" required>
 								</div><br>
 							
-								<button type="submit" name="reg" class="btn btn-info form-control">สมัคร</button>
+								<a href="<?php echo base_url('admin/teacheradvisor');?>" class="btn btn-info form-control">สมัคร</a>
 						</form>
 					</div>
 				</div>
 			</div>
-		</div>
 	</div>
+<?= $this->endSection() ?>
