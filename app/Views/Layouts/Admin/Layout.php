@@ -10,6 +10,7 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/ui/animate-css/animate.min.css');?>" media="screen">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/ui/lobipanel/lobipanel.min.css');?>" media="screen">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/ui/toastr/toastr.min.css');?>" media="screen">
+	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/ui/prism/prism.css');?>" media="screen">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/ui/icheck/skins/line/blue.css');?>" media="screen">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/ui/icheck/skins/line/red.css');?>" media="screen">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/ui/icheck/skins/line/green.css');?>" media="screen">

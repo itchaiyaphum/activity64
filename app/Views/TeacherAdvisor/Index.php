@@ -1,3 +1,4 @@
+<?= $this->extend('Layouts/Admin/Layout') ?>
 
 <?= $this->section('content') ?>
 	<div class="main-page">
