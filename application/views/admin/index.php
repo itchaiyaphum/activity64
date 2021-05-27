@@ -5,7 +5,7 @@
 		</div>
 		<div class="tm-main uk-width-medium-3-4 uk-margin-top uk-margin-bottom">
 			<h1>ยินดีต้อนรับเข้าสู่ระบบจัดการข้อมูลหลังบ้าน</h1>
-			<img src="/assets/imgs/slideshow1.jpg" width="100%" style="width: 100%; height: auto;">
+			<img src="/assets/imgs/homepage_landing.jpg" width="100%" style="width: 100%; height: auto;">
 		</div>
 	</div>
 </div>

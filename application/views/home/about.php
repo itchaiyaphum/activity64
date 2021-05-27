@@ -8,7 +8,8 @@
 					<?php $this->load->view('home/menu');?>
 				</div>
 				<div class="uk-width-6-10" style="border-left: 1px solid #fff;">
-				d
+				ระบบกิจกรรมนักเรียน นักศึกษาออนไลน์<br/>
+				พัฒนาโดย แผนกเทคโนโลยีสารสนเทศ วิทยาลัยเทคนิคชัยภูมิ
 				</div>
 				<div class="uk-width-2-10" style="border-left: 1px solid #fff;">
 					<?php $this->load->view('home/rightmenu');?>

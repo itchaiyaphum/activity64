@@ -8,7 +8,7 @@
 					<?php $this->load->view('home/menu');?>
 				</div>
 				<div class="uk-width-6-10" style="border-left: 1px solid #fff; padding: 10px;">
-					<img src="/assets/imgs/home_into_bg.png">
+					<img src="/assets/imgs/homepage_landing.jpg">
 				</div>
 				<div class="uk-width-2-10" style="border-left: 1px solid #fff; padding: 10px;">
 					<?php $this->load->view('home/rightmenu');?>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Internship Management System</title>
+<title>ระบบกิจกรรมนักเรียน นักศึกษาออนไลน์</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -33,7 +33,7 @@ tinymce.init({
 			<nav class="uk-navbar uk-margin-small-bottom">
             	<div class="uk-container uk-container-center">
             		<a class="uk-navbar-brand uk-hidden-small"
-            			href="<?php echo base_url('');?>">Internship Management System</a>
+            			href="<?php echo base_url('');?>">ระบบกิจกรรมนักเรียน</a>
             		<div class="uk-navbar-flip">
             			<ul class="uk-navbar-nav uk-hidden-small">
             				<?php 
