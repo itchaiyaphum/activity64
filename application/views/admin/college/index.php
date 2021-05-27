@@ -90,7 +90,7 @@
             				<td>
             					<a href="<?php echo $link_edit;?>" class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-pencil"></i></a>
             					<?php 
-            					if($this->helper_lib->getFilterStatus('college_filter_search')=='trash'){
+            					if($this->helper_lib->getFilterStatus('college_filter_status')=='trash'){
             					?>
             					<a href="<?php echo $link_restore;?>" class="uk-button uk-button-primary uk-button-mini"><i class="uk-icon-reply"></i></a>
             					<a href="<?php echo $link_delete;?>" class="uk-button uk-button-danger uk-button-mini"><i class="uk-icon-remove"></i></a>
