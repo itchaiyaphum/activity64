@@ -39,9 +39,6 @@
             				<th class="title" width="20%">
             					สถานะ
             				</th>
-            				<th width="10%" class="title" nowrap="nowrap">
-            					รหัส (ID)
-            				</th>
             				<th width="15%" class="title" nowrap="nowrap">
             					-
             				</th>
@@ -57,7 +54,7 @@
             		<tbody>
             		<?php 
             		if(count( $items )<=0){
-            		    echo '<tr><td colspan="5" class="uk-text-center"><p>ไม่มีข้อมูล</p></td></tr>';
+            		    echo '<tr><td colspan="4" class="uk-text-center"><p>ไม่มีข้อมูล</p></td></tr>';
             		}else{
             			$k = 0;
             			for ($i=0, $n=count( $items ); $i < $n; $i++)
@@ -86,12 +83,9 @@
             					<a href="<?php echo $status_link;?>"><?php echo $this->helper_lib->getStatusIcon($row->status);?></a>
             				</td>
             				<td>
-            					<?php echo $row->id; ?>
-            				</td>
-            				<td>
             					<a href="<?php echo $link_edit;?>" class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-pencil"></i></a>
             					<?php 
-            					if($this->helper_lib->getFilterStatus('semester_filter_search')=='trash'){
+            					if($this->helper_lib->getFilterStatus('semester_filter_status')=='trash'){
             					?>
             					<a href="<?php echo $link_restore;?>" class="uk-button uk-button-primary uk-button-mini"><i class="uk-icon-reply"></i></a>
             					<a href="<?php echo $link_delete;?>" class="uk-button uk-button-danger uk-button-mini"><i class="uk-icon-remove"></i></a>
