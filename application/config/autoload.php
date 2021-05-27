@@ -83,6 +83,7 @@ $autoload['libraries'] = array(
     ,'tables/TableUsersStudent'
     ,'tables/TableMajor'
     ,'tables/TableMinor'
+    ,'tables/TableGroup'
     
     ,'BaseModel'
     ,'session'
