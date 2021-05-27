@@ -3,11 +3,15 @@
 	<li class="<?php echo $this->helper_lib->getActiveMenu('admin');?>">
 		<a href="<?php echo base_url('admin'); ?>"><span class="uk-icon-home"></span> หน้าหลัก</a>
 	</li>
-	<!-- 
-	<li class="<?php echo $this->helper_lib->getActiveMenu('news');?>">
-		<a href="<?php echo base_url('admin/news'); ?>"><span class="uk-icon-cube"></span> จัดการข่าวประกาศ</a>
+	
+	
+	<li><hr></li>
+	<li class="<?php echo $this->helper_lib->getActiveMenu('homeroom');?>">
+		<a href="<?php echo base_url('admin/homeroom'); ?>"><span class="uk-icon-cube"></span> กิจกรรมโฮมรูม</a>
 	</li>
-	-->
+	
+	
+	<!-- 
 	<li><hr></li>
 	<li class="<?php echo $this->helper_lib->getActiveMenu('province');?>">
 		<a href="<?php echo base_url('admin/province'); ?>"><span class="uk-icon-cube"></span> จัดการจังหวัด</a>
@@ -18,6 +22,8 @@
 	<li class="<?php echo $this->helper_lib->getActiveMenu('edudegree');?>">
 		<a href="<?php echo base_url('admin/edudegree'); ?>"><span class="uk-icon-cube"></span> จัดการวุฒิการศึกษา</a>
 	</li>
+	-->
+	
 	<li><hr></li>
 	<li class="<?php echo $this->helper_lib->getActiveMenu('semester');?>">
 		<a href="<?php echo base_url('admin/semester'); ?>"><span class="uk-icon-cube"></span> จัดการภาคการศึกษา</a>
