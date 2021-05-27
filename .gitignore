@@ -21,3 +21,4 @@ application/logs/*
 /.settings/
 /.env
 /writable/
+/storage/
