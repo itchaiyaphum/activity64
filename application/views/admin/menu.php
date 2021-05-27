@@ -42,21 +42,14 @@
 	<li class="<?php echo $this->helper_lib->getActiveMenu('college');?>">
 		<a href="<?php echo base_url('admin/college'); ?>"><span class="uk-icon-cube"></span> จัดการสถานศึกษา</a>
 	</li>
-	<li class="<?php echo $this->helper_lib->getActiveMenu('college');?>">
+	<li class="<?php echo $this->helper_lib->getActiveMenu('major');?>">
 		<a href="<?php echo base_url('admin/major'); ?>"><span class="uk-icon-cube"></span> จัดการสาขาวิชา</a>
 	</li>
-	<!-- 
-	<li class="<?php echo $this->helper_lib->getActiveMenu('department');?>">
-		<a href="<?php echo base_url('admin/department'); ?>"><span class="uk-icon-cube"></span> จัดการแผนกวิชา</a>
+	<li class="<?php echo $this->helper_lib->getActiveMenu('minor');?>">
+		<a href="<?php echo base_url('admin/minor'); ?>"><span class="uk-icon-cube"></span> จัดการสาขางาน</a>
 	</li>
-	 -->
-	<!-- 
 	<li class="<?php echo $this->helper_lib->getActiveMenu('group');?>">
-		<a href="<?php echo base_url('admin/group'); ?>"><span class="uk-icon-cube"></span> จัดการกลุ่ม</a>
-	</li>
-	 -->
-	<li class="<?php echo $this->helper_lib->getActiveMenu('company');?>">
-		<a href="<?php echo base_url('admin/company'); ?>"><span class="uk-icon-cube"></span> จัดการสถานประกอบการ</a>
+		<a href="<?php echo base_url('admin/group'); ?>"><span class="uk-icon-cube"></span> จัดการกลุ่มการเรียน</a>
 	</li>
 	<li><hr></li>
 	<li class="uk-nav-header">ผู้ใช้งาน</li>
