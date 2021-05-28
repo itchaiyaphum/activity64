@@ -27,6 +27,14 @@ class Helper_lib
         return $css_class;
     }
     
+    public function querySQL($sql=NULL){
+        if($sql!=NULL){
+            $query = $this->ci->db->query($sql);
+            return $query->result();
+        }
+        return FALSE;
+    }
+    
     public function getProgressBarHtml($percentage=0)
     {
         $percentage = number_format($percentage,0);
