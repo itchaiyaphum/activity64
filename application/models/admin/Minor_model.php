@@ -28,7 +28,7 @@ class Minor_model extends BaseModel
     {
         $where = $this->getQueryWhere($options);
 //         $sql = "SELECT * FROM minors WHERE {$where}";
-        $sql = "SELECT majors.major_name,minors.* FROM minors
+        $sql = "SELECT majors.major_name, minors.* FROM minors
                     LEFT JOIN majors ON (minors.major_id=majors.id)
                     WHERE {$where}";
         $query = $this->ci->db->query($sql);

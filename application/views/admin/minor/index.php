@@ -41,11 +41,8 @@
             				<th class="title">
             					สาขางาน (English)
             				</th>
-            				<th class="title" width="20%">
+            				<th class="title" width="10%">
             					สถานะ
-            				</th>
-            				<th width="10%" class="title" nowrap="nowrap">
-            					รหัส (ID)
             				</th>
             				<th width="15%" class="title" nowrap="nowrap">
             					-
@@ -95,9 +92,6 @@
             				</td>
             				<td>
             					<a href="<?php echo $status_link;?>"><?php echo $this->helper_lib->getStatusIcon($row->status);?></a>
-            				</td>
-            				<td>
-            					<?php echo $row->id; ?>
             				</td>
             				<td>
             					<a href="<?php echo $link_edit;?>" class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-pencil"></i></a>

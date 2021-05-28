@@ -11,6 +11,7 @@ class Minor extends BaseController
         
         $this->load->model('admin/major_model');
         $this->load->model('admin/minor_model');
+        $this->load->model('admin/adminusers_model');
         $this->load->library('form_validation');
     }
 

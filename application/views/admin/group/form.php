@@ -50,6 +50,34 @@
                         <input type="text" id="form-h-it" name="group_name" value="<?php echo $item->group_name;?>">
                     </div>
                 </div>
+                <div class="uk-form-row">
+                    <label class="uk-form-label" for="form-h-it">ครูที่ปรึกษาหลัก</label>
+                    <div class="uk-form-controls">
+                        <select name="advisor_id"  class="uk-width-1-2">
+                        	<option value="0">- เลือกครูที่ปรึกษาหลัก -</option>
+                        	<?php 
+                        	for($i=0; $i<count($advisor_items); $i++){
+                        	    $row = $advisor_items[$i];
+                        	?>
+                        	<option value="<?php echo $row->id;?>" <?php echo ($row->id==$item->advisor_id)?'selected="selected"':'';?>><?php echo $row->firstname.' '.$row->lastname;?></option>
+                        	<?php } ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="uk-form-row">
+                    <label class="uk-form-label" for="form-h-it">ครูที่ปรึกษาร่วม</label>
+                    <div class="uk-form-controls">
+                        <select name="coadvisor_id"  class="uk-width-1-2">
+                        	<option value="0">- เลือกครูที่ปรึกษาร่วม -</option>
+                        	<?php 
+                        	for($i=0; $i<count($advisor_items); $i++){
+                        	    $row = $advisor_items[$i];
+                        	?>
+                        	<option value="<?php echo $row->id;?>" <?php echo ($row->id==$item->coadvisor_id)?'selected="selected"':'';?>><?php echo $row->firstname.' '.$row->lastname;?></option>
+                        	<?php } ?>
+                        </select>
+                    </div>
+                </div>
                 
             	<input type="hidden" name="id" value="<?php echo $item->id;?>" />
             </form>

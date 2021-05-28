@@ -41,11 +41,11 @@
             				<th class="title">
             					กลุ่มการเรียน
             				</th>
-            				<th class="title" width="20%">
-            					สถานะ
+            				<th width="20%" class="title" nowrap="nowrap">
+            					ครูที่ปรึกษา
             				</th>
-            				<th width="10%" class="title" nowrap="nowrap">
-            					รหัส (ID)
+            				<th class="title" width="10%">
+            					สถานะ
             				</th>
             				<th width="15%" class="title" nowrap="nowrap">
             					-
@@ -94,10 +94,10 @@
             					<a href="<?php echo $link_edit;?>"><?php echo $row->group_name; ?></a>
             				</td>
             				<td>
-            					<a href="<?php echo $status_link;?>"><?php echo $this->helper_lib->getStatusIcon($row->status);?></a>
+            					<?php echo $row->advisor_firstname.' '.$row->advisor_lastname; ?>
             				</td>
             				<td>
-            					<?php echo $row->id; ?>
+            					<a href="<?php echo $status_link;?>"><?php echo $this->helper_lib->getStatusIcon($row->status);?></a>
             				</td>
             				<td>
             					<a href="<?php echo $link_edit;?>" class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-pencil"></i></a>

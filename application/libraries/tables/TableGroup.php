@@ -6,6 +6,8 @@ class TableGroup extends JTable
     public $college_id = NULL;
     public $major_id = NULL;
     public $minor_id = NULL;
+    public $advisor_id = NULL;
+    public $coadvisor_id = NULL;
     public $grouup_code = NULL;
     public $group_name = NULL;
     public $created_at = NULL;
@@ -15,6 +17,8 @@ class TableGroup extends JTable
     // Join Field (Hidden)
     private $major_name = NULL;
     private $minor_name = NULL;
+    private $advisor_firstname = NULL;
+    private $advisor_lastname = NULL;
     
     public function __construct($db=NULL){
         parent::__construct('groups', 'id', $db);

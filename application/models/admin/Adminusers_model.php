@@ -40,6 +40,13 @@ class Adminusers_model extends BaseModel
         $items = $query->result();
         return $items;
     }
+    
+    public function getItemsCustom($sql = 'SELECT * FROM users')
+    {
+        $query = $this->ci->db->query($sql);
+        $items = $query->result();
+        return $items;
+    }
 
     public function getQueryWhere($options)
     {

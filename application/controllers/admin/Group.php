@@ -12,6 +12,7 @@ class Group extends BaseController
         $this->load->model('admin/major_model');
         $this->load->model('admin/minor_model');
         $this->load->model('admin/group_model');
+        $this->load->model('admin/adminusers_model');
         $this->load->library('form_validation');
     }
 
@@ -45,6 +46,9 @@ class Group extends BaseController
         $data['item'] = $this->group_model->getItem($id);
         $data['major_items'] = $this->major_model->getItems(array('status'=>'publish'));
         $data['minor_items'] = $this->minor_model->getItems(array('status'=>'publish'));
+        
+        $sql = "SELECT * FROM users WHERE user_type='advisor' AND activated=1 ";
+        $data['advisor_items'] = $this->adminusers_model->getItemsCustom($sql);
         
         $this->load->view('nav');
         $this->load->view('admin/group/form', $data);
