@@ -10,41 +10,10 @@
 		<a href="<?php echo base_url('admin/homeroom'); ?>"><span class="uk-icon-cube"></span> กิจกรรมโฮมรูม</a>
 	</li>
 	
-	
-	<!-- 
-	<li><hr></li>
-	<li class="<?php echo $this->helper_lib->getActiveMenu('province');?>">
-		<a href="<?php echo base_url('admin/province'); ?>"><span class="uk-icon-cube"></span> จัดการจังหวัด</a>
-	</li>
-	<li class="<?php echo $this->helper_lib->getActiveMenu('edulevel');?>">
-		<a href="<?php echo base_url('admin/edulevel'); ?>"><span class="uk-icon-cube"></span> จัดการระดับการศึกษา</a>
-	</li>
-	<li class="<?php echo $this->helper_lib->getActiveMenu('edudegree');?>">
-		<a href="<?php echo base_url('admin/edudegree'); ?>"><span class="uk-icon-cube"></span> จัดการวุฒิการศึกษา</a>
-	</li>
-	-->
-	
 	<li><hr></li>
 	<li class="<?php echo $this->helper_lib->getActiveMenu('semester');?>">
 		<a href="<?php echo base_url('admin/semester'); ?>"><span class="uk-icon-cube"></span> จัดการภาคการศึกษา</a>
 	</li>
-	<li class="<?php echo $this->helper_lib->getActiveMenu('course');?>">
-		<a href="<?php echo base_url('admin/course'); ?>"><span class="uk-icon-cube"></span> จัดการรายวิชา</a>
-	</li>
-	<!-- 
-	<li class="<?php echo $this->helper_lib->getActiveMenu('activity');?>">
-		<a href="<?php echo base_url('admin/activity'); ?>"><span class="uk-icon-cube"></span> จัดการบันทึกการฝึกงาน</a>
-	</li>
-	 -->
-	 <!-- 
-	<li class="<?php echo $this->helper_lib->getActiveMenu('evaluation');?>">
-		<a href="<?php echo base_url('admin/evaluation'); ?>"><span class="uk-icon-cube"></span> จัดการประเมินผล</a>
-	</li>
-	-->
-	<li class="<?php echo $this->helper_lib->getActiveMenu('internship');?>">
-		<a href="<?php echo base_url('admin/internship'); ?>"><span class="uk-icon-cube"></span> จัดการข้อมูลการฝึกงาน</a>
-	</li>
-	<li><hr></li>
 	<li class="<?php echo $this->helper_lib->getActiveMenu('college');?>">
 		<a href="<?php echo base_url('admin/college'); ?>"><span class="uk-icon-cube"></span> จัดการสถานศึกษา</a>
 	</li>
