@@ -11,6 +11,37 @@ System Requirements
 
 
 
+วิธีตั้งค่า VirtualHost สำหรับเข้าใช้งานโดเมน
+- WORKSPACE PATH คือ path ที่เราเอาไฟล์เว็บไซด์วางไว้เช่น /Users/wannapong/workspace/activity64
+
+```
+<VirtualHost *:80>
+    ServerAdmin itchaiyaphum@gmail.com
+    DocumentRoot "WORKSPACE PATH"
+    ServerName dev.activity64.itchaiyaphum.com
+    ErrorLog "logs/dev.activity64.itchaiyaphum.com.com-error_log"
+    CustomLog "logs/dev.activity64.itchaiyaphum.com-access_log" common
+    <Directory "WORKSPACE PATH">
+        Options FollowSymLinks
+        AllowOverride None
+    </Directory>
+    <Directory "WORKSPACE PATH">
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride All
+        Order allow,deny
+        allow from all
+    </Directory>
+</VirtualHost>
+```
+
+
+
+Clone repo จาก github โดยเอาไฟล์ไปไว้ที่ WORKSPACE PATH
+- https://github.com/itchaiyaphum/activity64
+
+
+
+
 1.วิธีการตั้งค่าให้้รันได้บนเครื่อง localhost
 1.1.ตั้งค่าไฟล์ hosts
 - สำหรับ Windows (C:\Windows\System32\drivers\etc\hosts)
