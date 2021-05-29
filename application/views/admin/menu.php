@@ -26,6 +26,9 @@
 	<li class="<?php echo $this->helper_lib->getActiveMenu('group');?>">
 		<a href="<?php echo base_url('admin/group'); ?>"><span class="uk-icon-cube"></span> จัดการกลุ่มการเรียน</a>
 	</li>
+	<li class="<?php echo $this->helper_lib->getActiveMenu('advisorgroup');?>">
+		<a href="<?php echo base_url('admin/advisorgroup'); ?>"><span class="uk-icon-cube"></span> ที่ปรึกษาประจำกลุ่มการเรียน</a>
+	</li>
 	<li><hr></li>
 	<li class="uk-nav-header">ผู้ใช้งาน</li>
 	<li class="<?php echo $this->helper_lib->getActiveMenu('users');?>">
