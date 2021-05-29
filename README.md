@@ -57,8 +57,8 @@ Clone repo จาก github โดยเอาไฟล์ไปไว้ที�
 1.4.รันทดสอบระบบ
 - เปิด Web Browser และรัน url (http://dev.activity64.itchaiyaphum.com)
 - login โดยใช้ demo user / password ดังนี้
-- admin@demo.com / 123456
-- advisor@demo.com / 123456
+- admin@demo.com / itc123456
+- advisor@demo.com / itc123456
 
 
 2.วิธีการ deploy to production

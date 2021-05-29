@@ -331,7 +331,7 @@ CREATE TABLE `users` (
   `email` varchar(100) COLLATE utf8_bin NOT NULL,
   `firstname` varchar(50) COLLATE utf8_bin NOT NULL,
   `lastname` varchar(50) COLLATE utf8_bin NOT NULL,
-  `user_type` varchar(10) COLLATE utf8_bin NOT NULL DEFAULT 'student',
+  `user_type` varchar(20) COLLATE utf8_bin NOT NULL DEFAULT 'student',
   `organization_id` int(11) NOT NULL DEFAULT '0',
   `thumbnail` varchar(255) COLLATE utf8_bin NOT NULL DEFAULT '/storage/profiles/no-thumbnail.jpg',
   `activated` tinyint(1) NOT NULL DEFAULT '1',
@@ -351,13 +351,13 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 INSERT INTO `users` (`id`, `username`, `password`, `email`, `firstname`, `lastname`, `user_type`, `organization_id`, `thumbnail`, `activated`, `banned`, `ban_reason`, `new_password_key`, `new_password_requested`, `new_email`, `new_email_key`, `last_ip`, `last_login`, `created`, `modified`, `major_id`, `minor_id`, `group_id`) VALUES
-(1, '', '$2a$08$.sZsPLNvz.m3Jz3CWmW2CewWOa5YAlIiN0mEPFd5LSMij4apsL7fS', 'admin@demo.com', 'admin', 'demo', 'admin', 3, '/storage/profiles/no-thumbnail.jpg', 1, 0, NULL, NULL, NULL, NULL, NULL, '127.0.0.1', '2021-05-29 04:02:24', '2016-03-14 10:13:19', '2021-05-29 04:02:24', 0, 0, 0),
-(2, '', '$2a$08$.sZsPLNvz.m3Jz3CWmW2CewWOa5YAlIiN0mEPFd5LSMij4apsL7fS', 'student@demo.com', 'student', 'demo', 'student', 3, '/storage/profiles/no-thumbnail.jpg', 1, 0, NULL, NULL, NULL, NULL, NULL, '127.0.0.1', '2021-05-27 20:23:37', '2016-03-08 10:39:02', '2021-05-27 17:55:38', 0, 0, 0),
-(3, '', '$2a$08$.sZsPLNvz.m3Jz3CWmW2CewWOa5YAlIiN0mEPFd5LSMij4apsL7fS', 'staff@demo.com', 'staff', 'demo', 'staff', 3, '/storage/profiles/no-thumbnail.jpg', 1, 0, NULL, NULL, NULL, NULL, NULL, '49.237.203.62', '2017-03-27 09:41:59', '2016-03-08 23:15:40', '2017-03-26 19:41:59', 0, 0, 0),
-(4, '', '$2a$08$.sZsPLNvz.m3Jz3CWmW2CewWOa5YAlIiN0mEPFd5LSMij4apsL7fS', 'advisor@demo.com', 'advisor', 'demo', 'advisor', 0, '/storage/profiles/no-thumbnail.jpg', 1, 0, NULL, NULL, NULL, NULL, NULL, '127.0.0.1', '2021-05-28 09:40:17', '2016-03-16 17:40:22', '2021-05-28 09:40:17', 0, 0, 0),
-(5, '', '$2a$08$.sZsPLNvz.m3Jz3CWmW2CewWOa5YAlIiN0mEPFd5LSMij4apsL7fS', 'headadvisor@demo.com', 'advisor', 'demo', 'headadvisor', 0, '/storage/profiles/no-thumbnail.jpg', 1, 0, NULL, NULL, NULL, NULL, NULL, '127.0.0.1', '2021-05-28 09:40:17', '2016-03-16 17:40:22', '2021-05-28 09:40:17', 0, 0, 0),
-(6, '', '$2a$08$.sZsPLNvz.m3Jz3CWmW2CewWOa5YAlIiN0mEPFd5LSMij4apsL7fS', 'headdepartment@demo.com', 'advisor', 'demo', 'headdepartment', 0, '/storage/profiles/no-thumbnail.jpg', 1, 0, NULL, NULL, NULL, NULL, NULL, '127.0.0.1', '2021-05-28 09:40:17', '2016-03-16 17:40:22', '2021-05-28 09:40:17', 0, 0, 0),
-(7, '', '$2a$08$.sZsPLNvz.m3Jz3CWmW2CewWOa5YAlIiN0mEPFd5LSMij4apsL7fS', 'executive@demo.com', 'advisor', 'demo', 'executive', 0, '/storage/profiles/no-thumbnail.jpg', 1, 0, NULL, NULL, NULL, NULL, NULL, '127.0.0.1', '2021-05-28 09:40:17', '2016-03-16 17:40:22', '2021-05-28 09:40:17', 0, 0, 0);
+(1, '', '57a7ea46a6c58f62f02a782bd0fb6ee8', 'admin@demo.com', 'admin', 'demo', 'admin', 3, '/storage/profiles/no-thumbnail.jpg', 1, 0, NULL, NULL, NULL, NULL, NULL, '127.0.0.1', '2021-05-29 04:02:24', '2016-03-14 10:13:19', '2021-05-29 04:02:24', 0, 0, 0),
+(2, '', '57a7ea46a6c58f62f02a782bd0fb6ee8', 'student@demo.com', 'student', 'demo', 'student', 3, '/storage/profiles/no-thumbnail.jpg', 1, 0, NULL, NULL, NULL, NULL, NULL, '127.0.0.1', '2021-05-27 20:23:37', '2016-03-08 10:39:02', '2021-05-27 17:55:38', 0, 0, 0),
+(3, '', '57a7ea46a6c58f62f02a782bd0fb6ee8', 'staff@demo.com', 'staff', 'demo', 'staff', 3, '/storage/profiles/no-thumbnail.jpg', 1, 0, NULL, NULL, NULL, NULL, NULL, '49.237.203.62', '2017-03-27 09:41:59', '2016-03-08 23:15:40', '2017-03-26 19:41:59', 0, 0, 0),
+(4, '', '57a7ea46a6c58f62f02a782bd0fb6ee8', 'advisor@demo.com', 'advisor', 'demo', 'advisor', 0, '/storage/profiles/no-thumbnail.jpg', 1, 0, NULL, NULL, NULL, NULL, NULL, '127.0.0.1', '2021-05-28 09:40:17', '2016-03-16 17:40:22', '2021-05-28 09:40:17', 0, 0, 0),
+(5, '', '57a7ea46a6c58f62f02a782bd0fb6ee8', 'headadvisor@demo.com', 'advisor', 'demo', 'headadvisor', 0, '/storage/profiles/no-thumbnail.jpg', 1, 0, NULL, NULL, NULL, NULL, NULL, '127.0.0.1', '2021-05-28 09:40:17', '2016-03-16 17:40:22', '2021-05-28 09:40:17', 0, 0, 0),
+(6, '', '57a7ea46a6c58f62f02a782bd0fb6ee8', 'headdepartment@demo.com', 'advisor', 'demo', 'headdepartment', 0, '/storage/profiles/no-thumbnail.jpg', 1, 0, NULL, NULL, NULL, NULL, NULL, '127.0.0.1', '2021-05-28 09:40:17', '2016-03-16 17:40:22', '2021-05-28 09:40:17', 0, 0, 0),
+(7, '', '57a7ea46a6c58f62f02a782bd0fb6ee8', 'executive@demo.com', 'advisor', 'demo', 'executive', 0, '/storage/profiles/no-thumbnail.jpg', 1, 0, NULL, NULL, NULL, NULL, NULL, '127.0.0.1', '2021-05-28 09:40:17', '2016-03-16 17:40:22', '2021-05-28 09:40:17', 0, 0, 0);
 
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),

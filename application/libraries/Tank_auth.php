@@ -33,6 +33,11 @@ class Tank_auth
 		// Try to autologin
 		$this->autologin();
 	}
+	
+	function checkPassword($raw_password, $hash_password){
+	    $raw_password_md5 = md5($raw_password);
+	    return ($raw_password_md5==$hash_password);
+	}
 
 	/**
 	 * Login user on the site. Return TRUE if login is successful
@@ -62,7 +67,9 @@ class Tank_auth
 				$hasher = new PasswordHash(
 						$this->ci->config->item('phpass_hash_strength', 'tank_auth'),
 						$this->ci->config->item('phpass_hash_portable', 'tank_auth'));
-				if ($hasher->CheckPassword($password, $user->password)) {		// password ok
+				
+				if ($this->checkPassword($password, $user->password)) { // password ok
+// 				if ($hasher->CheckPassword($password, $user->password)) {		// password ok
 
 					if ($user->banned == 1) {									// fail - banned
 						$this->error = array('banned' => $user->ban_reason);
@@ -453,10 +460,12 @@ class Tank_auth
 			$hasher = new PasswordHash(
 					$this->ci->config->item('phpass_hash_strength', 'tank_auth'),
 					$this->ci->config->item('phpass_hash_portable', 'tank_auth'));
-			if ($hasher->CheckPassword($old_pass, $user->password)) {			// success
+// 			if ($hasher->CheckPassword($old_pass, $user->password)) {			// success
+			if ($this->checkPassword($old_pass, $user->password)) {			// success
 
 				// Hash new password using phpass
-				$hashed_password = $hasher->HashPassword($new_pass);
+				$hashed_password = md5($new_pass);
+// 				$hashed_password = $hasher->HashPassword($new_pass);
 
 				// Replace old password with new one
 				$this->ci->users->change_password($user_id, $hashed_password);
@@ -488,7 +497,8 @@ class Tank_auth
 			$hasher = new PasswordHash(
 					$this->ci->config->item('phpass_hash_strength', 'tank_auth'),
 					$this->ci->config->item('phpass_hash_portable', 'tank_auth'));
-			if ($hasher->CheckPassword($password, $user->password)) {			// success
+			if ($this->checkPassword($password, $user->password)) {			// success
+// 			if ($hasher->CheckPassword($password, $user->password)) {			// success
 
 				$data = array(
 					'user_id'	=> $user_id,
@@ -551,7 +561,8 @@ class Tank_auth
 			$hasher = new PasswordHash(
 					$this->ci->config->item('phpass_hash_strength', 'tank_auth'),
 					$this->ci->config->item('phpass_hash_portable', 'tank_auth'));
-			if ($hasher->CheckPassword($password, $user->password)) {			// success
+			if ($this->checkPassword($password, $user->password)) {			// success
+// 			if ($hasher->CheckPassword($password, $user->password)) {			// success
 
 				$this->ci->users->delete_user($user_id);
 				$this->logout();
