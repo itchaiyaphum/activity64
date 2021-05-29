@@ -1,11 +1,3 @@
-## phpMyAdmin SQL Dump
-## version 4.8.2
-## https://www.phpmyadmin.net/
-##
-## Host: localhost:3306
-## Generation Time: May 29, 2021 at 04:03 AM
-## Server version: 5.7.21
-## PHP Version: 7.2.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,13 +6,7 @@ SET time_zone = "+00:00";
 ## Database: `activity64`
 ##
 
-## ########################################################
-
-
-##
-## Table structure for table `ci_sessions`
-##
-
+############################ TABLE: ci_sessions ##############################
 CREATE TABLE `ci_sessions` (
   `id` varchar(40) NOT NULL,
   `ip_address` varchar(45) NOT NULL,
@@ -28,36 +14,38 @@ CREATE TABLE `ci_sessions` (
   `data` blob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-##
-## Table structure for table `college`
-##
+ALTER TABLE `ci_sessions`
+  ADD KEY `ci_sessions_timestamp` (`timestamp`);
 
+
+
+############################ TABLE: college ##############################
 CREATE TABLE `college` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `province_id` int(11) NOT NULL,
   `status` tinyint(1) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-##
-## Dumping data for table `college`
-##
+INSERT INTO `college` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'วิทยาลัยเทคนิคชัยภูมิ', 1, '2015-05-19 02:45:30', '2015-05-28 08:27:57'),
+(2, 'วิทยาลัยเทคนิคขอนแก่น', 1, '2015-05-19 02:45:30', '2015-05-23 18:38:09'),
+(3, 'วิทยาลัยสารพัดช่าง', 1, '2015-05-19 02:45:51', '2015-05-23 18:37:33'),
+(4, 'วิทยาลัยเกษตร', -1, '2015-05-23 18:40:31', '2015-05-23 18:40:31'),
+(5, 'วิทยาลัยแก้งคร้อ', -1, '2015-05-23 18:40:41', '2015-05-23 18:40:41'),
+(6, 'วิทยาลัยเชตุพน', -1, '2015-05-23 18:40:56', '2015-05-23 18:41:34'),
+(7, 'วิทยาลัยเทคนิคชลบุรี', -1, '2015-05-19 02:45:30', '2015-05-19 02:45:30');
 
-INSERT INTO `college` (`id`, `name`, `province_id`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'วิทยาลัยเทคนิคชัยภูมิ', 1, 1, '0000-00-00 00:00:00', '2015-05-28 08:27:57'),
-(2, 'วิทยาลัยเทคนิคขอนแก่น', 2, 1, '2015-05-19 02:45:30', '2015-05-23 18:38:09'),
-(3, 'วิทยาลัยสารพัดช่าง', 1, 1, '2015-05-19 02:45:51', '2015-05-23 18:37:33'),
-(4, 'วิทยาลัยเกษตร', 1, -1, '2015-05-23 18:40:31', '2015-05-23 18:40:31'),
-(5, 'วิทยาลัยแก้งคร้อ', 1, -1, '2015-05-23 18:40:41', '2015-05-23 18:40:41'),
-(6, 'วิทยาลัยเชตุพน', 4, -1, '2015-05-23 18:40:56', '2015-05-23 18:41:34'),
-(7, 'วิทยาลัยเทคนิคชลบุรี', 0, -1, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+ALTER TABLE `college`
+  ADD PRIMARY KEY (`id`);
 
-##
-## Table structure for table `groups`
-##
+ALTER TABLE `college`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
+
+
+############################ TABLE: groups ##############################
 CREATE TABLE `groups` (
   `id` int(11) NOT NULL COMMENT 'รหัสอ้างอิง',
   `group_code` int(11) NOT NULL COMMENT 'รหัสกลุ่ม',
@@ -72,10 +60,31 @@ CREATE TABLE `groups` (
   `status` int(1) NOT NULL DEFAULT '1' COMMENT 'สถานะ'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-##
-## Table structure for table `homerooms`
-##
+INSERT INTO `groups` (`id`, `group_code`, `group_name`, `college_id`, `advisor_id`, `coadvisor_id`, `major_id`, `minor_id`, `created_at`, `updated_at`, `status`) VALUES
+(1, 632090102, 'กลุ่ม 1', 0, 6, 21, 4, 1, '2021-05-27 14:19:39', '2021-05-27 14:19:39', 1),
+(2, 632090101, 'กลุ่ม 2', 0, 21, 6, 4, 1, '2021-05-27 14:21:04', '2021-05-27 14:21:04', 1),
+(3, 0, 'EV 1', 0, 6, 21, 1, 2, '2021-05-27 14:21:04', '2021-05-27 14:21:04', 1),
+(4, 0, 'EV 2', 0, 6, 21, 1, 2, '2021-05-27 14:21:04', '2021-05-27 14:21:04', 1),
+(5, 0, 'EV 3', 0, 6, 21, 1, 2, '2021-05-27 14:21:04', '2021-05-27 14:21:04', 1),
+(6, 0, 'EV 4', 0, 6, 21, 1, 2, '2021-05-27 14:21:04', '2021-05-27 14:21:04', 1),
+(7, 0, 'EV 5', 0, 6, 21, 1, 2, '2021-05-27 14:21:04', '2021-05-27 14:21:04', 1),
+(8, 0, 'EV 6', 0, 0, 0, 1, 2, '2021-05-27 14:21:04', '2021-05-27 14:21:04', 1),
+(9, 0, 'EV 7', 0, 0, 0, 1, 2, '2021-05-27 14:21:04', '2021-05-27 14:21:04', 1),
+(10, 0, 'EV 8', 0, 0, 0, 1, 2, '2021-05-27 14:21:04', '2021-05-27 14:21:04', 1),
+(11, 0, 'EV 9', 0, 0, 0, 1, 2, '2021-05-27 14:21:04', '2021-05-27 14:21:04', 1),
+(12, 0, 'EV 10', 0, 0, 0, 1, 2, '2021-05-27 14:21:04', '2021-05-27 14:21:04', 1),
+(13, 0, 'EV 11', 0, 0, 0, 1, 2, '2021-05-27 14:21:04', '2021-05-27 14:21:04', 1);
 
+ALTER TABLE `groups`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `college_id` (`college_id`,`major_id`,`minor_id`);
+
+ALTER TABLE `groups`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสอ้างอิง', AUTO_INCREMENT=14;
+
+
+
+############################ TABLE: homerooms ##############################
 CREATE TABLE `homerooms` (
   `id` int(11) NOT NULL,
   `semester_id` int(11) NOT NULL,
@@ -90,29 +99,42 @@ CREATE TABLE `homerooms` (
   `remark` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-##
-## Table structure for table `homeroom_activities`
-##
+INSERT INTO `homerooms` (`id`, `semester_id`, `week`, `join_start`, `join_end`, `cover_img`, `created_at`, `updated_at`, `status`, `created_by_user_id`, `remark`) VALUES
+(3, 3, 1, '2021-05-27 00:00:00', '2021-05-31 00:00:00', 'homeroom/2021/id-1.jpg', '2021-05-27 15:15:03', '2021-05-27 15:15:03', 1, 1, ''),
+(4, 3, 2, '2021-05-28 00:00:00', '2021-05-29 00:00:00', 'homeroom/2021/id-2.jpg', '2021-05-27 15:15:03', '2021-05-27 15:15:03', 1, 1, '');
 
+ALTER TABLE `homerooms`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `homerooms`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+
+
+############################ TABLE: homeroom_activities ##############################
 CREATE TABLE `homeroom_activities` (
   `id` int(11) NOT NULL COMMENT 'รหัสอ้างอิง',
   `homeroom_id` int(11) NOT NULL COMMENT 'รหัสกิจกรรมโฮมรูม',
-  `advisor_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL COMMENT 'บันทึกข้อมูลโดยใคร',
+  `advisor_id` int(11) NOT NULL COMMENT 'บันทึกข้อมูลโดยใคร',
+  `group_id` int(11) NOT NULL COMMENT 'กลุ่มการเรียน',
   `created_at` int(11) NOT NULL COMMENT 'บันทึกข้อมูลเมื่อไหร่',
   `updated_at` int(11) NOT NULL COMMENT 'แก้ไขข้อมูลล่าสุดเมื่อไหร่',
-  `status` int(1) NOT NULL DEFAULT '1' COMMENT 'สถานะ',
-  `major_id` int(11) NOT NULL COMMENT 'รหัสสาขาวิชา'
+  `status` int(1) NOT NULL DEFAULT '1' COMMENT 'สถานะ'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-##
-## Table structure for table `homeroom_activity_items`
-##
+ALTER TABLE `homeroom_activities`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `homeroom_id` (`homeroom_id`,`group_id`,`advisor_id`) USING BTREE;
 
+ALTER TABLE `homeroom_activities`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสอ้างอิง';
+
+
+
+############################ TABLE: homeroom_activity_items ##############################
 CREATE TABLE `homeroom_activity_items` (
   `id` int(11) NOT NULL COMMENT 'รหัสอ้างอิง',
   `homeroom_id` int(11) NOT NULL COMMENT 'รหัสกิจกรรมโฮมรูม',
-  `homeroom_activity_id` int(11) NOT NULL COMMENT 'รหัสกิจกรรมโฮมรูม',
   `student_id` int(11) NOT NULL COMMENT 'รหัสนักเรียน',
   `created_at` datetime NOT NULL COMMENT 'บันทึกข้อมูลเมื่อไหร่',
   `updated_at` datetime NOT NULL COMMENT 'แก้ไขข้อมูลล่าสุดเมื่อไหร่',
@@ -120,61 +142,81 @@ CREATE TABLE `homeroom_activity_items` (
   `check_status` varchar(10) NOT NULL COMMENT 'สถานะการเข้าร่วมกิจกรรมโฮมรูม'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-##
-## Table structure for table `homeroom_obediences`
-##
+ALTER TABLE `homeroom_activity_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `homeroom_id` (`homeroom_id`,`student_id`);
 
+ALTER TABLE `homeroom_activity_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสอ้างอิง';
+
+
+
+############################ TABLE: homeroom_obediences ##############################
 CREATE TABLE `homeroom_obediences` (
   `id` int(11) NOT NULL COMMENT 'รหัสอ้างอิง',
   `homeroom_id` int(11) NOT NULL COMMENT 'รหัสกิจกรรมโฮมรูม',
-  `user_id` int(11) NOT NULL COMMENT 'บันทึกข้อมูลโดยใคร',
+  `advisor_id` int(11) NOT NULL COMMENT 'บันทึกข้อมูลโดยใคร',
   `created_at` datetime NOT NULL COMMENT 'บันทึกข้อมูลเมื่อไหร่',
   `updated_at` datetime NOT NULL COMMENT 'แก้ไขข้อมูลล่าสุดเมื่อไหร่',
   `status` int(1) NOT NULL DEFAULT '1' COMMENT 'สถานะ',
-  `major_id` int(11) NOT NULL COMMENT 'รหัสสาขาวิชา',
-  `minor_id` int(11) NOT NULL COMMENT 'รหัสสาขางาน',
   `group_id` int(11) NOT NULL COMMENT 'รหัสกลุ่มเรียน',
   `obe_detail` text NOT NULL COMMENT 'รายละเอียดการให้โอวาท',
   `question_amount` int(2) NOT NULL COMMENT 'จำนวนคนที่ตอบแบบสอบถาม'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-##
-## Table structure for table `homeroom_obedience_attachments`
-##
+ALTER TABLE `homeroom_obediences`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `homeroom_id_2` (`homeroom_id`,`group_id`,`advisor_id`) USING BTREE;
 
+ALTER TABLE `homeroom_obediences`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสอ้างอิง';
+
+
+
+############################ TABLE: homeroom_obedience_attachments ##############################
 CREATE TABLE `homeroom_obedience_attachments` (
   `id` int(11) NOT NULL COMMENT 'รหัสอ้างอิง',
   `img` varchar(100) NOT NULL COMMENT 'ที่อยู่รูปภาพกิจกรรม',
-  `homeroom_obedience_id` int(11) NOT NULL COMMENT 'รหัสกิจกรรมให้โอวาท',
+  `homeroom_id` int(11) NOT NULL COMMENT 'รหัสกิจกรรมโฮมรูม',
+  `group_id` int(11) NOT NULL COMMENT 'รหัสกลุ่มเรียน',
   `created_at` datetime NOT NULL COMMENT 'บันทึกข้อมูลเมื่อไหร่',
   `updated_at` datetime NOT NULL COMMENT 'แก้ไขข้อมูลล่าสุดเมื่อไหร่',
   `status` int(1) NOT NULL DEFAULT '1' COMMENT 'สถานะ'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-##
-## Table structure for table `homeroom_risks`
-##
+ALTER TABLE `homeroom_obedience_attachments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `homeroom_id` (`homeroom_id`,`group_id`);
 
+ALTER TABLE `homeroom_obedience_attachments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสอ้างอิง';
+
+
+
+############################ TABLE: homeroom_risks ##############################
 CREATE TABLE `homeroom_risks` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL COMMENT 'รหัสอ้างอิง',
   `homeroom_id` int(11) NOT NULL COMMENT 'รหัสกิจกรรมโฮมรูม',
-  `user_id` int(11) NOT NULL COMMENT 'บันทึกข้อมูลโดยใคร',
+  `group_id` int(11) NOT NULL COMMENT 'กลุ่มการเรียน',
+  `advisor_id` int(11) NOT NULL COMMENT 'บันทึกข้อมูลโดยใคร',
   `created_at` datetime NOT NULL COMMENT 'บันทึกข้อมูลเมื่อไหร่',
   `updated_at` datetime NOT NULL COMMENT 'แก้ไขข้อมูลล่าสุดเมื่อไหร่',
-  `status` int(1) NOT NULL DEFAULT '1' COMMENT 'สถานะ',
-  `major_id` int(11) NOT NULL COMMENT 'รหัสสาขาวิชา',
-  `minor_id` int(11) NOT NULL COMMENT 'รหัสสาขางาน',
-  `group_id` int(11) NOT NULL COMMENT 'รหัสกลุ่มเรียน'
+  `status` int(1) NOT NULL DEFAULT '1' COMMENT 'สถานะ'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-##
-## Table structure for table `homeroom_risk_items`
-##
+ALTER TABLE `homeroom_risks`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `homeroom_id` (`homeroom_id`,`group_id`,`advisor_id`);
 
+ALTER TABLE `homeroom_risks`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสอ้างอิง';
+
+
+
+############################ TABLE: homeroom_risk_items ##############################
 CREATE TABLE `homeroom_risk_items` (
   `id` int(11) NOT NULL COMMENT 'รหัสอ้างอิง',
   `homeroom_id` int(11) NOT NULL COMMENT 'รหัสกิจกรรมโฮมรูม',
-  `homeroom_risk_id` int(11) NOT NULL COMMENT 'รหัสกิจกรรมโฮมรูม',
   `student_id` int(11) NOT NULL COMMENT 'รหัสนักเรียน',
   `created_at` datetime NOT NULL COMMENT 'บันทึกข้อมูลเมื่อไหร่',
   `updated_at` datetime NOT NULL COMMENT 'แก้ไขข้อมูลล่าสุดเมื่อไหร่',
@@ -184,10 +226,16 @@ CREATE TABLE `homeroom_risk_items` (
   `risk_status` int(1) NOT NULL DEFAULT '0' COMMENT 'สถานะความเสี่ยง'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-##
-## Table structure for table `login_attempts`
-##
+ALTER TABLE `homeroom_risk_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `homeroom_id` (`homeroom_id`,`student_id`);
 
+ALTER TABLE `homeroom_risk_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสอ้างอิง';
+
+
+
+############################ TABLE: login_attempts ##############################
 CREATE TABLE `login_attempts` (
   `id` int(11) NOT NULL,
   `ip_address` varchar(40) COLLATE utf8_bin NOT NULL,
@@ -195,10 +243,15 @@ CREATE TABLE `login_attempts` (
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-##
-## Table structure for table `majors`
-##
+ALTER TABLE `login_attempts`
+  ADD PRIMARY KEY (`id`);
 
+ALTER TABLE `login_attempts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+
+
+############################ TABLE: majors ##############################
 CREATE TABLE `majors` (
   `id` int(11) NOT NULL COMMENT 'รหัสอ้างอิง',
   `college_id` int(11) NOT NULL COMMENT 'รหัสสถานศึกษา',
@@ -210,10 +263,21 @@ CREATE TABLE `majors` (
   `status` int(1) NOT NULL DEFAULT '1' COMMENT 'สถานะ'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-##
-## Table structure for table `minors`
-##
+INSERT INTO `majors` (`id`, `college_id`, `major_code`, `major_name`, `major_eng`, `created_at`, `updated_at`, `status`) VALUES
+(1, 0, '2101', 'ช่างยนต์', 'Mechanic', '2021-05-27 14:26:09', '2021-05-27 14:26:09', 1),
+(2, 0, '2102', 'ช่างกลโรงงาน', 'Factory mechanic', '2021-05-27 14:26:09', '2021-05-27 14:26:09', -1),
+(4, 0, '', 'เทคโนโลยีสารสนเทศ', 'Information Technology', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1);
 
+ALTER TABLE `majors`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `college_id` (`college_id`);
+
+ALTER TABLE `majors`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสอ้างอิง', AUTO_INCREMENT=5;
+
+
+
+############################ TABLE: minors ##############################
 CREATE TABLE `minors` (
   `id` int(11) NOT NULL COMMENT 'รหัสอ้างอิง',
   `minor_code` varchar(10) NOT NULL COMMENT 'รหัสสาขางาน',
@@ -226,22 +290,20 @@ CREATE TABLE `minors` (
   `status` int(1) NOT NULL DEFAULT '1' COMMENT 'สถานะ'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-##
-## Table structure for table `province`
-##
+INSERT INTO `minors` (`id`, `minor_code`, `minor_name`, `minor_eng`, `college_id`, `major_id`, `created_at`, `updated_at`, `status`) VALUES
+(1, '', 'แอนนิเมชั่น', 'Animation', 1, 4, '2021-05-28 00:00:00', '2021-05-28 00:00:00', 1),
+(2, '', 'รถยนต์ไฟฟ้า', 'EV', 0, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1);
 
-CREATE TABLE `province` (
-  `id` int(11) NOT NULL COMMENT 'รหัสอ้างอิง',
-  `name` varchar(255) NOT NULL COMMENT 'ชื่อจังหวัด',
-  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'สถานะ',
-  `created_at` datetime NOT NULL COMMENT 'บันทึกข้อมูลเมื่อไหร่',
-  `updated_at` datetime NOT NULL COMMENT 'แก้ไขข้อมูลล่าสุดเมื่อไหร่'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ALTER TABLE `minors`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `college_id` (`college_id`,`major_id`);
 
-##
-## Table structure for table `semester`
-##
+ALTER TABLE `minors`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสอ้างอิง', AUTO_INCREMENT=3;
 
+
+
+############################ TABLE: semester ##############################
 CREATE TABLE `semester` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -250,17 +312,18 @@ CREATE TABLE `semester` (
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-##
-## Dumping data for table `semester`
-##
-
 INSERT INTO `semester` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'ภาคเรียนที่ 1/2564', 1, '2015-05-24 16:27:34', '2015-05-24 18:16:18');
+(3, 'ภาคเรียนที่ 1/2564', 1, '2015-05-24 16:27:34', '2015-05-24 18:16:18');
 
-##
-## Table structure for table `users`
-##
+ALTER TABLE `semester`
+  ADD PRIMARY KEY (`id`);
 
+ALTER TABLE `semester`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+
+
+############################ TABLE: users ##############################
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `username` varchar(50) COLLATE utf8_bin NOT NULL,
@@ -296,10 +359,17 @@ INSERT INTO `users` (`id`, `username`, `password`, `email`, `firstname`, `lastna
 (6, '', '$2a$08$.sZsPLNvz.m3Jz3CWmW2CewWOa5YAlIiN0mEPFd5LSMij4apsL7fS', 'headdepartment@demo.com', 'advisor', 'demo', 'headdepartment', 0, '/storage/profiles/no-thumbnail.jpg', 1, 0, NULL, NULL, NULL, NULL, NULL, '127.0.0.1', '2021-05-28 09:40:17', '2016-03-16 17:40:22', '2021-05-28 09:40:17', 0, 0, 0),
 (7, '', '$2a$08$.sZsPLNvz.m3Jz3CWmW2CewWOa5YAlIiN0mEPFd5LSMij4apsL7fS', 'executive@demo.com', 'advisor', 'demo', 'executive', 0, '/storage/profiles/no-thumbnail.jpg', 1, 0, NULL, NULL, NULL, NULL, NULL, '127.0.0.1', '2021-05-28 09:40:17', '2016-03-16 17:40:22', '2021-05-28 09:40:17', 0, 0, 0);
 
-##
-## Table structure for table `users_student`
-##
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `major_id` (`major_id`),
+  ADD KEY `group_id` (`group_id`);
 
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+
+
+############################ TABLE: users_student ##############################
 CREATE TABLE `users_student` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
@@ -352,10 +422,15 @@ CREATE TABLE `users_student` (
   `organization_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-##
-## Table structure for table `user_autologin`
-##
+ALTER TABLE `users_student`
+  ADD PRIMARY KEY (`id`);
 
+ALTER TABLE `users_student`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+
+
+
+############################ TABLE: user_autologin ##############################
 CREATE TABLE `user_autologin` (
   `key_id` char(32) COLLATE utf8_bin NOT NULL,
   `user_id` int(11) NOT NULL DEFAULT '0',
@@ -364,10 +439,12 @@ CREATE TABLE `user_autologin` (
   `last_login` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-##
-## Table structure for table `user_signatures`
-##
+ALTER TABLE `user_autologin`
+  ADD PRIMARY KEY (`key_id`,`user_id`);
 
+
+
+############################ TABLE: user_signatures ##############################
 CREATE TABLE `user_signatures` (
   `id` int(11) NOT NULL COMMENT 'รหัสอ้างอิง',
   `img` varchar(100) NOT NULL COMMENT 'รูปภาพ',
@@ -377,10 +454,15 @@ CREATE TABLE `user_signatures` (
   `status` int(1) NOT NULL DEFAULT '1' COMMENT 'สถานะ'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-##
-## Table structure for table `users_advisor`
-##
+ALTER TABLE `user_signatures`
+  ADD PRIMARY KEY (`id`);
 
+ALTER TABLE `user_signatures`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสอ้างอิง', AUTO_INCREMENT=3;
+
+
+
+############################ TABLE: users_advisor ##############################
 CREATE TABLE `users_advisor` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
@@ -393,281 +475,51 @@ CREATE TABLE `users_advisor` (
   `college_id` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
-
-
-##
-###################### Indexes for dumped tables ######################################
-##
-
-##
-## Indexes for table `users_advisor`
-##
 ALTER TABLE `users_advisor`
   ADD PRIMARY KEY (`id`);
-  
-##
-## Indexes for table `user_advisors`
-##
-ALTER TABLE `user_advisors`
-  ADD PRIMARY KEY (`id`);
-  
-##
-## Indexes for table `ci_sessions`
-##
-ALTER TABLE `ci_sessions`
-  ADD KEY `ci_sessions_timestamp` (`timestamp`);
 
-##
-## Indexes for table `college`
-##
-ALTER TABLE `college`
-  ADD PRIMARY KEY (`id`);
-
-##
-## Indexes for table `groups`
-##
-ALTER TABLE `groups`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `college_id` (`college_id`,`major_id`,`minor_id`);
-
-##
-## Indexes for table `homerooms`
-##
-ALTER TABLE `homerooms`
-  ADD PRIMARY KEY (`id`);
-
-##
-## Indexes for table `homeroom_activities`
-##
-ALTER TABLE `homeroom_activities`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `homeroom_id` (`homeroom_id`,`user_id`),
-  ADD KEY `homeroom_id_2` (`homeroom_id`,`user_id`,`major_id`);
-
-##
-## Indexes for table `homeroom_activity_items`
-##
-ALTER TABLE `homeroom_activity_items`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `homeroom_id` (`homeroom_id`,`homeroom_activity_id`,`student_id`);
-
-##
-## Indexes for table `homeroom_obediences`
-##
-ALTER TABLE `homeroom_obediences`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `homeroom_id` (`homeroom_id`,`user_id`),
-  ADD KEY `homeroom_id_2` (`homeroom_id`,`user_id`,`major_id`,`minor_id`,`group_id`);
-
-##
-## Indexes for table `homeroom_obedience_attachments`
-##
-ALTER TABLE `homeroom_obedience_attachments`
-  ADD PRIMARY KEY (`id`);
-
-##
-## Indexes for table `homeroom_risks`
-##
-ALTER TABLE `homeroom_risks`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `homeroom_id` (`homeroom_id`,`user_id`),
-  ADD KEY `homeroom_id_2` (`homeroom_id`,`user_id`,`major_id`,`minor_id`,`group_id`);
-
-##
-## Indexes for table `homeroom_risk_items`
-##
-ALTER TABLE `homeroom_risk_items`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `homeroom_id` (`homeroom_id`,`homeroom_risk_id`,`student_id`);
-
-##
-## Indexes for table `login_attempts`
-##
-ALTER TABLE `login_attempts`
-  ADD PRIMARY KEY (`id`);
-
-##
-## Indexes for table `majors`
-##
-ALTER TABLE `majors`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `college_id` (`college_id`);
-
-##
-## Indexes for table `minors`
-##
-ALTER TABLE `minors`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `college_id` (`college_id`,`major_id`);
-
-##
-## Indexes for table `province`
-##
-ALTER TABLE `province`
-  ADD PRIMARY KEY (`id`);
-
-##
-## Indexes for table `semester`
-##
-ALTER TABLE `semester`
-  ADD PRIMARY KEY (`id`);
-
-
-##
-## Indexes for table `users`
-##
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `major_id` (`major_id`),
-  ADD KEY `group_id` (`group_id`);
-
-##
-## Indexes for table `users_student`
-##
-ALTER TABLE `users_student`
-  ADD PRIMARY KEY (`id`);
-
-##
-## Indexes for table `user_autologin`
-##
-ALTER TABLE `user_autologin`
-  ADD PRIMARY KEY (`key_id`,`user_id`);
-
-##
-## Indexes for table `user_signatures`
-##
-ALTER TABLE `user_signatures`
-  ADD PRIMARY KEY (`id`);
-
-
-
-
-
-
-##
-############################## AUTO_INCREMENT for dumped tables ##############################
-##
-
-##
-## AUTO_INCREMENT for table `users_advisor`
-##
 ALTER TABLE `users_advisor`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+
+
+############################ TABLE: homeroom_confirm ##############################
+CREATE TABLE `homeroom_confirm` (
+  `id` int(11) NOT NULL COMMENT 'รหัสอ้างอิง',
+  `homeroom_id` int(11) NOT NULL COMMENT 'รหัสกิจกรรมโฮมรูม',
+  `group_id` int(11) NOT NULL COMMENT 'กลุ่มการเรียน',
+  `advisor_id` int(11) NOT NULL COMMENT 'บันทึกข้อมูลโดยใคร',
+  `advisor_type` varchar(10) NOT NULL COMMENT 'ประเภทครูที่ปรึกษา',
+  `confirm_status` int(1) NOT NULL COMMENT 'สถานะการยืนยันการบันทึกข้อมูล',
+  `created_at` datetime NOT NULL COMMENT 'บันทึกข้อมูลเมื่อไหร่',
+  `updated_at` datetime NOT NULL COMMENT 'แก้ไขข้อมูลล่าสุดเมื่อไหร่',
+  `status` int(11) NOT NULL COMMENT 'สถานะ'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `homeroom_confirm`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `homeroom_confirm`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสอ้างอิง';
   
-##
-## AUTO_INCREMENT for table `college`
-##
-ALTER TABLE `college`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  
+  
+############################ TABLE: advisors_groups ##############################
+CREATE TABLE `advisors_groups` (
+  `id` int(11) NOT NULL COMMENT 'รหัสอ้างอิง',
+  `advisor_id` int(11) NOT NULL COMMENT 'ครูที่ปรึกษา',
+  `group_id` int(11) NOT NULL COMMENT 'กลุ่มการเรียน',
+  `advisor_type` varchar(10) NOT NULL COMMENT 'ประเภทที่ปรึกษา',
+  `created_at` datetime NOT NULL COMMENT 'บันทึกข้อมูลเมื่อไหร่',
+  `updated_at` datetime NOT NULL COMMENT 'แก้ไขข้อมูลล่าสุดเมื่อไหร่',
+  `status` int(1) NOT NULL DEFAULT '1' COMMENT 'สถานะ'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-##
-## AUTO_INCREMENT for table `groups`
-##
-ALTER TABLE `groups`
+ALTER TABLE `advisors_groups`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `advisor_id` (`advisor_id`,`group_id`);
+
+ALTER TABLE `advisors_groups`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสอ้างอิง', AUTO_INCREMENT=2;
 
-##
-## AUTO_INCREMENT for table `homerooms`
-##
-ALTER TABLE `homerooms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
-##
-## AUTO_INCREMENT for table `homeroom_activities`
-##
-ALTER TABLE `homeroom_activities`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสอ้างอิง';
-
-##
-## AUTO_INCREMENT for table `homeroom_activity_items`
-##
-ALTER TABLE `homeroom_activity_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสอ้างอิง';
-
-##
-## AUTO_INCREMENT for table `homeroom_obediences`
-##
-ALTER TABLE `homeroom_obediences`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสอ้างอิง';
-
-##
-## AUTO_INCREMENT for table `homeroom_obedience_attachments`
-##
-ALTER TABLE `homeroom_obedience_attachments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสอ้างอิง';
-
-##
-## AUTO_INCREMENT for table `homeroom_risks`
-##
-ALTER TABLE `homeroom_risks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
-##
-## AUTO_INCREMENT for table `homeroom_risk_items`
-##
-ALTER TABLE `homeroom_risk_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสอ้างอิง';
-
-##
-## AUTO_INCREMENT for table `login_attempts`
-##
-ALTER TABLE `login_attempts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
-##
-## AUTO_INCREMENT for table `majors`
-##
-ALTER TABLE `majors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสอ้างอิง', AUTO_INCREMENT=2;
-
-##
-## AUTO_INCREMENT for table `minors`
-##
-ALTER TABLE `minors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสอ้างอิง', AUTO_INCREMENT=2;
-
-##
-## AUTO_INCREMENT for table `province`
-##
-ALTER TABLE `province`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสอ้างอิง', AUTO_INCREMENT=2;
-
-##
-## AUTO_INCREMENT for table `semester`
-##
-ALTER TABLE `semester`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
-##
-## AUTO_INCREMENT for table `users`
-##
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
-##
-## AUTO_INCREMENT for table `users_student`
-##
-ALTER TABLE `users_student`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
-##
-## AUTO_INCREMENT for table `user_signatures`
-##
-ALTER TABLE `user_signatures`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสอ้างอิง', AUTO_INCREMENT=2;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  
