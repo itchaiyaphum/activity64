@@ -48,7 +48,7 @@ class Major_model extends BaseModel
         // filter: search
         if ($filter_search != "") {
             $filter_search_value = $filter_search;
-            $wheres[] = "name LIKE '%{$filter_search_value}%'";
+            $wheres[] = "major_name LIKE '%{$filter_search_value}%'";
         }
         
         // render query

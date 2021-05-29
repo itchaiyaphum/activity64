@@ -63,10 +63,12 @@ class Advisorgroup_model extends BaseModel
         }
         
         // filter: search
-        // group_name
+        // group_name, advisor firstname, lastname
         if ($filter_search != "") {
             $filter_search_value = $filter_search;
-            $wheres[] = "groups.group_name LIKE '%{$filter_search_value}%'";
+            $wheres[] = "groups.group_name LIKE '%{$filter_search_value}%' 
+                            OR users.firstname LIKE '%{$filter_search_value}%' 
+                            OR users.lastname LIKE '%{$filter_search_value}%' ";
         }
         
         // render query

@@ -20,7 +20,7 @@
             				Filter:
             				<input type="text" name="group_filter_search" id="search" value="<?php echo set_value('group_filter_search');?>" class="text_area" onchange="document.adminForm.submit();" />
             				<button onclick="this.form.submit();">Go</button>
-            				<button onclick="document.getElementById('search').value='';this.form.getElementById('filter_type').value='0';this.form.getElementById('filter_logged').value='0';this.form.submit();">Reset</button>
+            				<button onclick="document.getElementById('search').value='';this.form.submit();">Reset</button>
             			</td>
             			<td nowrap="nowrap">
             				<?php echo $this->helper_lib->getStatusHtml('group_filter_status');?>
@@ -33,16 +33,10 @@
             			<tr>
             				<th width="5%" class="title">#</th>
             				<th class="title">
-            					สาขาวิชา
-            				</th>
-            				<th class="title">
-            					สาขางาน
-            				</th>
-            				<th class="title">
             					กลุ่มการเรียน
             				</th>
-            				<th width="20%" class="title" nowrap="nowrap">
-            					ครูที่ปรึกษา
+            				<th class="title">
+            					สาขางาน / สาขาวิชา
             				</th>
             				<th class="title" width="10%">
             					สถานะ
@@ -85,16 +79,10 @@
             					<?php echo $this->helper_lib->getPaginationIndex($i+1);?>
             				</td>
             				<td>
-            					<a href="<?php echo $link_edit;?>"><?php echo $row->major_name; ?></a>
-            				</td>
-            				<td>
-            					<a href="<?php echo $link_edit;?>"><?php echo $row->minor_name; ?></a>
-            				</td>
-            				<td>
             					<a href="<?php echo $link_edit;?>"><?php echo $row->group_name; ?></a>
             				</td>
             				<td>
-            					<?php echo $row->advisor_firstname.' '.$row->advisor_lastname; ?>
+            					<?php echo $row->minor_name; ?> / <?php echo $row->major_name; ?>
             				</td>
             				<td>
             					<a href="<?php echo $status_link;?>"><?php echo $this->helper_lib->getStatusIcon($row->status);?></a>

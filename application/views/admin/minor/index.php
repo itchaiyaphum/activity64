@@ -20,7 +20,7 @@
             				Filter:
             				<input type="text" name="minor_filter_search" id="search" value="<?php echo set_value('minor_filter_search');?>" class="text_area" onchange="document.adminForm.submit();" />
             				<button onclick="this.form.submit();">Go</button>
-            				<button onclick="document.getElementById('search').value='';this.form.getElementById('filter_type').value='0';this.form.getElementById('filter_logged').value='0';this.form.submit();">Reset</button>
+            				<button onclick="document.getElementById('search').value='';this.form.submit();">Reset</button>
             			</td>
             			<td nowrap="nowrap">
             				<?php echo $this->helper_lib->getStatusHtml('minor_filter_status');?>
