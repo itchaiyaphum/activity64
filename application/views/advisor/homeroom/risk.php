@@ -6,17 +6,18 @@
 		<div class="tm-main uk-width-medium-3-4 uk-margin-top uk-margin-bottom">
 			<div class="uk-clearfix">
 				<div class="uk-float-left">
-					<h2>บันทึกกิจกรรมโฮมรูม > เช็คชื่อ สัปดาห์ที่ (<?php echo $homeroom->week;?>)</h2>
+					<h2>บันทึกกิจกรรมโฮมรูม > ประเมินความเสี่ยง สัปดาห์ที่ (<?php echo $homeroom->week;?>)</h2>
 				</div>
 			</div>
 			<hr/>
-            <form action="<?php echo base_url('advisor/homeroom/activity');?>" method="post" name="adminForm" id="adminForm">
-            	<div class="uk-button-group uk-width-1-1">
-                    <a class="uk-button uk-width-1-4 uk-button-primary" href="<?php echo base_url("advisor/homeroom/activity/?id=".$homeroom->id);?>">STEP 1: เช็คชื่อ</a>
-                    <a  class="uk-button uk-width-1-4" href="<?php echo base_url("advisor/homeroom/obedience/?id=".$homeroom->id);?>">STEP 2: การให้โอวาท</a>
-                    <a  class="uk-button uk-width-1-4" href="<?php echo base_url("advisor/homeroom/risk/?id=".$homeroom->id);?>">STEP 3: ประเมินความเสี่ยง</a>
-                    <a  class="uk-button uk-width-1-4" href="<?php echo base_url("advisor/homeroom/confirm/?id=".$homeroom->id);?>">STEP 4: ยืนยันการบันทึกข้อมูล</a>
+			<div class="uk-button-group uk-width-1-1">
+                    <a class="uk-button uk-width-1-4 " href="<?php echo base_url("advisor/homeroom/activity/?id=".$homeroom->id);?>">STEP 1: เช็คชื่อ</a>
+                    <a class="uk-button uk-width-1-4 " href="<?php echo base_url("advisor/homeroom/obedience/?id=".$homeroom->id);?>">STEP 2: การให้โอวาท</a>
+                    <a class="uk-button uk-width-1-4 uk-button-primary" href="<?php echo base_url("advisor/homeroom/risk/?id=".$homeroom->id);?>">STEP 3: ประเมินความเสี่ยง</a>
+                    <a class="uk-button uk-width-1-4" href="<?php echo base_url("advisor/homeroom/confirm/?id=".$homeroom->id);?>">STEP 4: ยืนยันการบันทึกข้อมูล</a>
                 </div>
+            <form action="<?php echo base_url('advisor/homeroom/risk');?>" method="post" name="adminForm" id="adminForm">
+            	
             	<div class="uk-panel uk-panel-box uk-panel-box-default uk-margin-top">
                     <h3 class="uk-panel-title">กลุ่มการเรียน: (EV 1 / สาขารถยนต์ไฟฟ้า / แผนกช่างยนต์)</h3>
                 	<hr/>
@@ -31,13 +32,13 @@
                 					ชื่อ - นามสกุล
                 				</th>
                 				<th class="title">
-                					สาขาวิชา
+                					รายละเอียด
                 				</th>
-                				<th class="title" width="20%">
-                					กลุ่มการเรียน
+                				<th class="title">
+                					หมายเหตุ
                 				</th>
-                				<th width="30%" class="title" nowrap="nowrap">
-                					สถานะการเข้าร่วม
+                				<th width="20%" class="title" nowrap="nowrap">
+                					สถานะความเสี่ยง
                 				</th>
                 			</tr>
                 		</thead>
@@ -62,16 +63,14 @@
                 					<?php echo $row->firstname; ?> <?php echo $row->lastname; ?>
                 				</td>
                 				<td>
-                					<?php echo $row->major_name; ?>
+                					<input type="text" class="uk-input" name="problem[group_1][<?php echo $row->id; ?>]">
                 				</td>
                 				<td>
-                					<?php echo $row->group_name; ?>
+                					<input type="text" class="uk-input" name="problem[group_1][<?php echo $row->id; ?>]">
                 				</td>
                 				<td>
-                					<input class="uk-radio" type="radio" name="join_status[group_1][<?php echo $row->id;?>]" checked="1"> มา
-                					<input class="uk-radio" type="radio" name="join_status[group_1][<?php echo $row->id;?>]" > ขาด
-                					<input class="uk-radio" type="radio" name="join_status[group_1][<?php echo $row->id;?>]" > สาย
-                					<input class="uk-radio" type="radio" name="join_status[group_1][<?php echo $row->id;?>]" > ลา
+                					<input class="uk-radio" type="radio" name="risk_status[group_1][<?php echo $row->id;?>]" checked="1"> ไม่เสี่ยง
+                					<input class="uk-radio" type="radio" name="risk_status[group_1][<?php echo $row->id;?>]" > เสี่ยง
                 				</td>
                 				<td>
                 					<?php //echo $row->operation_status_name; ?>
@@ -101,13 +100,13 @@
                 					ชื่อ - นามสกุล
                 				</th>
                 				<th class="title">
-                					สาขาวิชา
+                					รายละเอียด
                 				</th>
-                				<th class="title" width="20%">
-                					กลุ่มการเรียน
+                				<th class="title">
+                					หมายเหตุ
                 				</th>
-                				<th width="30%" class="title" nowrap="nowrap">
-                					สถานะการเข้าร่วม
+                				<th width="20%" class="title" nowrap="nowrap">
+                					สถานะความเสี่ยง
                 				</th>
                 			</tr>
                 		</thead>
@@ -132,16 +131,14 @@
                 					<?php echo $row->firstname; ?> <?php echo $row->lastname; ?>
                 				</td>
                 				<td>
-                					<?php echo $row->major_name; ?>
+                					<input type="text" class="uk-input" name="problem[group_2][<?php echo $row->id; ?>]">
                 				</td>
                 				<td>
-                					<?php echo $row->group_name; ?>
+                					<input type="text" class="uk-input" name="problem[group_2][<?php echo $row->id; ?>]">
                 				</td>
                 				<td>
-                					<input class="uk-radio" type="radio" name="join_status[group_2][<?php echo $row->id;?>]" checked="1"> มา
-                					<input class="uk-radio" type="radio" name="join_status[group_2][<?php echo $row->id;?>]" > ขาด
-                					<input class="uk-radio" type="radio" name="join_status[group_2][<?php echo $row->id;?>]" > สาย
-                					<input class="uk-radio" type="radio" name="join_status[group_2][<?php echo $row->id;?>]" > ลา
+                					<input class="uk-radio" type="radio" name="risk_status[group_2][<?php echo $row->id;?>]" checked="1"> ไม่เสี่ยง
+                					<input class="uk-radio" type="radio" name="risk_status[group_2][<?php echo $row->id;?>]" > เสี่ยง
                 				</td>
                 				<td>
                 					<?php //echo $row->operation_status_name; ?>
@@ -170,13 +167,13 @@
                 					ชื่อ - นามสกุล
                 				</th>
                 				<th class="title">
-                					สาขาวิชา
+                					รายละเอียด
                 				</th>
-                				<th class="title" width="20%">
-                					กลุ่มการเรียน
+                				<th class="title">
+                					หมายเหตุ
                 				</th>
-                				<th width="30%" class="title" nowrap="nowrap">
-                					สถานะการเข้าร่วม
+                				<th width="20%" class="title" nowrap="nowrap">
+                					สถานะความเสี่ยง
                 				</th>
                 			</tr>
                 		</thead>
@@ -201,16 +198,14 @@
                 					<?php echo $row->firstname; ?> <?php echo $row->lastname; ?>
                 				</td>
                 				<td>
-                					<?php echo $row->major_name; ?>
+                					<input type="text" class="uk-input" name="problem[group_3][<?php echo $row->id; ?>]">
                 				</td>
                 				<td>
-                					<?php echo $row->group_name; ?>
+                					<input type="text" class="uk-input" name="problem[group_3][<?php echo $row->id; ?>]">
                 				</td>
                 				<td>
-                					<input class="uk-radio" type="radio" name="join_status[group_3][<?php echo $row->id;?>]" checked="1"> มา
-                					<input class="uk-radio" type="radio" name="join_status[group_3][<?php echo $row->id;?>]" > ขาด
-                					<input class="uk-radio" type="radio" name="join_status[group_3][<?php echo $row->id;?>]" > สาย
-                					<input class="uk-radio" type="radio" name="join_status[group_3][<?php echo $row->id;?>]" > ลา
+                					<input class="uk-radio" type="radio" name="risk_status[group_3][<?php echo $row->id;?>]" checked="1"> ไม่เสี่ยง
+                					<input class="uk-radio" type="radio" name="risk_status[group_3][<?php echo $row->id;?>]" > เสี่ยง
                 				</td>
                 				<td>
                 					<?php //echo $row->operation_status_name; ?>
@@ -239,16 +234,23 @@
                 					ชื่อ - นามสกุล
                 				</th>
                 				<th class="title">
-                					สาขาวิชา
+                					รายละเอียด
                 				</th>
-                				<th class="title" width="20%">
-                					กลุ่มการเรียน
+                				<th class="title">
+                					หมายเหตุ
                 				</th>
-                				<th width="30%" class="title" nowrap="nowrap">
-                					สถานะการเข้าร่วม
+                				<th width="20%" class="title" nowrap="nowrap">
+                					สถานะความเสี่ยง
                 				</th>
                 			</tr>
                 		</thead>
+                		<tfoot>
+                			<tr>
+                				<td colspan="6" class="uk-text-center">
+                					<ul class="uk-pagination"><?php echo $pagination->create_links(); ?></ul>
+                				</td>
+                			</tr>
+                		</tfoot>
                 		<tbody>
                 		<?php 
                 		if(count( $student_items )<=0){
@@ -270,16 +272,14 @@
                 					<?php echo $row->firstname; ?> <?php echo $row->lastname; ?>
                 				</td>
                 				<td>
-                					<?php echo $row->major_name; ?>
+                					<input type="text" class="uk-input" name="problem[group_4][<?php echo $row->id; ?>]">
                 				</td>
                 				<td>
-                					<?php echo $row->group_name; ?>
+                					<input type="text" class="uk-input" name="problem[group_4][<?php echo $row->id; ?>]">
                 				</td>
                 				<td>
-                					<input class="uk-radio" type="radio" name="join_status[group_4][<?php echo $row->id;?>]" checked="1"> มา
-                					<input class="uk-radio" type="radio" name="join_status[group_4][<?php echo $row->id;?>]" > ขาด
-                					<input class="uk-radio" type="radio" name="join_status[group_4][<?php echo $row->id;?>]" > สาย
-                					<input class="uk-radio" type="radio" name="join_status[group_4][<?php echo $row->id;?>]" > ลา
+                					<input class="uk-radio" type="radio" name="risk_status[group_4][<?php echo $row->id;?>]" checked="1"> ไม่เสี่ยง
+                					<input class="uk-radio" type="radio" name="risk_status[group_4][<?php echo $row->id;?>]" > เสี่ยง
                 				</td>
                 				<td>
                 					<?php //echo $row->operation_status_name; ?>
@@ -294,7 +294,7 @@
                 	</table>
             	</div>
             	
-            
+            	
             	<input type="hidden" name="homeroom_id" value="<?php echo $homeroom->id;?>" />
             	<input type="hidden" name="boxchecked" value="0" />
             </form>
