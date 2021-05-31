@@ -54,6 +54,11 @@
                 			for ($i=0, $n=count( $group['items'] ); $i < $n; $i++)
                 			{
                 			    $row 	=& $group['items'][$i];
+                			    
+                			    if(!isset($join_status_items[$row->id])){
+                			        $join_status_items[$row->id] = 'come';
+                			    }
+                			    
                 			?>
                 			<tr class="<?php echo "row$k"; ?>">
                 				<td>
