@@ -45,6 +45,12 @@
                 		    echo '<tr><td colspan="6" class="uk-text-center"><p>ไม่มีข้อมูล</p></td></tr>';
                 		}else{
                 			$k = 0;
+                			
+                			$join_status_items = array();
+                			foreach ($homeroom_activity_items as $item){
+                			    $join_status_items[$item->student_id] = $item->check_status;
+                			}
+                			
                 			for ($i=0, $n=count( $group['items'] ); $i < $n; $i++)
                 			{
                 			    $row 	=& $group['items'][$i];
@@ -60,10 +66,10 @@
                 					<?php echo $row->firstname; ?> <?php echo $row->lastname; ?>
                 				</td>
                 				<td>
-                					<input class="uk-radio" type="radio" name="join_status[<?php echo $row->id;?>]" value="come" checked="1"> มา
-                					<input class="uk-radio" type="radio" name="join_status[<?php echo $row->id;?>]" value="not_come"> ขาด
-                					<input class="uk-radio" type="radio" name="join_status[<?php echo $row->id;?>]" value="late"> สาย
-                					<input class="uk-radio" type="radio" name="join_status[<?php echo $row->id;?>]" value="leave"> ลา
+                					<input class="uk-radio" type="radio" name="join_status[<?php echo $row->id;?>]" value="come" <?php echo ($join_status_items[$row->id]=='come')?'checked="1"':'';?>> มา
+                					<input class="uk-radio" type="radio" name="join_status[<?php echo $row->id;?>]" value="not_come" <?php echo ($join_status_items[$row->id]=='not_come')?'checked="1"':'';?>> ขาด
+                					<input class="uk-radio" type="radio" name="join_status[<?php echo $row->id;?>]" value="late" <?php echo ($join_status_items[$row->id]=='late')?'checked="1"':'';?>> สาย
+                					<input class="uk-radio" type="radio" name="join_status[<?php echo $row->id;?>]" value="leave" <?php echo ($join_status_items[$row->id]=='leave')?'checked="1"':'';?>> ลา
                 				</td>
                 				<td>
                 					<?php //echo $row->operation_status_name; ?>
