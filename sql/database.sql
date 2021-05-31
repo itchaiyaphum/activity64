@@ -381,6 +381,7 @@ CREATE TABLE `users_student` (
   `college_id` int(11) NOT NULL DEFAULT '1',
   `department_id` int(11) NOT NULL DEFAULT '1',
   `major_id` int(11) NOT NULL,
+  `minor_id` int(11) NOT NULL,
   `group_id` int(11) NOT NULL,
   `edulevel` int(11) NOT NULL,
   `religion_title` varchar(50) NOT NULL,
