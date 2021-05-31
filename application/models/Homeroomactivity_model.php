@@ -45,11 +45,13 @@ class Homeroomactivity_model extends BaseModel
         return $this->ci->db->insert_batch('homeroom_activity_items', $activity_items);
     }
     
-    public function getActivityItems()
+    public function getActivityItems($homeroom_id=0)
     {
-        $homeroom_id = $this->ci->input->get_post('homeroom_id', 0);
+        if($homeroom_id==0){
+            $homeroom_id = $this->ci->input->get_post('id', 0);
+        }
         
-        $sql = 'SELECT * FROM homeroom_activity_items WHERE homeroom_id=4' . $homeroom_id;
+        $sql = 'SELECT * FROM homeroom_activity_items WHERE homeroom_id=' . $homeroom_id;
         return $this->ci->db->query($sql)->result();
     }
 

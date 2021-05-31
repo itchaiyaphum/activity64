@@ -34,13 +34,12 @@ class Advisorhomeroom extends BaseController
     {
         $id = $this->input->get_post('id',0);
         
-        
         $data = array();
         $data['leftmenu'] = $this->load->view('advisor/menu', '', true);
         $data['homeroom'] = $this->homeroom_model->getItem($id);
         $data['student_items'] = $this->student_model->getStudentsByAdvisor();
         $data['homeroom_activity'] = $this->homeroomactivity_model->getItem($id);
-        $data['homeroom_activity_items'] = $this->homeroomactivity_model->getActivityItems();
+        $data['homeroom_activity_items'] = $this->homeroomactivity_model->getActivityItems($id);
         $data['advisor_id'] = $this->tank_auth->get_user_id();
         
         $this->load->view('nav');
