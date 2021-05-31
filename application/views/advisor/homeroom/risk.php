@@ -62,7 +62,9 @@
                 			{
                 			    $row 	=& $group['items'][$i];
                 			    if(!isset($risk_status_items[$row->id])){
-                			        $risk_status_items[$row->id] = 'not_risk';
+                			        $risk_status_items[$row->id]['risk_detail'] = '';
+                			        $risk_status_items[$row->id]['risk_comment'] = '';
+                			        $risk_status_items[$row->id]['risk_status'] = 'not_risk';
                 			    }
                 			?>
                 			<tr class="<?php echo "row$k"; ?>">
