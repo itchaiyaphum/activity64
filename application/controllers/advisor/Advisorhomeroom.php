@@ -11,8 +11,9 @@ class Advisorhomeroom extends BaseController
         
         $this->load->model('admin/semester_model');
         $this->load->model('admin/homeroom_model');
-        $this->load->model('advisor/homeroomactivity_model');
+        $this->load->model('homeroomactivity_model');
         $this->load->model('admin/adminusers_model');
+        $this->load->model('admin/student_model');
         $this->load->library('form_validation');
     }
 
@@ -32,21 +33,25 @@ class Advisorhomeroom extends BaseController
     {
         $id = $this->input->get_post('id',0);
         
+        
         $data = array();
         $data['leftmenu'] = $this->load->view('advisor/menu', '', true);
-        $data['pagination'] = $this->homeroom_model->getPagination();
         $data['homeroom'] = $this->homeroom_model->getItem($id);
-        
-        $advisor_majors = "1,2";
-        $sql = "SELECT users_student.*, groups.group_name, majors.major_name FROM users_student
-                    LEFT JOIN groups ON (users_student.group_id=groups.id)
-                    LEFT JOIN majors ON (users_student.major_id=majors.id)
-                    WHERE users_student.major_id IN(".$advisor_majors.")";
-        $data['student_items'] = $this->helper_lib->querySQL($sql);
+        $data['student_items'] = $this->student_model->getStudentsByAdvisor();
+        $data['homeroom_activity'] = $this->homeroomactivity_model->getItem($id);
+        $data['advisor_id'] = $this->tank_auth->get_user_id();
         
         $this->load->view('nav');
         $this->load->view('advisor/homeroom/activity', $data);
         $this->load->view('footer');
+    }
+    
+    public function activity_save()
+    {
+        $homeroom_id = $this->input->get_post('homeroom_id',0);
+        $this->homeroomactivity_model->save();
+        $this->homeroomactivity_model->saveItems();
+        redirect('/advisor/homeroom/obedience/?id='.$homeroom_id);
     }
     
     public function obedience()
@@ -69,7 +74,7 @@ class Advisorhomeroom extends BaseController
         $this->load->view('advisor/homeroom/obedience', $data);
         $this->load->view('footer');
     }
-    
+        
     public function risk()
     {
         $id = $this->input->get_post('id',0);

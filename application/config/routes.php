@@ -74,6 +74,7 @@ $route['trainer_restricted_access']	= "home/trainer_restricted_access";
 
 $route['advisor/homeroom']	= "advisor/advisorhomeroom";
 $route['advisor/homeroom/activity']	= "advisor/advisorhomeroom/activity";
+$route['advisor/homeroom/activity_save']	= "advisor/advisorhomeroom/activity_save";
 $route['advisor/homeroom/obedience']	= "advisor/advisorhomeroom/obedience";
 $route['advisor/homeroom/risk']	= "advisor/advisorhomeroom/risk";
 $route['advisor/homeroom/confirm']	= "advisor/advisorhomeroom/confirm";

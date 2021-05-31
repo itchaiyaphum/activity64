@@ -23,6 +23,21 @@ class Homeroom_model extends BaseModel
             'per_page' => 10
         ));
     }
+    
+    public function getStudentItems($activity_id=0){
+        $advisor_majors = "1,2";
+        $sql = "SELECT 
+                    users_student.*, 
+                    groups.group_name, 
+                    majors.major_name 
+                FROM users_student
+                LEFT JOIN groups ON (users_student.group_id=groups.id)
+                LEFT JOIN majors ON (users_student.major_id=majors.id)
+                WHERE users_student.major_id IN(".$advisor_majors.")";
+        $query = $this->ci->db->query($sql);
+        $items = $query->result();
+        return $items;
+    }
 
     public function getItems($options = array())
     {

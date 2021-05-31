@@ -10,6 +10,7 @@ class TableUsersStudent extends JTable
     public $lastname_en = NULL;
     public $student_id = NULL;
     public $major_id = NULL;
+    public $minor_id = NULL;
     public $group_id = NULL;
     public $edulevel = NULL;
     public $religion_title = NULL;
