@@ -51,7 +51,7 @@
                 			?>
                 			<tr class="<?php echo "row$k"; ?>">
                 				<td>
-                					<?php echo $this->helper_lib->getPaginationIndex($i+1);?>
+                					<?php echo ($i+1);?>
                 				</td>
                 				<td>
                 					<?php echo $row->student_id; ?>

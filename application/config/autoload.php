@@ -88,6 +88,7 @@ $autoload['libraries'] = array(
     ,'tables/TableGroup'
     ,'tables/TableHomeRoom'
     ,'tables/TableHomeRoomActivity'
+    ,'tables/TableHomeRoomObedience'
     ,'tables/TableAdvisorsGroups'
     
     ,'BaseModel'
