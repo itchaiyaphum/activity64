@@ -117,8 +117,15 @@ class Homeroomconfirm_model extends BaseModel
                 'firstname' => $student->firstname,
                 'lastname' => $student->lastname,
                 'group_id' => $student->group_id,
-                'activity' => array(),
-                'risk' => array()
+                'activity' => array(
+                    'check_status'=>'',
+                    'check_status_text'=>''
+                ),
+                'risk' => array(
+                    'risk_detail'=>'',
+                    'risk_comment'=>'',
+                    'risk_status'=>'',
+                    'risk_status_text'=>'')
             );
             array_push($items, $student_data);
         }
@@ -244,5 +251,42 @@ class Homeroomconfirm_model extends BaseModel
         $items = array('obedience_content'=>$obedience_content, 'obedience_attactments'=>$obedience_attactments);
 
         return $items;
+    }
+
+    public function getItem($homeroom_id=0, $advisor_id=0)
+    {
+        if ($advisor_id==0) {
+            $advisor_id = $this->ci->tank_auth->get_user_id();
+        }
+        
+        $sql = 'SELECT * FROM homeroom_confirm WHERE homeroom_id='.$homeroom_id.' AND advisor_id='.$advisor_id;
+        $query = $this->ci->db->query($sql);
+        $items = $query->result();
+        return $items;
+    }
+
+    public function saveData()
+    {
+        $confirm_data = $this->ci->input->post();
+        $homeroom_id = $this->ci->input->post('homeroom_id', 0);
+        $advisor_id = $this->ci->tank_auth->get_user_id();
+        $advisor_type = $this->ci->input->post('advisor_type', 'advisor');
+
+        $sql = 'SELECT id 
+                    FROM homeroom_confirm
+                    WHERE homeroom_id='.$homeroom_id.' AND advisor_id='.$advisor_id;
+        $query = $this->ci->db->query($sql);
+        $confirm_items = $query->result();
+
+        $data = array();
+        if (count($confirm_items)) {
+            $data['id'] = $confirm_items[0]->id;
+            $data['updated_at'] = mdate('%Y-%m-%d %H:%i:%s', time());
+        } else {
+            $data['created_at'] = mdate('%Y-%m-%d %H:%i:%s', time());
+            $data['updated_at'] = mdate('%Y-%m-%d %H:%i:%s', time());
+            $data['status'] = 1;
+        }
+        return $this->save(array_merge($confirm_data, $data));
     }
 }

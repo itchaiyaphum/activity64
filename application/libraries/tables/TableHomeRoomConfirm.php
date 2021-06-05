@@ -7,11 +7,10 @@ class TableHomeRoomConfirm extends JTable
     public $id = null;
     public $homeroom_id = null;
     public $advisor_id = null;
-    public $advisor_type = null;
-    public $confirm_status = null;
+    public $advisor_type = null; //default: advisor (advisor, co_advisor)
     public $created_at = null;
     public $updated_at = null;
-    public $status = null;
+    public $status = null; //default: 1 (1,0)
     
     public function __construct($db=null)
     {

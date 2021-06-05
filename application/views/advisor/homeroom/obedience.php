@@ -31,66 +31,6 @@
                		<br/>
                 	<h3 class="uk-panel-title">แบบประเมินตนเอง สำหรับนักเรียน นักศึกษา โดยผ่านการสแกน QR Code เพื่อเป็นการเฝ้าระวังและป้องกันการแพร่ระบาดของโควิต 19</h3>
                 	<hr/>
-                	
-                	<?php 
-                	$student_amount = 0;
-                	foreach ($student_items as $group){
-                	?>
-                	<div class="uk-panel uk-panel-box uk-panel-box-default uk-margin-top">
-                        <h3 class="uk-panel-title">กลุ่มการเรียน: <?php echo $group['group_name'].' / '.$group['minor_name'].' / '.$group['major_name'];?></h3>
-                    	<hr/>
-                    	<table class="uk-table uk-table-hover" cellpadding="1">
-                    		<thead>
-                    			<tr>
-                    				<th width="5%" class="title">#</th>
-                    				<th class="title" width="15%">
-                    					รหัส
-                    				</th>
-                    				<th class="title">
-                    					ชื่อ - นามสกุล
-                    				</th>
-                    				<th class="title" width="30%">
-                    					สถานะการตอบแบบสอบถาม
-                    				</th>
-                    			</tr>
-                    		</thead>
-                    		<tbody>
-                    		<?php 
-                    		if(count( $group['items'] )<=0){
-                    		    echo '<tr><td colspan="6" class="uk-text-center"><p>ไม่มีข้อมูล</p></td></tr>';
-                    		}else{
-                    			$k = 0;
-                    			for ($i=0, $n=count( $group['items'] ); $i < $n; $i++)
-                    			{
-                    			    $student_amount++;
-                    			    $row 	=& $group['items'][$i];
-                    			?>
-                    			<tr class="<?php echo "row$k"; ?>">
-                    				<td>
-                    					<?php echo ($i+1);?>
-                    				</td>
-                    				<td>
-                    					<?php echo $row->student_id; ?>
-                    				</td>
-                    				<td>
-                    					<?php echo $row->firstname; ?> <?php echo $row->lastname; ?>
-                    				</td>
-                    				<td>
-                    					<div class="uk-button uk-button-danger uk-button-mini">ยังไม่ได้ทำ</div>
-                    				</td>
-                    			</tr>
-                    		<?php
-                    			$k = 1 - $k;
-                    			}
-                    		}
-                    		?>
-                    		</tbody>
-                    	</table>
-                	</div>
-                	<?php } ?>
-               	</div>
-               	
-               	<div class="uk-panel uk-panel-box uk-panel-box-default uk-margin-top">
                		<h3>สถิติการตอบแบบสอบถามประเมินตนเอง</h3>
                		<div>
                			<ul class="uk-list uk-list-line">

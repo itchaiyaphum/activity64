@@ -1,11 +1,11 @@
 <?php
-if (! defined('BASEPATH'))
+if (! defined('BASEPATH')) {
     exit('No direct script access allowed');
+}
 
 class Student_model extends BaseModel
 {
-
-    public $table = NULL;
+    public $table = null;
 
     public function __construct()
     {
@@ -13,10 +13,23 @@ class Student_model extends BaseModel
         $this->table = $this->ci->factory_lib->getTable('UsersStudent');
         $this->table->setStatusKey('activated');
     }
+
+    public function getStudentsByAdvisorAmount($advisor_id=0)
+    {
+        if ($advisor_id==0) {
+            $advisor_id = $this->ci->tank_auth->get_user_id();
+        }
+        // get all students belong advisor logined
+        $sql = 'SELECT users_student.id  FROM users_student
+                WHERE users_student.group_id IN( SELECT group_id FROM advisors_groups WHERE advisor_id='.$advisor_id.')';
+        $query = $this->ci->db->query($sql);
+        $items = $query->result();
+        return count($items);
+    }
     
     public function getStudentsByAdvisor($advisor_id=0)
     {
-        if($advisor_id==0){
+        if ($advisor_id==0) {
             $advisor_id = $this->ci->tank_auth->get_user_id();
         }
         $sql = "SELECT
@@ -33,15 +46,15 @@ class Student_model extends BaseModel
         $students = $query->result();
         
         $items = array();
-        foreach ($students as $item){
-            $add_to_array = FALSE;
-            foreach($items as $val) {
-                if($item->group_id==$val['group_id']){
+        foreach ($students as $item) {
+            $add_to_array = false;
+            foreach ($items as $val) {
+                if ($item->group_id==$val['group_id']) {
                     array_push($items[$item->group_id]['items'], $item);
-                    $add_to_array = TRUE;
+                    $add_to_array = true;
                 }
             }
-            if($add_to_array==FALSE){
+            if ($add_to_array==false) {
                 $items[$item->group_id] = array(
                     'group_id' => $item->group_id,
                     'group_name' => $item->group_name,
@@ -54,6 +67,4 @@ class Student_model extends BaseModel
         }
         return $items;
     }
-
 }
-    

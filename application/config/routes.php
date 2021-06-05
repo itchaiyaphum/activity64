@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------------
@@ -51,7 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'home';
 $route['404_override'] = '';
-$route['translate_uri_dashes'] = FALSE;
+$route['translate_uri_dashes'] = false;
 
 $route['about']	= "home/about";
 $route['contact']	= "home/contact";
@@ -80,6 +80,7 @@ $route['advisor/homeroom/obedience_save']	= "advisor/advisorhomeroom/obedience_s
 $route['advisor/homeroom/risk']	= "advisor/advisorhomeroom/risk";
 $route['advisor/homeroom/risk_save']	= "advisor/advisorhomeroom/risk_save";
 $route['advisor/homeroom/confirm']	= "advisor/advisorhomeroom/confirm";
+$route['advisor/homeroom/confirm_save']	= "advisor/advisorhomeroom/confirm_save";
 
 
 $route['advisor']	= "advisor/home";
@@ -87,7 +88,3 @@ $route['advisor_restricted_access']	= "home/advisor_restricted_access";
 
 $route['staff']	= "staff/home";
 $route['staff_restricted_access']	= "home/staff_restricted_access";
-
-
-
-

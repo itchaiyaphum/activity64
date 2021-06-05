@@ -64,6 +64,7 @@ class Advisorhomeroom extends BaseController
         $data['leftmenu'] = $this->load->view('advisor/menu', '', true);
         $data['homeroom'] = $this->homeroom_model->getItem($id);
         $data['student_items'] = $this->student_model->getStudentsByAdvisor();
+        $data['student_amount'] = $this->student_model->getStudentsByAdvisorAmount();
         $data['obedience'] = $this->homeroomobedience_model->getItem($id);
         $data['advisor_id'] = $this->tank_auth->get_user_id();
         
@@ -111,7 +112,8 @@ class Advisorhomeroom extends BaseController
         $data = array();
         $data['leftmenu'] = $this->load->view('advisor/menu', '', true);
         $data['homeroom'] = $this->homeroom_model->getItem($id);
-
+        $data['homeroom_confirm'] = $this->homeroomconfirm_model->getItem($id);
+        
         $data['homeroom_confirm_stats'] = $this->homeroomconfirm_model->getStats($id);
         $data['homeroom_confirm_items'] = $this->homeroomconfirm_model->getSummaryItems($id);
         $data['homeroom_confirm_obedience'] = $this->homeroomconfirm_model->getObedienceData($id);
@@ -121,5 +123,11 @@ class Advisorhomeroom extends BaseController
         $this->load->view('nav');
         $this->load->view('advisor/homeroom/confirm', $data);
         $this->load->view('footer');
+    }
+
+    public function confirm_save()
+    {
+        $this->homeroomconfirm_model->saveData();
+        redirect('/advisor/homeroom/');
     }
 }

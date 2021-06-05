@@ -10,7 +10,7 @@
 				</div>
 			</div>
 			<hr/>
-            <form action="<?php echo base_url('advisor/homeroom/confirm');?>" method="post" name="adminForm" id="adminForm">
+            <form action="<?php echo base_url('advisor/homeroom/confirm_save');?>" method="post" name="adminForm" id="adminForm">
             	<div class="uk-button-group uk-width-1-1">
                     <a class="uk-button uk-width-1-4 " href="<?php echo base_url("advisor/homeroom/activity/?id=".$homeroom->id);?>">STEP 1: เช็คชื่อ</a>
                     <a class="uk-button uk-width-1-4 " href="<?php echo base_url("advisor/homeroom/obedience/?id=".$homeroom->id);?>">STEP 2: การให้โอวาท</a>
@@ -107,7 +107,10 @@
                    		<h3>- เรื่องที่ให้คำแนะนำนักเรียน นักศึกษา</h3>
 						<hr/>
                    		<div style="border: 1px;">
-                   			<?php echo nl2br($homeroom_confirm_obedience['obedience_content']->obe_detail);?>
+                   			<?php
+                               if (isset($homeroom_confirm_obedience['obedience_content'])) {
+                                   echo nl2br($homeroom_confirm_obedience['obedience_content']->obe_detail);
+                               }?>
                    		</div>
                    		<hr/>
 						
@@ -128,12 +131,19 @@
             	
             
             	<input type="hidden" name="homeroom_id" value="<?php echo $homeroom->id;?>" />
-            	<input type="hidden" name="boxchecked" value="0" />
+            	<input type="hidden" name="advisor_id" value="<?php echo $advisor_id;?>" />
+            	<input type="hidden" name="advisor_type" value="advisor" />
             </form>
             
             <br/><br/>
         	<div class="uk-panel uk-panel-box uk-panel-box-primary uk-margin-top uk-text-center">
-                <button class="uk-button uk-button-primary uk-button-large" data-uk-modal="{target:'#confirm-form'}">กดยืนยันการบันทึกข้อมูล</button>
+				<?php
+                $disable_button = '';
+                if (count($homeroom_confirm)) {
+                    $disable_button = 'disabled';
+                }
+                ?>
+				<button <?php echo $disable_button; ?> class="uk-button uk-button-primary uk-button-large" data-uk-modal="{target:'#confirm-form'}">กดยืนยันการบันทึกข้อมูล</button>
         		<div id="confirm-form" class="uk-modal">
                     <div class="uk-modal-dialog">
                     	<a class="uk-modal-close uk-close"></a>

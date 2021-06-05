@@ -491,7 +491,6 @@ CREATE TABLE `homeroom_confirm` (
   `group_id` int(11) NOT NULL COMMENT 'กลุ่มการเรียน',
   `advisor_id` int(11) NOT NULL COMMENT 'บันทึกข้อมูลโดยใคร',
   `advisor_type` varchar(10) NOT NULL COMMENT 'ประเภทครูที่ปรึกษา',
-  `confirm_status` int(1) NOT NULL COMMENT 'สถานะการยืนยันการบันทึกข้อมูล',
   `created_at` datetime NOT NULL COMMENT 'บันทึกข้อมูลเมื่อไหร่',
   `updated_at` datetime NOT NULL COMMENT 'แก้ไขข้อมูลล่าสุดเมื่อไหร่',
   `status` int(11) NOT NULL COMMENT 'สถานะ'
