@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 date_default_timezone_set('Asia/Bangkok');
 
@@ -90,6 +90,7 @@ $autoload['libraries'] = array(
     ,'tables/TableHomeRoomActivity'
     ,'tables/TableHomeRoomObedience'
     ,'tables/TableHomeRoomRisk'
+    ,'tables/TableHomeRoomConfirm'
     ,'tables/TableAdvisorsGroups'
     
     ,'BaseModel'
