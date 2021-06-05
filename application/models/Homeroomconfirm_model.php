@@ -13,28 +13,50 @@ class Homeroomconfirm_model extends BaseModel
         $this->table = $this->ci->factory_lib->getTable('HomeRoomConfirm');
     }
 
-    //TODO: mockup
     public function getStats($homeroom_id = 0, $advisor_id = 0)
     {
         if ($advisor_id==0) {
             $advisor_id = $this->ci->tank_auth->get_user_id();
         }
-        return array(
-            'totals' => 100,
-            'come' => 97,
-            'not_come' => 1,
-            'late' => 1,
-            'leave' => 1,
-            'risk' => 5
-        );
-    }
 
-    public function getSummaryItems($homeroom_id = 0, $advisor_id = 0)
-    {
-        if ($advisor_id==0) {
-            $advisor_id = $this->ci->tank_auth->get_user_id();
+        $student_items = $this->getStudentItems($homeroom_id, $advisor_id);
+        $activity_items = $this->getActivityItems($homeroom_id, $advisor_id);
+        $risk_items = $this->getRiskItems($homeroom_id, $advisor_id);
+
+        $stats = array(
+            'totals' => count($student_items),
+            'come' => 0,
+            'not_come' => 0,
+            'late' => 0,
+            'leave' => 0,
+            'risk' => 0
+        );
+
+        // calculate activity stats
+        foreach ($activity_items as $item) {
+            if ($item->check_status=='come') {
+                $stats['come']++;
+            } elseif ($item->check_status=='not_come') {
+                $stats['not_come']++;
+            } elseif ($item->check_status=='late') {
+                $stats['late']++;
+            } elseif ($item->check_status=='leave') {
+                $stats['leave']++;
+            }
         }
 
+        // calculate risk stats
+        foreach ($risk_items as $item) {
+            if ($item->risk_status=='risk') {
+                $stats['risk']++;
+            }
+        }
+
+        return $stats;
+    }
+
+    private function getStudentItems($homeroom_id = 0, $advisor_id = 0)
+    {
         // get all students belong advisor logined
         $sql = 'SELECT
                     users_student.id, users_student.student_id, 
@@ -43,8 +65,12 @@ class Homeroomconfirm_model extends BaseModel
                 FROM users_student
                 WHERE users_student.group_id IN( SELECT group_id FROM advisors_groups WHERE advisor_id='.$advisor_id.')';
         $query = $this->ci->db->query($sql);
-        $student_items = $query->result();
+        $items = $query->result();
+        return $items;
+    }
 
+    private function getActivityItems($homeroom_id = 0, $advisor_id = 0)
+    {
         // get all activity content belong advisor logined
         $sql = 'SELECT
                     users_student.id as student_id, users_student.group_id,
@@ -54,8 +80,12 @@ class Homeroomconfirm_model extends BaseModel
                 WHERE users_student.group_id IN( SELECT group_id FROM advisors_groups WHERE advisor_id='.$advisor_id.') 
                     AND hai.homeroom_id='.$homeroom_id;
         $query = $this->ci->db->query($sql);
-        $activity_items = $query->result();
+        $items = $query->result();
+        return $items;
+    }
 
+    private function getRiskItems($homeroom_id = 0, $advisor_id = 0)
+    {
         // get all risk content belong advisor logined
         $sql = 'SELECT
                     users_student.id as student_id, users_student.group_id,
@@ -65,8 +95,19 @@ class Homeroomconfirm_model extends BaseModel
                 WHERE users_student.group_id IN( SELECT group_id FROM advisors_groups WHERE advisor_id='.$advisor_id.') 
                     AND hri.homeroom_id='.$homeroom_id;
         $query = $this->ci->db->query($sql);
-        $risk_items = $query->result();
+        $items = $query->result();
+        return $items;
+    }
 
+    public function getSummaryItems($homeroom_id = 0, $advisor_id = 0)
+    {
+        if ($advisor_id==0) {
+            $advisor_id = $this->ci->tank_auth->get_user_id();
+        }
+
+        $student_items = $this->getStudentItems($homeroom_id, $advisor_id);
+        $activity_items = $this->getActivityItems($homeroom_id, $advisor_id);
+        $risk_items = $this->getRiskItems($homeroom_id, $advisor_id);
 
         $items = array();
         foreach ($student_items as $student) {
@@ -168,26 +209,37 @@ class Homeroomconfirm_model extends BaseModel
         return 'ไม่เสี่ยง';
     }
 
-    public function getObedienceData($homeroom_id = 0, $advisor_id = 0)
+    private function getObedienceItem($homeroom_id = 0, $advisor_id = 0)
     {
-        if ($advisor_id==0) {
-            $advisor_id = $this->ci->tank_auth->get_user_id();
-        }
-        
         // get obedience content belong advisor logined
         $sql = 'SELECT
                     ho.obe_detail, ho.survey_amount
                 FROM homeroom_obediences ho
                 WHERE ho.homeroom_id='.$homeroom_id.' AND ho.advisor_id='.$advisor_id;
         $query = $this->ci->db->query($sql);
-        $obedience_content = $query->row();
+        $item = $query->row();
+        return $item;
+    }
 
+    private function getObedienceAttachmentItems($homeroom_id = 0, $advisor_id = 0)
+    {
         // get obedience attactments belong advisor logined
         $sql = 'SELECT hoa.img
                 FROM homeroom_obedience_attachments hoa
                 WHERE hoa.homeroom_id='.$homeroom_id.' AND hoa.advisor_id='.$advisor_id;
         $query = $this->ci->db->query($sql);
-        $obedience_attactments = $query->result();
+        $items = $query->result();
+        return $items;
+    }
+
+    public function getObedienceData($homeroom_id = 0, $advisor_id = 0)
+    {
+        if ($advisor_id==0) {
+            $advisor_id = $this->ci->tank_auth->get_user_id();
+        }
+        
+        $obedience_content = $this->getObedienceItem($homeroom_id, $advisor_id);
+        $obedience_attactments = $this->getObedienceAttachmentItems($homeroom_id, $advisor_id);
 
         $items = array('obedience_content'=>$obedience_content, 'obedience_attactments'=>$obedience_attactments);
 

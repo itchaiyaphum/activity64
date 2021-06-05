@@ -178,7 +178,7 @@ CREATE TABLE `homeroom_obedience_attachments` (
   `id` int(11) NOT NULL COMMENT 'รหัสอ้างอิง',
   `img` varchar(100) NOT NULL COMMENT 'ที่อยู่รูปภาพกิจกรรม',
   `homeroom_id` int(11) NOT NULL COMMENT 'รหัสกิจกรรมโฮมรูม',
-  `group_id` int(11) NOT NULL COMMENT 'รหัสกลุ่มเรียน',
+  `advisor_id` int(11) NOT NULL COMMENT 'รหัสครูที่ปรึกษา',
   `created_at` datetime NOT NULL COMMENT 'บันทึกข้อมูลเมื่อไหร่',
   `updated_at` datetime NOT NULL COMMENT 'แก้ไขข้อมูลล่าสุดเมื่อไหร่',
   `status` int(1) NOT NULL DEFAULT '1' COMMENT 'สถานะ'
