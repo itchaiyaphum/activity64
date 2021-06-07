@@ -11,10 +11,12 @@ class Factory_lib
         $this->ci->load->database();
     }
 
-    public function getTable($table)
+    public function getTable($table, $key='')
     {
         $class_name = 'Table'.$table;
+        if ($key!='') {
+            return new $class_name($this->ci->db, $key);
+        }
         return new $class_name($this->ci->db);
     }
-    
 }

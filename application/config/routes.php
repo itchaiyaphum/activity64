@@ -93,5 +93,10 @@ $route['staff_restricted_access']	= "home/staff_restricted_access";
 $route['headdepartment']	= "headdepartment/home";
 $route['headdepartment_restricted_access']	= "home/headdepartment_restricted_access";
 
+$route['headadvisor']	= "headadvisor/home";
+$route['headadvisor/users']	= "headadvisor/userscontroller";
+$route['headadvisor/users/edit']	= "headadvisor/userscontroller/edit";
+$route['headadvisor_restricted_access']	= "home/headadvisor_restricted_access";
+
 $route['executive']	= "executive/home";
 $route['executive_restricted_access']	= "home/executive_restricted_access";

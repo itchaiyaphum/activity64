@@ -92,6 +92,9 @@ $autoload['libraries'] = array(
     ,'tables/TableHomeRoomRisk'
     ,'tables/TableHomeRoomConfirm'
     ,'tables/TableAdvisorsGroups'
+
+    ,'tables/TableUsersAdvisor'
+    ,'tables/TableUsersHeadDepartment'
     
     ,'BaseModel'
     ,'session'
