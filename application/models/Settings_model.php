@@ -1,13 +1,13 @@
 <?php
-if (! defined('BASEPATH'))
+if (! defined('BASEPATH')) {
     exit('No direct script access allowed');
+}
 
 class Settings_model extends BaseModel
 {
+    public $table = null;
 
-    public $table = NULL;
-
-    public $ci = NULL;
+    public $ci = null;
 
     public function __construct()
     {
@@ -65,9 +65,9 @@ class Settings_model extends BaseModel
         $this->ci->form_validation->set_rules('internship_id', 'internship_id', 'trim|xss_clean');
         
         if ($this->ci->form_validation->run()) {
-            return TRUE;
+            return true;
         }
-        return FALSE;
+        return false;
     }
 
     public function validateAdvisor()
@@ -78,9 +78,23 @@ class Settings_model extends BaseModel
         $this->ci->form_validation->set_rules('email', 'อีเมล์', 'trim|required|xss_clean');
         
         if ($this->ci->form_validation->run()) {
-            return TRUE;
+            return true;
         }
-        return FALSE;
+        return false;
+    }
+
+    public function validateHeadDepartment()
+    {
+        $this->ci->form_validation->set_rules('firstname', 'ชื่อ', 'trim|required|xss_clean');
+        $this->ci->form_validation->set_rules('lastname', 'นามสกุล', 'trim|required|xss_clean');
+        $this->ci->form_validation->set_rules('college_id', 'สถานศึกษา', 'trim|required|xss_clean');
+        $this->ci->form_validation->set_rules('major_id', 'แผนกวิชา', 'trim|required|xss_clean');
+        $this->ci->form_validation->set_rules('email', 'อีเมล์', 'trim|required|xss_clean');
+        
+        if ($this->ci->form_validation->run()) {
+            return true;
+        }
+        return false;
     }
 
     public function validateStaff()
@@ -91,9 +105,9 @@ class Settings_model extends BaseModel
         $this->ci->form_validation->set_rules('email', 'อีเมล์', 'trim|required|xss_clean');
         
         if ($this->ci->form_validation->run()) {
-            return TRUE;
+            return true;
         }
-        return FALSE;
+        return false;
     }
 
     public function validateTrainer()
@@ -104,8 +118,8 @@ class Settings_model extends BaseModel
         $this->ci->form_validation->set_rules('email', 'อีเมล์', 'trim|required|xss_clean');
         
         if ($this->ci->form_validation->run()) {
-            return TRUE;
+            return true;
         }
-        return FALSE;
+        return false;
     }
 }

@@ -99,8 +99,8 @@ class Profile_lib
                 $profile = $this->getStudentProfile($profile);
             } elseif ($profile->user_type=='advisor') {
                 $profile = $this->getAdvisorProfile($profile);
-            } elseif ($profile->user_type=='trainer') {
-                $profile = $this->getTrainerProfile($profile);
+            } elseif ($profile->user_type=='headdepartment') {
+                $profile = $this->getHeadDepartmentProfile($profile);
             }
         }
         
@@ -118,6 +118,23 @@ class Profile_lib
             $profile->lastname = $row->lastname;
             $profile->user_id = $row->user_id;
             $profile->college_id = $row->college_id;
+            $profile->signature = $row->signature;
+        }
+        return $profile;
+    }
+
+    private function getHeadDepartmentProfile($profile)
+    {
+        $this->ci->db->where('user_id', $profile->user_id);
+        $query = $this->ci->db->get('users_headdepartment');
+        if ($query->num_rows()) {
+            $row = $query->row();
+            
+            $profile->firstname = $row->firstname;
+            $profile->lastname = $row->lastname;
+            $profile->user_id = $row->user_id;
+            $profile->college_id = $row->college_id;
+            $profile->major_id = $row->major_id;
             $profile->signature = $row->signature;
         }
         return $profile;
@@ -345,6 +362,53 @@ class Profile_lib
             $data['created_at'] = date('Y-m-d H:i:s');
             $data['updated_at'] = date('Y-m-d H:i:s');
             if ($this->ci->db->insert('users_advisor', $data)) {
+                return true;
+            }
+        }
+    
+        return false;
+    }
+
+    public function saveHeadDepartment($data)
+    {
+        //upload thumbnail
+        $thumbnail = $this->saveThumbnail($data);
+
+        //upload signature
+        $signature = $this->saveSignature($data);
+        if (!empty($signature)) {
+            $data['signature'] = $signature;
+        }
+        
+        $users_data = array();
+        $users_data['firstname'] = $data['firstname'];
+        $users_data['lastname'] = $data['lastname'];
+        $users_data['email'] = $data['email'];
+        if (!empty($thumbnail)) {
+            $users_data['thumbnail'] = $thumbnail;
+        }
+        $users_data['modified'] = date('Y-m-d H:i:s');
+
+        
+        //save table: users
+        $this->ci->db->where('id', $data['user_id']);
+        $this->ci->db->update('users', $users_data);
+    
+        unset($data['thumbnail']);
+        
+        //save table: users_headadvisor
+        $this->ci->db->where('user_id', $data['user_id']);
+        $query = $this->ci->db->get('users_headdepartment');
+        if ($query->num_rows()) {
+            $data['updated_at'] = date('Y-m-d H:i:s');
+            $this->ci->db->where('user_id', $data['user_id']);
+            if ($this->ci->db->update('users_headdepartment', $data)) {
+                return true;
+            }
+        } else {
+            $data['created_at'] = date('Y-m-d H:i:s');
+            $data['updated_at'] = date('Y-m-d H:i:s');
+            if ($this->ci->db->insert('users_headdepartment', $data)) {
                 return true;
             }
         }

@@ -10,6 +10,7 @@ class Settings extends CI_Controller
         $this->load->helper(array('form', 'url'));
         $this->load->model('settings_model');
         $this->load->model('admin/college_model');
+        $this->load->model('admin/major_model');
         $this->load->model('admin/department_model');
         $this->load->model('admin/internship_model');
         $this->load->model('admin/company_model');
@@ -33,7 +34,7 @@ class Settings extends CI_Controller
             $data['errors'] = array();
             $input_data = $this->input->post();
             
-            if($profile->user_type=="student"){
+            if ($profile->user_type=="student") {
                 $input_data['user_id'] = $profile->user_id;
                 if ($this->settings_model->validateStudent()) {
                     if ($this->profile_lib->saveStudent($input_data)) {
@@ -41,7 +42,9 @@ class Settings extends CI_Controller
                         redirect('settings/profile');
                     } else {
                         $errors = $this->tank_auth->get_error_message();
-                        foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
+                        foreach ($errors as $k => $v) {
+                            $data['errors'][$k] = $this->lang->line($v);
+                        }
                     }
                 }
                 
@@ -55,7 +58,7 @@ class Settings extends CI_Controller
                 $this->load->view('nav');
                 $this->load->view('settings/profile_student', $data);
                 $this->load->view('footer');
-            }else if($profile->user_type=="advisor"){
+            } elseif ($profile->user_type=="advisor") {
                 $input_data['user_id'] = $profile->user_id;
                 if ($this->settings_model->validateAdvisor()) {
                     if ($this->profile_lib->saveAdvisor($input_data)) {
@@ -63,7 +66,9 @@ class Settings extends CI_Controller
                         redirect('settings/profile');
                     } else {
                         $errors = $this->tank_auth->get_error_message();
-                        foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
+                        foreach ($errors as $k => $v) {
+                            $data['errors'][$k] = $this->lang->line($v);
+                        }
                     }
                 }
                 
@@ -72,7 +77,7 @@ class Settings extends CI_Controller
                 $this->load->view('nav');
                 $this->load->view('settings/profile_advisor', $data);
                 $this->load->view('footer');
-            }else if($profile->user_type=="trainer"){
+            } elseif ($profile->user_type=="trainer") {
                 $input_data['user_id'] = $profile->user_id;
                 if ($this->settings_model->validateTrainer()) {
                     if ($this->profile_lib->saveTrainer($input_data)) {
@@ -80,7 +85,9 @@ class Settings extends CI_Controller
                         redirect('settings/profile');
                     } else {
                         $errors = $this->tank_auth->get_error_message();
-                        foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
+                        foreach ($errors as $k => $v) {
+                            $data['errors'][$k] = $this->lang->line($v);
+                        }
                     }
                 }
                 
@@ -89,7 +96,7 @@ class Settings extends CI_Controller
                 $this->load->view('nav');
                 $this->load->view('settings/profile_trainer', $data);
                 $this->load->view('footer');
-            }else if($profile->user_type=="staff"){
+            } elseif ($profile->user_type=="staff") {
                 $input_data['user_id'] = $profile->user_id;
                 if ($this->settings_model->validateStaff()) {
                     if ($this->profile_lib->saveStaff($input_data)) {
@@ -97,7 +104,9 @@ class Settings extends CI_Controller
                         redirect('settings/profile');
                     } else {
                         $errors = $this->tank_auth->get_error_message();
-                        foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
+                        foreach ($errors as $k => $v) {
+                            $data['errors'][$k] = $this->lang->line($v);
+                        }
                     }
                 }
                 
@@ -106,41 +115,61 @@ class Settings extends CI_Controller
                 $this->load->view('nav');
                 $this->load->view('settings/profile_staff', $data);
                 $this->load->view('footer');
-            }else{
+            } elseif ($profile->user_type=="headdepartment") {
+                $input_data['user_id'] = $profile->user_id;
+                if ($this->settings_model->validateHeadDepartment()) {
+                    if ($this->profile_lib->saveHeadDepartment($input_data)) {
+                        $data['messages'] = 'บันทึกข้อมูลเรียบร้อบ';
+                        redirect('settings/profile');
+                    } else {
+                        $errors = $this->tank_auth->get_error_message();
+                        foreach ($errors as $k => $v) {
+                            $data['errors'][$k] = $this->lang->line($v);
+                        }
+                    }
+                }
+                    
+                $data['college_items'] = $this->college_model->getItems(array('status'=>1));
+                $data['major_items'] = $this->major_model->getItems(array('status'=>1));
+                    
+                $this->load->view('nav');
+                $this->load->view('settings/profile_headdepartment', $data);
+                $this->load->view('footer');
+            } else {
                 $this->load->view('nav');
                 echo "no this user_type on this platform! please contact administrator!";
                 $this->load->view('footer');
             }
-            
         }
-        
-        
     }
     public function password()
     {
         if (!$this->tank_auth->is_logged_in()) {								// not logged in or not activated
-			redirect('/auth/login/');
-		} else {
-			$this->form_validation->set_rules('old_password', 'Old Password', 'trim|required|xss_clean');
-			$this->form_validation->set_rules('new_password', 'New Password', 'trim|required|xss_clean|min_length['.$this->config->item('password_min_length', 'tank_auth').']|max_length['.$this->config->item('password_max_length', 'tank_auth').']|alpha_dash');
-			$this->form_validation->set_rules('confirm_new_password', 'Confirm new Password', 'trim|required|xss_clean|matches[new_password]');
+            redirect('/auth/login/');
+        } else {
+            $this->form_validation->set_rules('old_password', 'Old Password', 'trim|required|xss_clean');
+            $this->form_validation->set_rules('new_password', 'New Password', 'trim|required|xss_clean|min_length['.$this->config->item('password_min_length', 'tank_auth').']|max_length['.$this->config->item('password_max_length', 'tank_auth').']|alpha_dash');
+            $this->form_validation->set_rules('confirm_new_password', 'Confirm new Password', 'trim|required|xss_clean|matches[new_password]');
 
-			$data['errors'] = array();
+            $data['errors'] = array();
 
-			if ($this->form_validation->run()) {								// validation ok
-				if ($this->tank_auth->change_password(
-						$this->form_validation->set_value('old_password'),
-						$this->form_validation->set_value('new_password'))) {	// success
-					$data['messages'] = $this->lang->line('auth_message_password_changed');
-				} else {														// fail
-					$errors = $this->tank_auth->get_error_message();
-					foreach ($errors as $k => $v)	$data['errors'][$k] = $this->lang->line($v);
-				}
-			}
-			$this->load->view('nav');
-			$this->load->view('settings/password', $data);
-			$this->load->view('footer');
-		}
+            if ($this->form_validation->run()) {								// validation ok
+                if ($this->tank_auth->change_password(
+                    $this->form_validation->set_value('old_password'),
+                    $this->form_validation->set_value('new_password')
+                )) {	// success
+                    $data['messages'] = $this->lang->line('auth_message_password_changed');
+                } else {														// fail
+                    $errors = $this->tank_auth->get_error_message();
+                    foreach ($errors as $k => $v) {
+                        $data['errors'][$k] = $this->lang->line($v);
+                    }
+                }
+            }
+            $this->load->view('nav');
+            $this->load->view('settings/password', $data);
+            $this->load->view('footer');
+        }
     }
     
     private function _show_message($message)
