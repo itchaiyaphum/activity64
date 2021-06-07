@@ -1,3 +1,6 @@
+<?php
+$attributes = array('class' => 'uk-form uk-form-horizontal', 'id' => 'adminForm', 'method'=>'post');
+?>
 <div class="uk-container uk-container-center">
 	<div class="uk-grid">
 		<div class="tm-sidebar uk-width-medium-1-4 uk-hidden-small">
@@ -10,7 +13,7 @@
 				</div>
 			</div>
 			<hr/>
-            <form action="<?php echo base_url('advisor/homeroom/obedience_save');?>" method="post" name="adminForm" id="adminForm">
+			<?php echo form_open_multipart('advisor/homeroom/obedience_save', $attributes); ?>
             	<div class="uk-button-group uk-width-1-1">
                     <a class="uk-button uk-width-1-4" href="<?php echo base_url("advisor/homeroom/activity/?id=".$homeroom->id);?>"><i class="uk-icon-check-circle"></i> STEP 1: เช็คชื่อ</a>
                     <a class="uk-button uk-width-1-4 uk-button-primary" href="<?php echo base_url("advisor/homeroom/obedience/?id=".$homeroom->id);?>">STEP 2: การให้โอวาท</a>
@@ -44,10 +47,18 @@
                		
                		<h3>รูปภาพขณะให้คำแนะนำนักเรียน นักศึกษา เพื่อใช้ประกอบการจัดทำรายงาน</h3>
                		<hr/>
-               		<div>
+               		<div class="uk-margin-top">
                			<div>กรุณาเลือกไฟล์รูปภาพ 2 รูป</div>
                			<input type="file" class="uk-button uk-width-1-2 uk-margin-top" name="upload_file_1"/>
                			<input type="file" class="uk-button uk-width-1-2 uk-margin-top" name="upload_file_2"/>
+						<div class="uk-margin-top">
+						<?php
+                        for ($i=0; $i<count($obedience_attactments); $i++) {
+                            $row = $obedience_attactments[$i]; ?>
+							<img class="uk-thumbnail uk-width-1-1" src="<?php echo $row->img; ?>" alt="">
+						<?php
+                        } ?>
+						</div>
                		</div>
               	</div>
             	

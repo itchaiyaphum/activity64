@@ -66,6 +66,7 @@ class Advisorhomeroom extends BaseController
         $data['student_items'] = $this->student_model->getStudentsByAdvisor();
         $data['student_amount'] = $this->student_model->getStudentsByAdvisorAmount();
         $data['obedience'] = $this->homeroomobedience_model->getItem($id);
+        $data['obedience_attactments'] = $this->homeroomobedience_model->getAttactments($id);
         $data['advisor_id'] = $this->tank_auth->get_user_id();
         
         $this->load->view('nav');
@@ -76,7 +77,7 @@ class Advisorhomeroom extends BaseController
     public function obedience_save()
     {
         $homeroom_id = $this->input->get_post('homeroom_id', 0);
-        $this->homeroomobedience_model->save();
+        $this->homeroomobedience_model->saveData();
         redirect('/advisor/homeroom/risk/?id='.$homeroom_id);
     }
     
