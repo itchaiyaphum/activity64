@@ -4,12 +4,12 @@ require_once APPPATH . 'controllers' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY
 
 class Major extends BaseController
 {
-
     public function __construct()
     {
         parent::__construct();
         
         $this->load->model('admin/major_model');
+        $this->load->model('admin/college_model');
         $this->load->library('form_validation');
     }
 
@@ -36,12 +36,13 @@ class Major extends BaseController
             }
         }
             
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         
         $data = array();
         $data['leftmenu'] = $this->load->view('admin/menu', '', true);
         $data['pagination'] = $this->major_model->getPagination();
         $data['item'] = $this->major_model->getItem($id);
+        $data['college_items'] = $this->college_model->getItems(array('status'=>1));
         
         $this->load->view('nav');
         $this->load->view('admin/major/form', $data);
@@ -50,37 +51,37 @@ class Major extends BaseController
     
     public function publish()
     {
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         $this->major_model->publish($id);
-        $per_page = $this->input->get_post('per_page',1);
+        $per_page = $this->input->get_post('per_page', 1);
         redirect('admin/major/?per_page='.$per_page);
     }
     public function unpublish()
     {
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         $this->major_model->unpublish($id);
-        $per_page = $this->input->get_post('per_page',1);
+        $per_page = $this->input->get_post('per_page', 1);
         redirect('admin/major/?per_page='.$per_page);
     }
     public function trash()
     {
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         $this->major_model->trash($id);
-        $per_page = $this->input->get_post('per_page',1);
+        $per_page = $this->input->get_post('per_page', 1);
         redirect('admin/major/?per_page='.$per_page);
     }
     public function delete()
     {
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         $this->major_model->delete($id);
-        $per_page = $this->input->get_post('per_page',1);
+        $per_page = $this->input->get_post('per_page', 1);
         redirect('admin/major/?per_page='.$per_page);
     }
     public function restore()
     {
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         $this->major_model->restore($id);
-        $per_page = $this->input->get_post('per_page',1);
+        $per_page = $this->input->get_post('per_page', 1);
         redirect('admin/major/?per_page='.$per_page);
     }
 }

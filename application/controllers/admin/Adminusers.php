@@ -4,7 +4,6 @@ require_once APPPATH . 'controllers' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY
 
 class Adminusers extends BaseController
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -36,18 +35,18 @@ class Adminusers extends BaseController
         
         $data['errors'] = array();
         if ($this->form_validation->run()) {
-            if($this->input->post('id')=='' && $this->adminusers_model->checkEmailExists($this->input->post('email'))){
+            if ($this->input->post('id')=='' && $this->adminusers_model->checkEmailExists($this->input->post('email'))) {
                 $data['errors']['email'] = "มีอีเมล์นี้อยู่ในระบบแล้ว!";
-            }else{
+            } else {
                 if ($this->adminusers_model->save()) {
                     redirect('/admin/users/');
-                }else{
+                } else {
                     $data['errors']['global'] = "ไม่สามารถบันทึกข้อมูลได้ กรุณาตรวจสอบการกรอกข้อมูลและลองใหม่อีกครั้ง!";
                 }
             }
         }
             
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         
         $data['leftmenu'] = $this->load->view('admin/menu', '', true);
         $data['pagination'] = $this->adminusers_model->getPagination();
@@ -60,37 +59,37 @@ class Adminusers extends BaseController
     
     public function publish()
     {
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         $this->adminusers_model->publish($id);
-        $per_page = $this->input->get_post('per_page',1);
+        $per_page = $this->input->get_post('per_page', 1);
         redirect('admin/users/?per_page='.$per_page);
     }
     public function unpublish()
     {
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         $this->adminusers_model->unpublish($id);
-        $per_page = $this->input->get_post('per_page',1);
+        $per_page = $this->input->get_post('per_page', 1);
         redirect('admin/users/?per_page='.$per_page);
     }
     public function trash()
     {
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         $this->adminusers_model->trash($id);
-        $per_page = $this->input->get_post('per_page',1);
+        $per_page = $this->input->get_post('per_page', 1);
         redirect('admin/users/?per_page='.$per_page);
     }
     public function delete()
     {
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         $this->adminusers_model->delete($id);
-        $per_page = $this->input->get_post('per_page',1);
+        $per_page = $this->input->get_post('per_page', 1);
         redirect('admin/users/?per_page='.$per_page);
     }
     public function restore()
     {
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         $this->adminusers_model->restore($id);
-        $per_page = $this->input->get_post('per_page',1);
+        $per_page = $this->input->get_post('per_page', 1);
         redirect('admin/users/?per_page='.$per_page);
     }
 }
