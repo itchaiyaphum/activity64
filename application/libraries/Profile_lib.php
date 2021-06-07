@@ -78,6 +78,7 @@ class Profile_lib
         $profile->internship_id = null;
         
         $profile->thumbnail = null;
+        $profile->signature = null;
         $profile->organization_id = null;
         
         $this->ci->db->where('id', $this->ci->tank_auth->get_user_id());
@@ -117,6 +118,7 @@ class Profile_lib
             $profile->lastname = $row->lastname;
             $profile->user_id = $row->user_id;
             $profile->college_id = $row->college_id;
+            $profile->signature = $row->signature;
         }
         return $profile;
     }
@@ -307,16 +309,22 @@ class Profile_lib
     {
         //upload thumbnail
         $thumbnail = $this->saveThumbnail($data);
+
+        //upload signature
+        $signature = $this->saveSignature($data);
+        if (!empty($signature)) {
+            $data['signature'] = $signature;
+        }
         
         $users_data = array();
         $users_data['firstname'] = $data['firstname'];
         $users_data['lastname'] = $data['lastname'];
-//         $users_data['organization_id'] = $data['organization_id'];
         $users_data['email'] = $data['email'];
         if (!empty($thumbnail)) {
             $users_data['thumbnail'] = $thumbnail;
         }
         $users_data['modified'] = date('Y-m-d H:i:s');
+
         
         //save table: users
         $this->ci->db->where('id', $data['user_id']);
@@ -451,6 +459,36 @@ class Profile_lib
             $this->ci->image_lib->resize();
             
             return '/storage/profiles/thumbnail/'.$thumbnail_data['file_name'];
+        } else {
+            return false;
+        }
+    }
+
+    private function saveSignature($data)
+    {
+        $profile = $this->ci->profile_lib->getData();
+        
+        $config = array();
+        $config['upload_path'] = './storage/profiles/';
+        $config['allowed_types'] = 'jpeg|jpg|png|gif';
+        $config['file_name'] = $profile->user_id;
+        $config['max_size']	= '10240';
+        $this->ci->upload->initialize($config);
+    
+        if ($this->ci->upload->do_upload('signature')) {
+            $thumbnail_data = $this->ci->upload->data();
+            //resize thumbnail
+            $config_photo['image_library'] = 'gd2';
+            $config_photo['source_image']	= $config['upload_path'].$thumbnail_data['file_name'];
+            $config_photo['new_image'] = $config['upload_path'].'/signature/'.$thumbnail_data['file_name'];
+            $config_photo['create_thumb'] = false;
+            $config_photo['maintain_ratio'] = true;
+            $config_photo['width']	= 300;
+            $config_photo['height']	= 250;
+            $this->ci->image_lib->initialize($config_photo);
+            $this->ci->image_lib->resize();
+            
+            return '/storage/profiles/signature/'.$thumbnail_data['file_name'];
         } else {
             return false;
         }

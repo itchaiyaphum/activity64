@@ -159,7 +159,7 @@
                     	<a class="uk-modal-close uk-close"></a>
                     	<div class="uk-modal-header">คุณต้องการยืนยันการบันทึกข้อมูลจริงหรือไม่?</div>
                         <div>
-                        	<img src="https://www.cognidox.com/hubfs/Digital%20Signature%20MHRA%20Remote%20Working.jpg" />
+                        	<div class="uk-margin-top uk-margin-bottom"><img src="<?php echo $profile->signature; ?>" /></div>
                         	<button class="uk-button uk-modal-close">ยกเลิก</button>
                         	<button class="uk-button uk-button-primary" onclick="document.getElementById('adminForm').submit();">ยืนยันการบันทึกข้อมูล</button>
                         </div>

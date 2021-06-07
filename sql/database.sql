@@ -473,6 +473,7 @@ CREATE TABLE `users_advisor` (
   `updated_at` datetime NOT NULL,
   `email` varchar(255) NOT NULL,
   `organization_id` int(11) NOT NULL,
+  `signature` varchar(200) NOT NULL,
   `college_id` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
