@@ -541,3 +541,83 @@ ALTER TABLE `homeroom_actions`
 
 ALTER TABLE `homeroom_actions`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+
+############################ TABLE: users_executive ##############################
+CREATE TABLE `users_executive` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `firstname` varchar(50) NOT NULL,
+  `lastname` varchar(50) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `college_id` int(11) NOT NULL DEFAULT '1',
+  `signature` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `users_executive`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `users_executive`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+
+############################ TABLE: users_headadvisor ##############################
+CREATE TABLE `users_headadvisor` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `firstname` varchar(50) NOT NULL,
+  `lastname` varchar(50) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `college_id` int(11) NOT NULL DEFAULT '1',
+  `signature` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `users_headadvisor`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `users_headadvisor`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+
+############################ TABLE: users_headdepartment ##############################
+CREATE TABLE `users_headdepartment` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `firstname` varchar(50) NOT NULL,
+  `lastname` varchar(50) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `major_id` int(11) NOT NULL,
+  `college_id` int(11) NOT NULL DEFAULT '1',
+  `signature` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `users_headdepartment`
+  ADD KEY `id` (`id`);
+
+ALTER TABLE `users_headdepartment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+
+############################ TABLE: users_staff ##############################
+CREATE TABLE `users_staff` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `firstname` varchar(50) NOT NULL,
+  `lastname` varchar(50) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `college_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `users_staff`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `users_staff`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;

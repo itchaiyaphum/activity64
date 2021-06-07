@@ -88,3 +88,10 @@ $route['advisor_restricted_access']	= "home/advisor_restricted_access";
 
 $route['staff']	= "staff/home";
 $route['staff_restricted_access']	= "home/staff_restricted_access";
+
+
+$route['headdepartment']	= "headdepartment/home";
+$route['headdepartment_restricted_access']	= "home/headdepartment_restricted_access";
+
+$route['executive']	= "executive/home";
+$route['executive_restricted_access']	= "home/executive_restricted_access";

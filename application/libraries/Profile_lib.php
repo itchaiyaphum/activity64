@@ -101,6 +101,12 @@ class Profile_lib
                 $profile = $this->getAdvisorProfile($profile);
             } elseif ($profile->user_type=='headdepartment') {
                 $profile = $this->getHeadDepartmentProfile($profile);
+            } elseif ($profile->user_type=='headadvisor') {
+                $profile = $this->getHeadAdvisorProfile($profile);
+            } elseif ($profile->user_type=='executive') {
+                $profile = $this->getExecutiveProfile($profile);
+            } elseif ($profile->user_type=='staff') {
+                $profile = $this->getStaffProfile($profile);
             }
         }
         
@@ -111,6 +117,22 @@ class Profile_lib
     {
         $this->ci->db->where('user_id', $profile->user_id);
         $query = $this->ci->db->get('users_advisor');
+        if ($query->num_rows()) {
+            $row = $query->row();
+            
+            $profile->firstname = $row->firstname;
+            $profile->lastname = $row->lastname;
+            $profile->user_id = $row->user_id;
+            $profile->college_id = $row->college_id;
+            $profile->signature = $row->signature;
+        }
+        return $profile;
+    }
+
+    private function getHeadAdvisorProfile($profile)
+    {
+        $this->ci->db->where('user_id', $profile->user_id);
+        $query = $this->ci->db->get('users_headadvisor');
         if ($query->num_rows()) {
             $row = $query->row();
             
@@ -140,17 +162,33 @@ class Profile_lib
         return $profile;
     }
     
-    private function getTrainerProfile($profile)
+    private function getExecutiveProfile($profile)
     {
         $this->ci->db->where('user_id', $profile->user_id);
-        $query = $this->ci->db->get('users_trainer');
+        $query = $this->ci->db->get('users_executive');
         if ($query->num_rows()) {
             $row = $query->row();
             
             $profile->firstname = $row->firstname;
             $profile->lastname = $row->lastname;
             $profile->user_id = $row->user_id;
-            $profile->company_id = $row->company_id;
+            $profile->college_id = $row->college_id;
+            $profile->signature = $row->signature;
+        }
+        return $profile;
+    }
+
+    private function getStaffProfile($profile)
+    {
+        $this->ci->db->where('user_id', $profile->user_id);
+        $query = $this->ci->db->get('users_staff');
+        if ($query->num_rows()) {
+            $row = $query->row();
+            
+            $profile->firstname = $row->firstname;
+            $profile->lastname = $row->lastname;
+            $profile->user_id = $row->user_id;
+            $profile->college_id = $row->college_id;
         }
         return $profile;
     }
@@ -369,6 +407,53 @@ class Profile_lib
         return false;
     }
 
+    public function saveHeadAdvisor($data)
+    {
+        //upload thumbnail
+        $thumbnail = $this->saveThumbnail($data);
+
+        //upload signature
+        $signature = $this->saveSignature($data);
+        if (!empty($signature)) {
+            $data['signature'] = $signature;
+        }
+        
+        $users_data = array();
+        $users_data['firstname'] = $data['firstname'];
+        $users_data['lastname'] = $data['lastname'];
+        $users_data['email'] = $data['email'];
+        if (!empty($thumbnail)) {
+            $users_data['thumbnail'] = $thumbnail;
+        }
+        $users_data['modified'] = date('Y-m-d H:i:s');
+
+        
+        //save table: users
+        $this->ci->db->where('id', $data['user_id']);
+        $this->ci->db->update('users', $users_data);
+    
+        unset($data['thumbnail']);
+        
+        //save table: users_headadvisor
+        $this->ci->db->where('user_id', $data['user_id']);
+        $query = $this->ci->db->get('users_headadvisor');
+        if ($query->num_rows()) {
+            $data['updated_at'] = date('Y-m-d H:i:s');
+            $this->ci->db->where('user_id', $data['user_id']);
+            if ($this->ci->db->update('users_headadvisor', $data)) {
+                return true;
+            }
+        } else {
+            $data['created_at'] = date('Y-m-d H:i:s');
+            $data['updated_at'] = date('Y-m-d H:i:s');
+            if ($this->ci->db->insert('users_headadvisor', $data)) {
+                return true;
+            }
+        }
+    
+        return false;
+    }
+
     public function saveHeadDepartment($data)
     {
         //upload thumbnail
@@ -415,45 +500,51 @@ class Profile_lib
     
         return false;
     }
-    
-    public function saveTrainer($data)
+
+    public function saveExecutive($data)
     {
         //upload thumbnail
         $thumbnail = $this->saveThumbnail($data);
+
+        //upload signature
+        $signature = $this->saveSignature($data);
+        if (!empty($signature)) {
+            $data['signature'] = $signature;
+        }
         
         $users_data = array();
         $users_data['firstname'] = $data['firstname'];
         $users_data['lastname'] = $data['lastname'];
-//         $users_data['organization_id'] = $data['organization_id'];
         $users_data['email'] = $data['email'];
         if (!empty($thumbnail)) {
             $users_data['thumbnail'] = $thumbnail;
         }
         $users_data['modified'] = date('Y-m-d H:i:s');
+
         
         //save table: users
         $this->ci->db->where('id', $data['user_id']);
         $this->ci->db->update('users', $users_data);
-        
+    
         unset($data['thumbnail']);
         
-        //save table: users_trainer
+        //save table: users_executive
         $this->ci->db->where('user_id', $data['user_id']);
-        $query = $this->ci->db->get('users_trainer');
+        $query = $this->ci->db->get('users_executive');
         if ($query->num_rows()) {
             $data['updated_at'] = date('Y-m-d H:i:s');
             $this->ci->db->where('user_id', $data['user_id']);
-            if ($this->ci->db->update('users_trainer', $data)) {
+            if ($this->ci->db->update('users_executive', $data)) {
                 return true;
             }
         } else {
             $data['created_at'] = date('Y-m-d H:i:s');
             $data['updated_at'] = date('Y-m-d H:i:s');
-            if ($this->ci->db->insert('users_trainer', $data)) {
+            if ($this->ci->db->insert('users_executive', $data)) {
                 return true;
             }
         }
-        
+    
         return false;
     }
     
@@ -465,7 +556,6 @@ class Profile_lib
         $users_data = array();
         $users_data['firstname'] = $data['firstname'];
         $users_data['lastname'] = $data['lastname'];
-        $users_data['organization_id'] = $data['organization_id'];
         $users_data['email'] = $data['email'];
         if (!empty($thumbnail)) {
             $users_data['thumbnail'] = $thumbnail;

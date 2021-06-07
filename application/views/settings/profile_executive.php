@@ -2,20 +2,20 @@
 $profile = $this->profile_lib->getData();
 
 $firstname = array(
-	'name'	=> 'firstname',
-	'id'	=> 'firstname',
+    'name'	=> 'firstname',
+    'id'	=> 'firstname',
     'value'	=> $profile->firstname,
 );
 $lastname = array(
-	'name'	=> 'lastname',
-	'id'	=> 'lastname',
+    'name'	=> 'lastname',
+    'id'	=> 'lastname',
     'value'	=> $profile->lastname,
 );
 $email = array(
-	'name'	=> 'email',
-	'id'	=> 'email',
-	'value'	=> $profile->email,
-	'size'	=> 30,
+    'name'	=> 'email',
+    'id'	=> 'email',
+    'value'	=> $profile->email,
+    'size'	=> 30,
 );
 
 $attributes = array('class' => 'uk-form uk-form-horizontal', 'id' => 'loginform', 'method'=>'post');
@@ -62,15 +62,14 @@ $attributes = array('class' => 'uk-form uk-form-horizontal', 'id' => 'loginform'
                                 </div>
                             </div>
                             <div class="uk-form-row">
-                                <label class="uk-form-label" >สถานประกอบการ</label>
+                                <label class="uk-form-label" >สถานศึกษา</label>
                                 <div class="uk-form-controls">
-                                    <select name="company_id" id="company_id">
-                                	<option value="0">--- เลือกสถานประกอบการ ---</option>
-                                    <?php 
-                                    for($i=0; $i<count($company_items); $i++){
-                                        $company = $company_items[$i];
-                                        ?>
-                                        <option value="<?php echo $company->id;?>" <?php echo ($profile->company_id==$company->id)?' selected="selected" ':'';?>><?php echo $company->name;?></option>
+                                    <select name="college_id" id="college_id">
+                                	<option value="0">--- เลือกสถานศึกษา ---</option>
+                                    <?php
+                                    for ($i=0; $i<count($college_items); $i++) {
+                                        $college = $college_items[$i]; ?>
+                                        <option value="<?php echo $college->id; ?>" <?php echo ($profile->college_id==$college->id)?' selected="selected" ':''; ?>><?php echo $college->name; ?></option>
                                         <?php
                                     }
                                     ?>
@@ -85,6 +84,16 @@ $attributes = array('class' => 'uk-form uk-form-horizontal', 'id' => 'loginform'
                                 	<img class="uk-border-circle" width="120" height="120" src="<?php echo $profile->thumbnail;?>">
                                     <br/><br/>
                                     <div><input type="file" name="thumbnail"></div>
+                                </div>
+                            </div>
+
+                            <hr/>
+                            <div class="uk-form-row">
+                                <label class="uk-form-label" >ลายเซนต์ประจำตัว</label>
+                                <div class="uk-form-controls">
+                                	<img class="uk-border-rounded" width="350" height="250" src="<?php echo $profile->signature;?>">
+                                    <br/><br/>
+                                    <div><input type="file" name="signature"></div>
                                 </div>
                             </div>
                 		</div>

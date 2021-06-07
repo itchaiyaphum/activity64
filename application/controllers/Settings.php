@@ -24,117 +24,189 @@ class Settings extends CI_Controller
         redirect('settings/profile');
     }
 
+    private function profileStudent($input_data=null)
+    {
+        $profile = $this->profile_lib->getData();
+        if (is_null($input_data)) {
+            $input_data = $this->input->post();
+        }
+        $input_data['user_id'] = $profile->user_id;
+        if ($this->settings_model->validateStudent()) {
+            if ($this->profile_lib->saveStudent($input_data)) {
+                $data['messages'] = 'บันทึกข้อมูลเรียบร้อบ';
+                redirect('settings/profile');
+            } else {
+                $errors = $this->tank_auth->get_error_message();
+                foreach ($errors as $k => $v) {
+                    $data['errors'][$k] = $this->lang->line($v);
+                }
+            }
+        }
+                
+        $data['colleges'] = $this->college_model->getItems(array('status'=>1));
+        $data['departments'] = $this->department_model->getItems(array('status'=>1));
+        $data['internship_items'] = $this->internship_model->getItems(array('status'=>1));
+        $data['company_items'] = $this->company_model->getItems(array('status'=>1));
+        $data['trainer_items'] = $this->profile_lib->getTrainer();
+        $data['advisor_items'] = $this->profile_lib->getAdvisor();
+                
+        $this->load->view('nav');
+        $this->load->view('settings/profile_student', $data);
+        $this->load->view('footer');
+    }
+
+    private function profileAdvisor($input_data=null)
+    {
+        $profile = $this->profile_lib->getData();
+        if (is_null($input_data)) {
+            $input_data = $this->input->post();
+        }
+        $input_data['user_id'] = $profile->user_id;
+        if ($this->settings_model->validateAdvisor()) {
+            if ($this->profile_lib->saveAdvisor($input_data)) {
+                $data['messages'] = 'บันทึกข้อมูลเรียบร้อบ';
+                redirect('settings/profile');
+            } else {
+                $errors = $this->tank_auth->get_error_message();
+                foreach ($errors as $k => $v) {
+                    $data['errors'][$k] = $this->lang->line($v);
+                }
+            }
+        }
+                
+        $data['college_items'] = $this->college_model->getItems(array('status'=>1));
+                
+        $this->load->view('nav');
+        $this->load->view('settings/profile_advisor', $data);
+        $this->load->view('footer');
+    }
+
+    private function profileHeadAdvisor($input_data=null)
+    {
+        $profile = $this->profile_lib->getData();
+        if (is_null($input_data)) {
+            $input_data = $this->input->post();
+        }
+        $input_data['user_id'] = $profile->user_id;
+        if ($this->settings_model->validateHeadAdvisor()) {
+            if ($this->profile_lib->saveHeadAdvisor($input_data)) {
+                $data['messages'] = 'บันทึกข้อมูลเรียบร้อบ';
+                redirect('settings/profile');
+            } else {
+                $errors = $this->tank_auth->get_error_message();
+                foreach ($errors as $k => $v) {
+                    $data['errors'][$k] = $this->lang->line($v);
+                }
+            }
+        }
+                
+        $data['college_items'] = $this->college_model->getItems(array('status'=>1));
+                
+        $this->load->view('nav');
+        $this->load->view('settings/profile_headadvisor', $data);
+        $this->load->view('footer');
+    }
+
+    private function profileStaff($input_data=null)
+    {
+        $profile = $this->profile_lib->getData();
+        if (is_null($input_data)) {
+            $input_data = $this->input->post();
+        }
+        $input_data['user_id'] = $profile->user_id;
+        if ($this->settings_model->validateStaff()) {
+            if ($this->profile_lib->saveStaff($input_data)) {
+                $data['messages'] = 'บันทึกข้อมูลเรียบร้อบ';
+                redirect('settings/profile');
+            } else {
+                $errors = $this->tank_auth->get_error_message();
+                foreach ($errors as $k => $v) {
+                    $data['errors'][$k] = $this->lang->line($v);
+                }
+            }
+        }
+                
+        $data['college_items'] = $this->college_model->getItems(array('status'=>1));
+                
+        $this->load->view('nav');
+        $this->load->view('settings/profile_staff', $data);
+        $this->load->view('footer');
+    }
+
+    private function profileHeadDepartment($input_data=null)
+    {
+        $profile = $this->profile_lib->getData();
+        if (is_null($input_data)) {
+            $input_data = $this->input->post();
+        }
+        $input_data['user_id'] = $profile->user_id;
+        if ($this->settings_model->validateHeadDepartment()) {
+            if ($this->profile_lib->saveHeadDepartment($input_data)) {
+                $data['messages'] = 'บันทึกข้อมูลเรียบร้อบ';
+                redirect('settings/profile');
+            } else {
+                $errors = $this->tank_auth->get_error_message();
+                foreach ($errors as $k => $v) {
+                    $data['errors'][$k] = $this->lang->line($v);
+                }
+            }
+        }
+            
+        $data['college_items'] = $this->college_model->getItems(array('status'=>1));
+        $data['major_items'] = $this->major_model->getItems(array('status'=>1));
+            
+        $this->load->view('nav');
+        $this->load->view('settings/profile_headdepartment', $data);
+        $this->load->view('footer');
+    }
+
+    private function profileExecutive($input_data=null)
+    {
+        $profile = $this->profile_lib->getData();
+        if (is_null($input_data)) {
+            $input_data = $this->input->post();
+        }
+        $input_data['user_id'] = $profile->user_id;
+        if ($this->settings_model->validateExecutive()) {
+            if ($this->profile_lib->saveExecutive($input_data)) {
+                $data['messages'] = 'บันทึกข้อมูลเรียบร้อบ';
+                redirect('settings/profile');
+            } else {
+                $errors = $this->tank_auth->get_error_message();
+                foreach ($errors as $k => $v) {
+                    $data['errors'][$k] = $this->lang->line($v);
+                }
+            }
+        }
+            
+        $data['college_items'] = $this->college_model->getItems(array('status'=>1));
+            
+        $this->load->view('nav');
+        $this->load->view('settings/profile_executive', $data);
+        $this->load->view('footer');
+    }
+
     public function profile()
     {
         if (!$this->tank_auth->is_logged_in()) {								// not logged in or not activated
             redirect('/auth/login/');
         } else {
             $profile = $this->profile_lib->getData();
-        
             $data['errors'] = array();
             $input_data = $this->input->post();
             
             if ($profile->user_type=="student") {
-                $input_data['user_id'] = $profile->user_id;
-                if ($this->settings_model->validateStudent()) {
-                    if ($this->profile_lib->saveStudent($input_data)) {
-                        $data['messages'] = 'บันทึกข้อมูลเรียบร้อบ';
-                        redirect('settings/profile');
-                    } else {
-                        $errors = $this->tank_auth->get_error_message();
-                        foreach ($errors as $k => $v) {
-                            $data['errors'][$k] = $this->lang->line($v);
-                        }
-                    }
-                }
-                
-                $data['colleges'] = $this->college_model->getItems(array('status'=>1));
-                $data['departments'] = $this->department_model->getItems(array('status'=>1));
-                $data['internship_items'] = $this->internship_model->getItems(array('status'=>1));
-                $data['company_items'] = $this->company_model->getItems(array('status'=>1));
-                $data['trainer_items'] = $this->profile_lib->getTrainer();
-                $data['advisor_items'] = $this->profile_lib->getAdvisor();
-                
-                $this->load->view('nav');
-                $this->load->view('settings/profile_student', $data);
-                $this->load->view('footer');
+                $this->profileStudent($input_data);
             } elseif ($profile->user_type=="advisor") {
-                $input_data['user_id'] = $profile->user_id;
-                if ($this->settings_model->validateAdvisor()) {
-                    if ($this->profile_lib->saveAdvisor($input_data)) {
-                        $data['messages'] = 'บันทึกข้อมูลเรียบร้อบ';
-                        redirect('settings/profile');
-                    } else {
-                        $errors = $this->tank_auth->get_error_message();
-                        foreach ($errors as $k => $v) {
-                            $data['errors'][$k] = $this->lang->line($v);
-                        }
-                    }
-                }
-                
-                $data['college_items'] = $this->college_model->getItems(array('status'=>1));
-                
-                $this->load->view('nav');
-                $this->load->view('settings/profile_advisor', $data);
-                $this->load->view('footer');
-            } elseif ($profile->user_type=="trainer") {
-                $input_data['user_id'] = $profile->user_id;
-                if ($this->settings_model->validateTrainer()) {
-                    if ($this->profile_lib->saveTrainer($input_data)) {
-                        $data['messages'] = 'บันทึกข้อมูลเรียบร้อบ';
-                        redirect('settings/profile');
-                    } else {
-                        $errors = $this->tank_auth->get_error_message();
-                        foreach ($errors as $k => $v) {
-                            $data['errors'][$k] = $this->lang->line($v);
-                        }
-                    }
-                }
-                
-                $data['company_items'] = $this->company_model->getItems(array('status'=>1));
-                
-                $this->load->view('nav');
-                $this->load->view('settings/profile_trainer', $data);
-                $this->load->view('footer');
+                $this->profileAdvisor($input_data);
+            } elseif ($profile->user_type=="headadvisor") {
+                $this->profileHeadAdvisor($input_data);
             } elseif ($profile->user_type=="staff") {
-                $input_data['user_id'] = $profile->user_id;
-                if ($this->settings_model->validateStaff()) {
-                    if ($this->profile_lib->saveStaff($input_data)) {
-                        $data['messages'] = 'บันทึกข้อมูลเรียบร้อบ';
-                        redirect('settings/profile');
-                    } else {
-                        $errors = $this->tank_auth->get_error_message();
-                        foreach ($errors as $k => $v) {
-                            $data['errors'][$k] = $this->lang->line($v);
-                        }
-                    }
-                }
-                
-                $data['college_items'] = $this->college_model->getItems(array('status'=>1));
-                
-                $this->load->view('nav');
-                $this->load->view('settings/profile_staff', $data);
-                $this->load->view('footer');
+                $this->profileStaff($input_data);
             } elseif ($profile->user_type=="headdepartment") {
-                $input_data['user_id'] = $profile->user_id;
-                if ($this->settings_model->validateHeadDepartment()) {
-                    if ($this->profile_lib->saveHeadDepartment($input_data)) {
-                        $data['messages'] = 'บันทึกข้อมูลเรียบร้อบ';
-                        redirect('settings/profile');
-                    } else {
-                        $errors = $this->tank_auth->get_error_message();
-                        foreach ($errors as $k => $v) {
-                            $data['errors'][$k] = $this->lang->line($v);
-                        }
-                    }
-                }
-                    
-                $data['college_items'] = $this->college_model->getItems(array('status'=>1));
-                $data['major_items'] = $this->major_model->getItems(array('status'=>1));
-                    
-                $this->load->view('nav');
-                $this->load->view('settings/profile_headdepartment', $data);
-                $this->load->view('footer');
+                $this->profileHeadDepartment($input_data);
+            } elseif ($profile->user_type=="executive") {
+                $this->profileExecutive($input_data);
             } else {
                 $this->load->view('nav');
                 echo "no this user_type on this platform! please contact administrator!";
@@ -142,6 +214,7 @@ class Settings extends CI_Controller
             }
         }
     }
+
     public function password()
     {
         if (!$this->tank_auth->is_logged_in()) {								// not logged in or not activated

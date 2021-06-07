@@ -76,7 +76,7 @@ $attributes = array('class' => 'uk-form uk-form-horizontal', 'id' => 'loginform'
                                     </select>
                                 </div>
                             </div>
-                            
+
                             <hr/>
                             <div class="uk-form-row">
                                 <label class="uk-form-label" >รูปภาพส่วนตัว</label>
@@ -84,6 +84,16 @@ $attributes = array('class' => 'uk-form uk-form-horizontal', 'id' => 'loginform'
                                 	<img class="uk-border-circle" width="120" height="120" src="<?php echo $profile->thumbnail;?>">
                                     <br/><br/>
                                     <div><input type="file" name="thumbnail"></div>
+                                </div>
+                            </div>
+
+                            <hr/>
+                            <div class="uk-form-row">
+                                <label class="uk-form-label" >ลายเซนต์ประจำตัว</label>
+                                <div class="uk-form-controls">
+                                	<img class="uk-border-rounded" width="350" height="250" src="<?php echo $profile->signature;?>">
+                                    <br/><br/>
+                                    <div><input type="file" name="signature"></div>
                                 </div>
                             </div>
                 		</div>
