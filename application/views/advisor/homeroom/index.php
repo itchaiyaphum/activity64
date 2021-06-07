@@ -8,9 +8,6 @@
 				<div class="uk-float-left">
 					<h1>บันทึกกิจกรรมโฮมรูม</h1>
 				</div>
-    			<div class="uk-float-right">
-    				<a href="<?php echo base_url('/advisor/homeroom/edit');?>" class="uk-button uk-button-success"><i class="uk-icon-plus"></i> เพิ่ม</a>
-    			</div>
 			</div>
 			<hr/>
             <form action="<?php echo base_url('advisor/homeroom');?>" method="post" name="adminForm">
@@ -23,7 +20,6 @@
             				<button onclick="document.getElementById('search').value='';this.form.getElementById('filter_type').value='0';this.form.getElementById('filter_logged').value='0';this.form.submit();">Reset</button>
             			</td>
             			<td nowrap="nowrap">
-            				<?php echo $this->helper_lib->getStatusHtml('homeroom_filter_status');?>
             			</td>
             		</tr>
             	</table>
