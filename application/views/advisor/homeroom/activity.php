@@ -18,11 +18,11 @@
                     <a  class="uk-button uk-width-1-4" href="<?php echo base_url("advisor/homeroom/confirm/?id=".$homeroom->id);?>">STEP 4: ยืนยันการบันทึกข้อมูล</a>
                 </div>
             	
-            	<?php 
-            	foreach ($student_items as $group){
-            	?>
+            	<?php
+                foreach ($student_items as $group) {
+                    ?>
             	<div class="uk-panel uk-panel-box uk-panel-box-default uk-margin-top">
-                    <h3 class="uk-panel-title">กลุ่มการเรียน: <?php echo $group['group_name'].' / '.$group['minor_name'].' / '.$group['major_name'];?></h3>
+                    <h3 class="uk-panel-title">กลุ่มการเรียน: <?php echo $group['group_name'].' / '.$group['minor_name'].' / '.$group['major_name']; ?></h3>
                 	<hr/>
                 	<table class="uk-table uk-table-hover" cellpadding="1">
                 		<thead>
@@ -40,29 +40,26 @@
                 			</tr>
                 		</thead>
                 		<tbody>
-                		<?php 
-                		if(count( $group['items'] )<=0){
-                		    echo '<tr><td colspan="6" class="uk-text-center"><p>ไม่มีข้อมูล</p></td></tr>';
-                		}else{
-                			$k = 0;
-                			
-                			$join_status_items = array();
-                			foreach ($homeroom_activity_items as $item){
-                			    $join_status_items[$item->student_id] = $item->check_status;
-                			}
-                			
-                			for ($i=0, $n=count( $group['items'] ); $i < $n; $i++)
-                			{
-                			    $row 	=& $group['items'][$i];
-                			    
-                			    if(!isset($join_status_items[$row->id])){
-                			        $join_status_items[$row->id] = 'come';
-                			    }
-                			    
-                			?>
+                		<?php
+                        if (count($group['items'])<=0) {
+                            echo '<tr><td colspan="6" class="uk-text-center"><p>ไม่มีข้อมูล</p></td></tr>';
+                        } else {
+                            $k = 0;
+                            
+                            $join_status_items = array();
+                            foreach ($homeroom_activity_items as $item) {
+                                $join_status_items[$item->student_id] = $item->check_status;
+                            }
+                            
+                            for ($i=0, $n=count($group['items']); $i < $n; $i++) {
+                                $row 	=& $group['items'][$i];
+                                
+                                if (!isset($join_status_items[$row->id])) {
+                                    $join_status_items[$row->id] = 'come';
+                                } ?>
                 			<tr class="<?php echo "row$k"; ?>">
                 				<td>
-                					<?php echo ($i+1);?>
+                					<?php echo($i+1); ?>
                 				</td>
                 				<td>
                 					<?php echo $row->student_id; ?>
@@ -71,24 +68,24 @@
                 					<?php echo $row->firstname; ?> <?php echo $row->lastname; ?>
                 				</td>
                 				<td>
-                					<input class="uk-radio" type="radio" name="join_status[<?php echo $row->id;?>]" value="come" <?php echo ($join_status_items[$row->id]=='come')?'checked="1"':'';?>> มา
-                					<input class="uk-radio" type="radio" name="join_status[<?php echo $row->id;?>]" value="not_come" <?php echo ($join_status_items[$row->id]=='not_come')?'checked="1"':'';?>> ขาด
-                					<input class="uk-radio" type="radio" name="join_status[<?php echo $row->id;?>]" value="late" <?php echo ($join_status_items[$row->id]=='late')?'checked="1"':'';?>> สาย
-                					<input class="uk-radio" type="radio" name="join_status[<?php echo $row->id;?>]" value="leave" <?php echo ($join_status_items[$row->id]=='leave')?'checked="1"':'';?>> ลา
+                					<input class="uk-radio" type="radio" name="join_status[<?php echo $row->id; ?>]" value="come" <?php echo ($join_status_items[$row->id]=='come')?'checked="1"':''; ?>> มา
+                					<input class="uk-radio" type="radio" name="join_status[<?php echo $row->id; ?>]" value="not_come" <?php echo ($join_status_items[$row->id]=='not_come')?'checked="1"':''; ?>> ขาด
+                					<input class="uk-radio" type="radio" name="join_status[<?php echo $row->id; ?>]" value="late" <?php echo ($join_status_items[$row->id]=='late')?'checked="1"':''; ?>> สาย
+                					<input class="uk-radio" type="radio" name="join_status[<?php echo $row->id; ?>]" value="leave" <?php echo ($join_status_items[$row->id]=='leave')?'checked="1"':''; ?>> ลา
                 				</td>
                 				<td>
-                					<?php //echo $row->operation_status_name; ?>
+                					<?php //echo $row->operation_status_name;?>
                 				</td>
                 			</tr>
                 		<?php
-                			$k = 1 - $k;
-                			}
-                		}
-                		?>
+                            $k = 1 - $k;
+                            }
+                        } ?>
                 		</tbody>
                 	</table>
             	</div>
-            	<?php } ?>
+            	<?php
+                } ?>
             
             	<input type="hidden" name="id" value="<?php echo $homeroom_activity->id;?>" />
             	<input type="hidden" name="homeroom_id" value="<?php echo $homeroom->id;?>" />
@@ -97,7 +94,23 @@
             
             <br/><br/>
         	<div class="uk-panel uk-panel-box uk-panel-box-primary uk-margin-top uk-text-center">
-                <button class="uk-button uk-button-primary uk-button-large" data-uk-modal="{target:'#confirm-form'}">บันทึกข้อมูล</button>
+				<?php
+                $rowAction = $this->homeroom_lib->getHomeroomAction($homeroom->id);
+                $actionStatusButton = '';
+                $actionTextButton = 'บันทึกข้อมูล';
+                if (isset($rowAction)) {
+                    if ($rowAction->action_status=='confirmed') {
+                        $actionStatusButton = 'disabled';
+                        $actionTextButton = 'ยืนยันการบันทึกข้อมูลเรียบร้อยแล้ว';
+                    }
+                }
+                if ($actionStatusButton!='') {
+                    ?>
+				<a class="uk-button uk-button-primary uk-button-large" href="<?php echo base_url('/advisor/homeroom'); ?>"><i class="uk-icon-home"></i> กลับหน้าหลัก</a>
+				<?php
+                }
+                ?>
+				<button <?php echo $actionStatusButton; ?> class="uk-button uk-button-primary uk-button-large" data-uk-modal="{target:'#confirm-form'}"><?php echo $actionTextButton; ?></button>
         		<div id="confirm-form" class="uk-modal">
                     <div class="uk-modal-dialog">
                     	<a class="uk-modal-close uk-close"></a>

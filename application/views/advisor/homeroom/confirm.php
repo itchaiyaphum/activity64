@@ -137,13 +137,23 @@
             
             <br/><br/>
         	<div class="uk-panel uk-panel-box uk-panel-box-primary uk-margin-top uk-text-center">
+			<?php
+                $rowAction = $this->homeroom_lib->getHomeroomAction($homeroom->id);
+                $actionStatusButton = '';
+                $actionTextButton = 'กดยืนยันการบันทึกข้อมูล';
+                if (isset($rowAction)) {
+                    if ($rowAction->action_status=='confirmed') {
+                        $actionStatusButton = 'disabled';
+                        $actionTextButton = 'ยืนยันการบันทึกข้อมูลเรียบร้อยแล้ว';
+                    }
+                }
+                if ($actionStatusButton!='') {
+                    ?>
+				<a class="uk-button uk-button-primary uk-button-large" href="<?php echo base_url('/advisor/homeroom'); ?>"><i class="uk-icon-home"></i> กลับหน้าหลัก</a>
 				<?php
-                $disable_button = '';
-                if (count($homeroom_confirm)) {
-                    $disable_button = 'disabled';
                 }
                 ?>
-				<button <?php echo $disable_button; ?> class="uk-button uk-button-primary uk-button-large" data-uk-modal="{target:'#confirm-form'}">กดยืนยันการบันทึกข้อมูล</button>
+				<button <?php echo $actionStatusButton; ?> class="uk-button uk-button-primary uk-button-large" data-uk-modal="{target:'#confirm-form'}"><?php echo $actionTextButton; ?></button>
         		<div id="confirm-form" class="uk-modal">
                     <div class="uk-modal-dialog">
                     	<a class="uk-modal-close uk-close"></a>

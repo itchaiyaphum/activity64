@@ -523,3 +523,21 @@ ALTER TABLE `advisors_groups`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสอ้างอิง', AUTO_INCREMENT=2;
 
   
+############################ TABLE: homeroom_actions ##############################
+CREATE TABLE `homeroom_actions` (
+  `id` int(11) NOT NULL,
+  `homeroom_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `user_type` varchar(15) NOT NULL,
+  `action_status` varchar(15) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL,
+  `status` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `homeroom_actions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `homeroom_id` (`homeroom_id`,`user_id`,`user_type`);
+
+ALTER TABLE `homeroom_actions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;

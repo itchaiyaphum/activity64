@@ -32,22 +32,22 @@
             		<thead>
             			<tr>
             				<th width="5%" class="title">#</th>
-            				<th class="title">
+            				<th width="20%" class="title">
             					ภาคการเรียน
             				</th>
             				<th class="title">
             					สัปดาห์ที่
             				</th>
-            				<th class="title">
+            				<th width="13%" class="title">
             					วันที่เริ่มต้น
             				</th>
-            				<th class="title" width="20%">
+            				<th width="13%" class="title" width="20%">
             					วันที่สิ้นสุด
             				</th>
             				<th width="10%" class="title" nowrap="nowrap">
-            					สถานะเผยแพร่
+            					พิมพ์รายงาน
             				</th>
-            				<th width="20%" class="title" nowrap="nowrap">
+            				<th class="title" nowrap="">
             					สถานะบันทึกกิจกรรมโฮมรูม
             				</th>
             			</tr>
@@ -60,49 +60,54 @@
             			</tr>
             		</tfoot>
             		<tbody>
-            		<?php 
-            		if(count( $items )<=0){
-            		    echo '<tr><td colspan="7" class="uk-text-center"><p>ไม่มีข้อมูล</p></td></tr>';
-            		}else{
-            			$k = 0;
-            			for ($i=0, $n=count( $items ); $i < $n; $i++)
-            			{
-            				$row 	=& $items[$i];
-            				
-            				$link_activity = base_url('advisor/homeroom/activity/?id='.$row->id);
-            				$link_obedience = base_url('advisor/homeroom/obedience/?id='.$row->id);
-            				$link_risk = base_url('advisor/homeroom/risk/?id='.$row->id);
-            				$link_confirm = base_url('advisor/homeroom/confirm/?id=');
-            				
-            			?>
+            		<?php
+                    if (count($items)<=0) {
+                        echo '<tr><td colspan="7" class="uk-text-center"><p>ไม่มีข้อมูล</p></td></tr>';
+                    } else {
+                        $k = 0;
+                        for ($i=0, $n=count($items); $i < $n; $i++) {
+                            $row 	=& $items[$i];
+                            
+                            $link_activity = base_url('advisor/homeroom/activity/?id='.$row->id);
+                            $link_obedience = base_url('advisor/homeroom/obedience/?id='.$row->id);
+                            $link_risk = base_url('advisor/homeroom/risk/?id='.$row->id);
+                            $link_confirm = base_url('advisor/homeroom/confirm/?id='); ?>
             			<tr class="<?php echo "row$k"; ?>">
             				<td>
-            					<?php echo $this->helper_lib->getPaginationIndex($i+1);?>
+            					<?php echo $this->helper_lib->getPaginationIndex($i+1); ?>
             				</td>
             				<td>
-            					<a href="<?php echo $link_activity;?>"><?php echo $row->semester_name; ?></a>
+            					<a href="<?php echo $link_activity; ?>"><?php echo $row->semester_name; ?></a>
             				</td>
             				<td>
-            					<a href="<?php echo $link_activity;?>"><?php echo $row->week; ?></a>
+            					<a href="<?php echo $link_activity; ?>"><?php echo $row->week; ?></a>
             				</td>
             				<td>
-            					<a href="<?php echo $link_activity;?>"><?php echo date_format(date_create($row->join_start),'Y-m-d'); ?></a>
+            					<a href="<?php echo $link_activity; ?>"><?php echo date_format(date_create($row->join_start), 'Y-m-d'); ?></a>
             				</td>
             				<td>
-            					<a href="<?php echo $link_activity;?>"><?php echo date_format(date_create($row->join_end),'Y-m-d'); ?></a>
+            					<a href="<?php echo $link_activity; ?>"><?php echo date_format(date_create($row->join_end), 'Y-m-d'); ?></a>
+            				</td>
+            				<td class="uk-text-center">
+								<button disabled class="uk-button"><i class="uk-icon-print"></i></button>
             				</td>
             				<td>
-            					<a href="#"><?php echo $this->helper_lib->getStatusIcon($row->status);?></a>
-            				</td>
-            				<td>
-            					<?php //echo $row->operation_status_name; ?>
+							<?php
+                            $rowAction = $this->homeroom_lib->getHomeroomAction($row->id);
+                            $userType = 'advisor';
+                            $actionStatus = '';
+                            if (isset($rowAction)) {
+                                $userType = $rowAction->user_type;
+                                $actionStatus = $rowAction->action_status;
+                            }
+                            echo $this->homeroom_lib->getActionStatusHtml($userType, $actionStatus); ?>
             				</td>
             			</tr>
             		<?php
-            			$k = 1 - $k;
-            			}
-            		}
-            		?>
+                        $k = 1 - $k;
+                        }
+                    }
+                    ?>
             		</tbody>
             	</table>
             

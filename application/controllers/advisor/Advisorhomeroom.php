@@ -17,6 +17,8 @@ class Advisorhomeroom extends BaseController
         $this->load->model('admin/adminusers_model');
         $this->load->model('admin/student_model');
         $this->load->library('form_validation');
+        $this->load->library('profile_lib');
+        $this->load->library('homeroom_lib');
     }
 
     public function index()
@@ -25,7 +27,7 @@ class Advisorhomeroom extends BaseController
         $data['leftmenu'] = $this->load->view('advisor/menu', '', true);
         $data['pagination'] = $this->homeroom_model->getPagination();
         $data['items'] = $this->homeroom_model->getItems();
-        
+
         $this->load->view('nav');
         $this->load->view('advisor/homeroom/index', $data);
         $this->load->view('footer');

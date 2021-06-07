@@ -3,69 +3,82 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Profile_lib
 {
-
     public function __construct()
     {
         $this->ci = & get_instance();
     }
 
+    public function getUserType($user_id=0)
+    {
+        if ($user_id==0) {
+            $user_id = $this->ci->tank_auth->get_user_id();
+        }
+        $sql = 'SELECT user_type FROM users WHERE id=' . $user_id;
+        $query = $this->ci->db->query($sql);
+        $row = $query->row();
+        if (isset($row)) {
+            return $row->user_type;
+        }
+        return 'guest';
+    }
+
     public function getData()
     {
         $profile = new stdClass();
-        $profile->user_id = NULL;
-        $profile->firstname = NULL;
-        $profile->firstname_en = NULL;
-        $profile->lastname = NULL;
-        $profile->lastname_en = NULL;
-        $profile->user_type = NULL;
-        $profile->email = NULL;
-        $profile->student_id = NULL;
-        $profile->college_id = NULL;
-        $profile->department_id = NULL;
-        $profile->major_id = NULL;
-        $profile->major_title = NULL;
-        $profile->group_id = NULL;
-        $profile->group_title = NULL;
-        $profile->edulevel = NULL;
-        $profile->religion_title = NULL;
-        $profile->dob = NULL;
-        $profile->age = NULL;
-        $profile->congenital_disease = NULL;
-        $profile->drug_allergy = NULL;
-        $profile->blood_type = NULL;
-        $profile->experience_work = NULL;
-        $profile->experience_skill = NULL;
-        $profile->experience_intesting = NULL;
-        $profile->experience_status = NULL;
-        $profile->experience_marry_name = NULL;
-        $profile->experience_marry_cocupation = NULL;
-        $profile->emergency_name = NULL;
-        $profile->emergency_address = NULL;
-        $profile->emergency_mobile = NULL;
+        $profile->user_id = null;
+        $profile->firstname = null;
+        $profile->firstname_en = null;
+        $profile->lastname = null;
+        $profile->lastname_en = null;
+        $profile->user_type = null;
+        $profile->email = null;
+        $profile->student_id = null;
+        $profile->college_id = null;
+        $profile->department_id = null;
+        $profile->major_id = null;
+        $profile->major_title = null;
+        $profile->group_id = null;
+        $profile->group_title = null;
+        $profile->edulevel = null;
+        $profile->religion_title = null;
+        $profile->dob = null;
+        $profile->age = null;
+        $profile->congenital_disease = null;
+        $profile->drug_allergy = null;
+        $profile->blood_type = null;
+        $profile->experience_work = null;
+        $profile->experience_skill = null;
+        $profile->experience_intesting = null;
+        $profile->experience_status = null;
+        $profile->experience_marry_name = null;
+        $profile->experience_marry_cocupation = null;
+        $profile->emergency_name = null;
+        $profile->emergency_address = null;
+        $profile->emergency_mobile = null;
         
-        $profile->hometown_no = NULL;
-        $profile->hometown_moo = NULL;
-        $profile->hometown_subdistrict = NULL;
-        $profile->hometown_district = NULL;
-        $profile->hometown_province = NULL;
-        $profile->hometown_postcode = NULL;
-        $profile->hometown_mobile = NULL;
+        $profile->hometown_no = null;
+        $profile->hometown_moo = null;
+        $profile->hometown_subdistrict = null;
+        $profile->hometown_district = null;
+        $profile->hometown_province = null;
+        $profile->hometown_postcode = null;
+        $profile->hometown_mobile = null;
         
-        $profile->current_address_no = NULL;
-        $profile->current_address_moo = NULL;
-        $profile->current_address_subdistrict = NULL;
-        $profile->current_address_district = NULL;
-        $profile->current_address_province = NULL;
-        $profile->current_address_postcode = NULL;
-        $profile->current_address_mobile = NULL;
+        $profile->current_address_no = null;
+        $profile->current_address_moo = null;
+        $profile->current_address_subdistrict = null;
+        $profile->current_address_district = null;
+        $profile->current_address_province = null;
+        $profile->current_address_postcode = null;
+        $profile->current_address_mobile = null;
         
-        $profile->advisor_id = NULL;
-        $profile->trainer_id = NULL;
-        $profile->company_id = NULL;
-        $profile->internship_id = NULL;
+        $profile->advisor_id = null;
+        $profile->trainer_id = null;
+        $profile->company_id = null;
+        $profile->internship_id = null;
         
-        $profile->thumbnail = NULL;
-        $profile->organization_id = NULL;
+        $profile->thumbnail = null;
+        $profile->organization_id = null;
         
         $this->ci->db->where('id', $this->ci->tank_auth->get_user_id());
         $query = $this->ci->db->get('users');
@@ -81,20 +94,20 @@ class Profile_lib
             $profile->thumbnail = $row->thumbnail;
             $profile->organization_id = $row->organization_id;
             
-            if($profile->user_type=='student'){
+            if ($profile->user_type=='student') {
                 $profile = $this->getStudentProfile($profile);
-            }else if($profile->user_type=='advisor'){
+            } elseif ($profile->user_type=='advisor') {
                 $profile = $this->getAdvisorProfile($profile);
-            }else if($profile->user_type=='trainer'){
+            } elseif ($profile->user_type=='trainer') {
                 $profile = $this->getTrainerProfile($profile);
             }
-            
         }
         
         return $profile;
     }
     
-    private function getAdvisorProfile($profile){
+    private function getAdvisorProfile($profile)
+    {
         $this->ci->db->where('user_id', $profile->user_id);
         $query = $this->ci->db->get('users_advisor');
         if ($query->num_rows()) {
@@ -108,7 +121,8 @@ class Profile_lib
         return $profile;
     }
     
-    private function getTrainerProfile($profile){
+    private function getTrainerProfile($profile)
+    {
         $this->ci->db->where('user_id', $profile->user_id);
         $query = $this->ci->db->get('users_trainer');
         if ($query->num_rows()) {
@@ -122,7 +136,8 @@ class Profile_lib
         return $profile;
     }
     
-    private function getStudentProfile($profile){
+    private function getStudentProfile($profile)
+    {
         $this->ci->db->where('user_id', $profile->user_id);
         $query = $this->ci->db->get('users_student');
         if ($query->num_rows()) {
@@ -174,7 +189,6 @@ class Profile_lib
             $profile->trainer_id = $row->trainer_id;
             $profile->company_id = $row->company_id;
             $profile->internship_id = $row->internship_id;
-            
         }
         return $profile;
     }
@@ -182,7 +196,7 @@ class Profile_lib
     public function checkNotChooseInternship()
     {
         $profile = $this->ci->profile_lib->getData();
-        if($profile->user_type=="student" && empty($profile->internship_id)){
+        if ($profile->user_type=="student" && empty($profile->internship_id)) {
             return true;
         }
         return false;
@@ -211,9 +225,10 @@ class Profile_lib
         $this->ci->db->where('user_type', 'staff');
         $this->ci->db->where('activated', 1);
         $query = $this->ci->db->get('users');
-        if ($query->num_rows())
+        if ($query->num_rows()) {
             return $query->result();
-        return NULL;
+        }
+        return null;
     }
 
     public function getAdvisor()
@@ -221,9 +236,10 @@ class Profile_lib
         $this->ci->db->where('user_type', 'advisor');
         $this->ci->db->where('activated', 1);
         $query = $this->ci->db->get('users');
-        if ($query->num_rows())
+        if ($query->num_rows()) {
             return $query->result();
-        return NULL;
+        }
+        return null;
     }
 
     public function getTrainer()
@@ -231,14 +247,16 @@ class Profile_lib
         $this->ci->db->where('user_type', 'trainer');
         $this->ci->db->where('activated', 1);
         $query = $this->ci->db->get('users');
-        if ($query->num_rows())
+        if ($query->num_rows()) {
             return $query->result();
-        return NULL;
+        }
+        return null;
     }
     
-    public function save($data){
+    public function save($data)
+    {
         $profile = $this->ci->profile_lib->getData();
-        if($profile->user_type=='student'){
+        if ($profile->user_type=='student') {
             return $this->saveStudent($data);
         }
         return false;
@@ -254,7 +272,7 @@ class Profile_lib
         $users_data['lastname'] = $data['lastname'];
 //         $users_data['organization_id'] = $data['organization_id'];
         $users_data['email'] = $data['email'];
-        if(!empty($thumbnail)){
+        if (!empty($thumbnail)) {
             $users_data['thumbnail'] = $thumbnail;
         }
         $users_data['modified'] = date('Y-m-d H:i:s');
@@ -268,14 +286,18 @@ class Profile_lib
         //save table: users_student
         $this->ci->db->where('user_id', $data['user_id']);
         $query = $this->ci->db->get('users_student');
-        if ($query->num_rows()){
+        if ($query->num_rows()) {
             $data['updated_at'] = date('Y-m-d H:i:s');
             $this->ci->db->where('user_id', $data['user_id']);
-            if ($this->ci->db->update('users_student', $data)) return true;
-        }else{
+            if ($this->ci->db->update('users_student', $data)) {
+                return true;
+            }
+        } else {
             $data['created_at'] = date('Y-m-d H:i:s');
             $data['updated_at'] = date('Y-m-d H:i:s');
-            if ($this->ci->db->insert('users_student', $data)) return true;
+            if ($this->ci->db->insert('users_student', $data)) {
+                return true;
+            }
         }
         
         return false;
@@ -291,7 +313,7 @@ class Profile_lib
         $users_data['lastname'] = $data['lastname'];
 //         $users_data['organization_id'] = $data['organization_id'];
         $users_data['email'] = $data['email'];
-        if(!empty($thumbnail)){
+        if (!empty($thumbnail)) {
             $users_data['thumbnail'] = $thumbnail;
         }
         $users_data['modified'] = date('Y-m-d H:i:s');
@@ -305,14 +327,18 @@ class Profile_lib
         //save table: users_advisor
         $this->ci->db->where('user_id', $data['user_id']);
         $query = $this->ci->db->get('users_advisor');
-        if ($query->num_rows()){
+        if ($query->num_rows()) {
             $data['updated_at'] = date('Y-m-d H:i:s');
             $this->ci->db->where('user_id', $data['user_id']);
-            if ($this->ci->db->update('users_advisor', $data)) return true;
-        }else{
+            if ($this->ci->db->update('users_advisor', $data)) {
+                return true;
+            }
+        } else {
             $data['created_at'] = date('Y-m-d H:i:s');
             $data['updated_at'] = date('Y-m-d H:i:s');
-            if ($this->ci->db->insert('users_advisor', $data)) return true;
+            if ($this->ci->db->insert('users_advisor', $data)) {
+                return true;
+            }
         }
     
         return false;
@@ -328,7 +354,7 @@ class Profile_lib
         $users_data['lastname'] = $data['lastname'];
 //         $users_data['organization_id'] = $data['organization_id'];
         $users_data['email'] = $data['email'];
-        if(!empty($thumbnail)){
+        if (!empty($thumbnail)) {
             $users_data['thumbnail'] = $thumbnail;
         }
         $users_data['modified'] = date('Y-m-d H:i:s');
@@ -342,14 +368,18 @@ class Profile_lib
         //save table: users_trainer
         $this->ci->db->where('user_id', $data['user_id']);
         $query = $this->ci->db->get('users_trainer');
-        if ($query->num_rows()){
+        if ($query->num_rows()) {
             $data['updated_at'] = date('Y-m-d H:i:s');
             $this->ci->db->where('user_id', $data['user_id']);
-            if ($this->ci->db->update('users_trainer', $data)) return true;
-        }else{
+            if ($this->ci->db->update('users_trainer', $data)) {
+                return true;
+            }
+        } else {
             $data['created_at'] = date('Y-m-d H:i:s');
             $data['updated_at'] = date('Y-m-d H:i:s');
-            if ($this->ci->db->insert('users_trainer', $data)) return true;
+            if ($this->ci->db->insert('users_trainer', $data)) {
+                return true;
+            }
         }
         
         return false;
@@ -365,7 +395,7 @@ class Profile_lib
         $users_data['lastname'] = $data['lastname'];
         $users_data['organization_id'] = $data['organization_id'];
         $users_data['email'] = $data['email'];
-        if(!empty($thumbnail)){
+        if (!empty($thumbnail)) {
             $users_data['thumbnail'] = $thumbnail;
         }
         $users_data['modified'] = date('Y-m-d H:i:s');
@@ -379,20 +409,25 @@ class Profile_lib
         //save table: users_staff
         $this->ci->db->where('user_id', $data['user_id']);
         $query = $this->ci->db->get('users_staff');
-        if ($query->num_rows()){
+        if ($query->num_rows()) {
             $data['updated_at'] = date('Y-m-d H:i:s');
             $this->ci->db->where('user_id', $data['user_id']);
-            if ($this->ci->db->update('users_staff', $data)) return true;
-        }else{
+            if ($this->ci->db->update('users_staff', $data)) {
+                return true;
+            }
+        } else {
             $data['created_at'] = date('Y-m-d H:i:s');
             $data['updated_at'] = date('Y-m-d H:i:s');
-            if ($this->ci->db->insert('users_staff', $data)) return true;
+            if ($this->ci->db->insert('users_staff', $data)) {
+                return true;
+            }
         }
     
         return false;
     }
     
-    private function saveThumbnail($data){
+    private function saveThumbnail($data)
+    {
         $profile = $this->ci->profile_lib->getData();
         
         $config = array();
@@ -402,23 +437,22 @@ class Profile_lib
         $config['max_size']	= '10240';
         $this->ci->upload->initialize($config);
     
-        if($this->ci->upload->do_upload('thumbnail')){
+        if ($this->ci->upload->do_upload('thumbnail')) {
             $thumbnail_data = $this->ci->upload->data();
             //resize thumbnail
             $config_photo['image_library'] = 'gd2';
             $config_photo['source_image']	= $config['upload_path'].$thumbnail_data['file_name'];
             $config_photo['new_image'] = $config['upload_path'].'/thumbnail/'.$thumbnail_data['file_name'];
-            $config_photo['create_thumb'] = FALSE;
-            $config_photo['maintain_ratio'] = FALSE;
+            $config_photo['create_thumb'] = false;
+            $config_photo['maintain_ratio'] = false;
             $config_photo['width']	= 150;
             $config_photo['height']	= 150;
             $this->ci->image_lib->initialize($config_photo);
             $this->ci->image_lib->resize();
             
             return '/storage/profiles/thumbnail/'.$thumbnail_data['file_name'];
-        }else{
+        } else {
             return false;
         }
     }
-    
 }
