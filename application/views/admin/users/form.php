@@ -1,4 +1,4 @@
-<?php 
+<?php
 $attributes = array('class' => 'uk-form uk-form-horizontal', 'name' => 'adminForm', 'id' => 'adminForm', 'method'=>'post');
 ?>
 <div class="uk-container uk-container-center">
@@ -46,10 +46,13 @@ $attributes = array('class' => 'uk-form uk-form-horizontal', 'name' => 'adminFor
                     <div class="uk-form-controls">
                     	<select name="user_type" class="uk-width-1-2">
                         	<option value="">- เลือกประเภทผู้ใช้ -</option>
-                        	<option value="student" <?php echo ($item->user_type=='student')?'selected="selected"':'';?>>นักศึกษา</option>
-                        	<option value="advisor" <?php echo ($item->user_type=='advisor')?'selected="selected"':'';?>>อาจารย์ที่ปรึกษา</option>
-                        	<option value="trainer" <?php echo ($item->user_type=='trainer')?'selected="selected"':'';?>>ผู้ควบคุมการฝึกงาน</option>
-                        	<option value="staff" <?php echo ($item->user_type=='staff')?'selected="selected"':'';?>>เจ้าหน้าที่สถานศึกษา</option>
+                        	<option value="student" <?php echo ($item->user_type=='student')?'selected="selected"':'';?>>นักศึกษา (Student)</option>
+                        	<option value="advisor" <?php echo ($item->user_type=='advisor')?'selected="selected"':'';?>>อาจารย์ที่ปรึกษา (Advisor)</option>
+                        	<option value="headdepartment" <?php echo ($item->user_type=='headdepartment')?'selected="selected"':'';?>>หัวหน้าแผนกฯ (Head of Department)</option>
+                        	<option value="headadvisor" <?php echo ($item->user_type=='headadvisor')?'selected="selected"':'';?>>หัวหน้างานครูที่ปรึกษา (Head of Advisor)</option>
+                        	<option value="staff" <?php echo ($item->user_type=='staff')?'selected="selected"':'';?>>เจ้าหน้าที่งานครูที่ปรึกษา (Staff)</option>
+                        	<option value="executive" <?php echo ($item->user_type=='executive')?'selected="selected"':'';?>>ฝ่ายบริหาร (Executive)</option>
+                        	<option value="admin" <?php echo ($item->user_type=='admin')?'selected="selected"':'';?>>ผู้ดูแลระบบ (Admin)</option>
                         </select>
                         <div>
                         <?php echo form_error('user_type'); ?>

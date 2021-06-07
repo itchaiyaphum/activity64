@@ -25,16 +25,19 @@
             			<td nowrap="nowrap">
             				<select name="users_filter_user_type" onchange="document.adminForm.submit();">
                             	<option value="">- เลือกประเภทผู้ใช้ -</option>
-                            	<option value="student" <?php echo set_select('users_filter_user_type','student');?>>นักศึกษา</option>
-                            	<option value="advisor" <?php echo set_select('users_filter_user_type','advisor');?>>อาจารย์ที่ปรึกษา</option>
-                            	<option value="trainer" <?php echo set_select('users_filter_user_type','trainer');?>>ผู้ควบคุมการฝึกงาน</option>
-                            	<option value="staff" <?php echo set_select('users_filter_user_type','staff');?>>เจ้าหน้าที่สถานศึกษา</option>
+                            	<option value="student" <?php echo set_select('users_filter_user_type', 'student');?>>นักศึกษา (Student)</option>
+                            	<option value="advisor" <?php echo set_select('users_filter_user_type', 'advisor');?>>อาจารย์ที่ปรึกษา (Advisor)</option>
+                            	<option value="headdepartment" <?php echo set_select('users_filter_user_type', 'headdepartment');?>>หัวหน้าแผนกฯ (Head of Department)</option>
+                            	<option value="headadvisor" <?php echo set_select('users_filter_user_type', 'headadvisor');?>>หัวหน้างานครูที่ปรึกษา (Head of Advisor)</option>
+                            	<option value="staff" <?php echo set_select('users_filter_user_type', 'staff');?>>เจ้าหน้าที่งานครูที่ปรึกษา (Staff)</option>
+                            	<option value="executive" <?php echo set_select('users_filter_user_type', 'executive');?>>ฝ่ายบริหาร (Executive)</option>
+                            	<option value="admin" <?php echo set_select('users_filter_user_type', 'admin');?>>ผู้ดูแลระบบ (Admin)</option>
                             </select>
             				<?php echo $this->helper_lib->getStatusHtml('users_filter_status');?>
             			</td>
             		</tr>
             	</table>
-            
+
             	<table class="uk-table" cellpadding="1">
             		<thead>
             			<tr>
@@ -51,9 +54,6 @@
             				<th class="title" width="20%">
             					สถานะ
             				</th>
-            				<th width="10%" class="title" nowrap="nowrap">
-            					รหัส (ID)
-            				</th>
             				<th width="15%" class="title" nowrap="nowrap">
             					-
             				</th>
@@ -67,62 +67,58 @@
             			</tr>
             		</tfoot>
             		<tbody>
-            		<?php 
-            		if(count( $items )<=0){
-            		    echo '<tr><td colspan="6" class="uk-text-center"><p>ไม่มีข้อมูล</p></td></tr>';
-            		}else{
-            			$k = 0;
-            			for ($i=0, $n=count( $items ); $i < $n; $i++)
-            			{
-            				$row 	=& $items[$i];
-            				
-            				$per_page = $this->input->get_post('per_page',1);
-            				$link_edit = base_url('admin/users/edit/?id='.$row->id.'&per_page='.$per_page);
-            				$link_restore = base_url('admin/users/restore/?id='.$row->id.'&per_page='.$per_page);
-            				$link_trash = base_url('admin/users/trash/?id='.$row->id.'&per_page='.$per_page);
-            				$link_delete = base_url('admin/users/delete/?id='.$row->id.'&per_page='.$per_page);
-            				
-            				$status_link = base_url('admin/users/unpublish/?id='.$row->id.'&per_page='.$per_page);
-            				if($row->activated==0){
-            				    $status_link = base_url('admin/users/publish/?id='.$row->id.'&per_page='.$per_page);
-            				}
-            			?>
+            		<?php
+                    if (count($items)<=0) {
+                        echo '<tr><td colspan="6" class="uk-text-center"><p>ไม่มีข้อมูล</p></td></tr>';
+                    } else {
+                        $k = 0;
+                        for ($i=0, $n=count($items); $i < $n; $i++) {
+                            $row 	=& $items[$i];
+                            
+                            $per_page = $this->input->get_post('per_page', 1);
+                            $link_edit = base_url('admin/users/edit/?id='.$row->id.'&per_page='.$per_page);
+                            $link_restore = base_url('admin/users/restore/?id='.$row->id.'&per_page='.$per_page);
+                            $link_trash = base_url('admin/users/trash/?id='.$row->id.'&per_page='.$per_page);
+                            $link_delete = base_url('admin/users/delete/?id='.$row->id.'&per_page='.$per_page);
+                            
+                            $status_link = base_url('admin/users/unpublish/?id='.$row->id.'&per_page='.$per_page);
+                            if ($row->activated==0) {
+                                $status_link = base_url('admin/users/publish/?id='.$row->id.'&per_page='.$per_page);
+                            } ?>
             			<tr class="<?php echo "row$k"; ?>">
             				<td>
-            					<?php echo $this->helper_lib->getPaginationIndex($i+1);?>
+            					<?php echo $this->helper_lib->getPaginationIndex($i+1); ?>
             				</td>
             				<td>
-            					<a href="<?php echo $link_edit;?>"><?php echo $row->firstname.' '.$row->lastname; ?></a>
+            					<a href="<?php echo $link_edit; ?>"><?php echo $row->firstname.' '.$row->lastname; ?></a>
             				</td>
             				<td>
-            					<a href="<?php echo $link_edit;?>"><?php echo $row->email; ?></a>
+            					<a href="<?php echo $link_edit; ?>"><?php echo $row->email; ?></a>
             				</td>
             				<td>
             					<?php echo $row->user_type; ?>
             				</td>
             				<td>
-            					<a href="<?php echo $status_link;?>"><?php echo $this->helper_lib->getStatusIcon($row->activated);?></a>
+            					<a href="<?php echo $status_link; ?>"><?php echo $this->helper_lib->getStatusIcon($row->activated); ?></a>
             				</td>
             				<td>
-            					<?php echo $row->id; ?>
-            				</td>
-            				<td>
-            					<a href="<?php echo $link_edit;?>" class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-pencil"></i></a>
-            					<?php 
-            					if($this->helper_lib->getFilterStatus('users_filter_status')=='trash'){
-            					?>
-            					<a href="<?php echo $link_restore;?>" class="uk-button uk-button-primary uk-button-mini"><i class="uk-icon-reply"></i></a>
-            					<a href="<?php echo $link_delete;?>" class="uk-button uk-button-danger uk-button-mini"><i class="uk-icon-remove"></i></a>
-            					<?php }else{?>
+            					<a href="<?php echo $link_edit; ?>" class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-pencil"></i></a>
+            					<?php
+                                if ($this->helper_lib->getFilterStatus('users_filter_status')=='trash') {
+                                    ?>
+            					<a href="<?php echo $link_restore; ?>" class="uk-button uk-button-primary uk-button-mini"><i class="uk-icon-reply"></i></a>
+            					<a href="<?php echo $link_delete; ?>" class="uk-button uk-button-danger uk-button-mini"><i class="uk-icon-remove"></i></a>
+            					<?php
+                                } else {?>
             					<a href="<?php echo $link_trash;?>" class="uk-button uk-button-primary uk-button-mini"><i class="uk-icon-trash"></i></a>
-            					<?php }?>
+            					<?php } ?>
             				</td>
             			</tr>
             		<?php
-            			$k = 1 - $k;
-            			}
-            		}
-            		?>
+                        $k = 1 - $k;
+                        }
+                    }
+                    ?>
             		</tbody>
             	</table>
             
