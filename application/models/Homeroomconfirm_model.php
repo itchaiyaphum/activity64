@@ -253,40 +253,28 @@ class Homeroomconfirm_model extends BaseModel
         return $items;
     }
 
-    public function getItem($homeroom_id=0, $advisor_id=0)
-    {
-        if ($advisor_id==0) {
-            $advisor_id = $this->ci->tank_auth->get_user_id();
-        }
-        
-        $sql = 'SELECT * FROM homeroom_confirm WHERE homeroom_id='.$homeroom_id.' AND advisor_id='.$advisor_id;
-        $query = $this->ci->db->query($sql);
-        $items = $query->result();
-        return $items;
-    }
-
     public function saveData()
     {
         $confirm_data = $this->ci->input->post();
         $homeroom_id = $this->ci->input->post('homeroom_id', 0);
-        $advisor_id = $this->ci->tank_auth->get_user_id();
-        $advisor_type = $this->ci->input->post('advisor_type', 'advisor');
+        $user_id = $this->ci->tank_auth->get_user_id();
+        $user_type = $this->ci->profile_lib->getUserType();
 
-        $sql = 'SELECT id 
-                    FROM homeroom_confirm
-                    WHERE homeroom_id='.$homeroom_id.' AND advisor_id='.$advisor_id;
-        $query = $this->ci->db->query($sql);
-        $confirm_items = $query->result();
-
-        $data = array();
-        if (count($confirm_items)) {
-            $data['id'] = $confirm_items[0]->id;
-            $data['updated_at'] = mdate('%Y-%m-%d %H:%i:%s', time());
-        } else {
-            $data['created_at'] = mdate('%Y-%m-%d %H:%i:%s', time());
-            $data['updated_at'] = mdate('%Y-%m-%d %H:%i:%s', time());
-            $data['status'] = 1;
-        }
-        return $this->save(array_merge($confirm_data, $data));
+        $confirm_items = array();
+        array_push($confirm_items, array(
+            'homeroom_id' => $homeroom_id,
+            'user_id' => $user_id,
+            'user_type' => $user_type,
+            'action_status' => 'confirmed',
+            'created_at' => mdate('%Y-%m-%d %H:%i:%s', time()),
+            'updated_at' => mdate('%Y-%m-%d %H:%i:%s', time()),
+            'status' => 1
+        ));
+        
+        // clear old homeroom data
+        $this->ci->db->delete('homeroom_actions', array('homeroom_id' => $homeroom_id, 'user_id' => $user_id));
+        
+        // insert activity items
+        return $this->ci->db->insert_batch('homeroom_actions', $confirm_items);
     }
 }

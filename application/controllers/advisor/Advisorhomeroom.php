@@ -115,7 +115,6 @@ class Advisorhomeroom extends BaseController
         $data = array();
         $data['leftmenu'] = $this->load->view('advisor/menu', '', true);
         $data['homeroom'] = $this->homeroom_model->getItem($id);
-        $data['homeroom_confirm'] = $this->homeroomconfirm_model->getItem($id);
         
         $data['homeroom_confirm_stats'] = $this->homeroomconfirm_model->getStats($id);
         $data['homeroom_confirm_items'] = $this->homeroomconfirm_model->getSummaryItems($id);

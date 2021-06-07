@@ -488,12 +488,11 @@ ALTER TABLE `users_advisor`
 CREATE TABLE `homeroom_confirm` (
   `id` int(11) NOT NULL COMMENT 'รหัสอ้างอิง',
   `homeroom_id` int(11) NOT NULL COMMENT 'รหัสกิจกรรมโฮมรูม',
-  `group_id` int(11) NOT NULL COMMENT 'กลุ่มการเรียน',
   `advisor_id` int(11) NOT NULL COMMENT 'บันทึกข้อมูลโดยใคร',
   `advisor_type` varchar(10) NOT NULL COMMENT 'ประเภทครูที่ปรึกษา',
   `created_at` datetime NOT NULL COMMENT 'บันทึกข้อมูลเมื่อไหร่',
   `updated_at` datetime NOT NULL COMMENT 'แก้ไขข้อมูลล่าสุดเมื่อไหร่',
-  `status` int(11) NOT NULL COMMENT 'สถานะ'
+  `status` int(1) NOT NULL COMMENT 'สถานะ'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `homeroom_confirm`
