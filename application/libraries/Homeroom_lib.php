@@ -80,7 +80,7 @@ class Homeroom_lib
                                             <button class="uk-button uk-button-mini"><i class="uk-icon-eye"></i></button>
                                             <button class="uk-button uk-button-mini">หัวหน้าแผนก (เปิดอ่านแล้ว)</button>
                                         </div>';
-            } elseif ($checkStatus=='approved') {
+            } elseif ($checkStatus=='confirmed') {
                 $checkStatusHtml = '<div class="uk-button-group">
                                             <button class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-check"></i></button>
                                             <button class="uk-button uk-button-success uk-button-mini">หัวหน้าแผนก (รับรองการส่งแล้ว)</button>
