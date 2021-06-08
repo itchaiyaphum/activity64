@@ -42,7 +42,7 @@ class Major extends BaseController
         $data['leftmenu'] = $this->load->view('admin/menu', '', true);
         $data['pagination'] = $this->major_model->getPagination();
         $data['item'] = $this->major_model->getItem($id);
-        $data['college_items'] = $this->college_model->getItems(array('status'=>1));
+        $data['college_items'] = $this->college_model->getItems(array('status'=>1,'no_limit'=>true));
         
         $this->load->view('nav');
         $this->load->view('admin/major/form', $data);

@@ -4,7 +4,6 @@ require_once APPPATH . 'controllers' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY
 
 class Group extends BaseController
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -38,14 +37,14 @@ class Group extends BaseController
             }
         }
             
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         
         $data = array();
         $data['leftmenu'] = $this->load->view('admin/menu', '', true);
         $data['pagination'] = $this->group_model->getPagination();
         $data['item'] = $this->group_model->getItem($id);
-        $data['major_items'] = $this->major_model->getItems(array('status'=>'publish'));
-        $data['minor_items'] = $this->minor_model->getItems(array('status'=>'publish'));
+        $data['major_items'] = $this->major_model->getItems(array('status'=>'publish','no_limit'=>true));
+        $data['minor_items'] = $this->minor_model->getItems(array('status'=>'publish','no_limit'=>true));
         
         $sql = "SELECT * FROM users WHERE user_type='advisor' AND activated=1 ";
         $data['advisor_items'] = $this->adminusers_model->getItemsCustom($sql);
@@ -57,37 +56,37 @@ class Group extends BaseController
     
     public function publish()
     {
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         $this->group_model->publish($id);
-        $per_page = $this->input->get_post('per_page',1);
+        $per_page = $this->input->get_post('per_page', 1);
         redirect('admin/group/?per_page='.$per_page);
     }
     public function unpublish()
     {
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         $this->group_model->unpublish($id);
-        $per_page = $this->input->get_post('per_page',1);
+        $per_page = $this->input->get_post('per_page', 1);
         redirect('admin/group/?per_page='.$per_page);
     }
     public function trash()
     {
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         $this->group_model->trash($id);
-        $per_page = $this->input->get_post('per_page',1);
+        $per_page = $this->input->get_post('per_page', 1);
         redirect('admin/group/?per_page='.$per_page);
     }
     public function delete()
     {
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         $this->group_model->delete($id);
-        $per_page = $this->input->get_post('per_page',1);
+        $per_page = $this->input->get_post('per_page', 1);
         redirect('admin/group/?per_page='.$per_page);
     }
     public function restore()
     {
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         $this->group_model->restore($id);
-        $per_page = $this->input->get_post('per_page',1);
+        $per_page = $this->input->get_post('per_page', 1);
         redirect('admin/group/?per_page='.$per_page);
     }
 }
