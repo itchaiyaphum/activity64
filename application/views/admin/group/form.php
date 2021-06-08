@@ -22,11 +22,11 @@
                         <select name="major_id"  class="uk-width-1-2">
                         	<option value="0">- เลือกสาขาวิชา -</option>
                         	<?php
-                                for($i=0; $i<count($major_items); $i++){
-                                    $row = $major_items[$i];
-                            ?>
-                            <option value="<?php echo $row->id;?>" <?php echo ($row->id==$item->major_id)?'selected="selected"':'';?>><?php echo $row->major_name;?></option>
-                            <?php  } ?>
+                                for ($i=0; $i<count($major_items); $i++) {
+                                    $row = $major_items[$i]; ?>
+                            <option value="<?php echo $row->id; ?>" <?php echo ($row->id==$item->major_id)?'selected="selected"':''; ?>><?php echo $row->major_name; ?></option>
+                            <?php
+                                } ?>
                         </select>
                     </div>
                 </div>
@@ -35,19 +35,18 @@
                     <div class="uk-form-controls">
                         <select name="minor_id"  class="uk-width-1-2">
                         	<option value="0">- เลือกสาขางาน -</option>
-                        	<?php 
-                            for($i=0; $i<count($major_items); $i++){
-                                $row_major = $major_items[$i];
-                            ?>
-                            	<option value="0" disabled>-| <?php echo $row_major->major_name;?></option>
-                                <?php 
-                            	for($j=0; $j<count($minor_items); $j++){
-                            	    $row = $minor_items[$j];
-                            	    if($row_major->id==$row->major_id){
-                            	?>
-                            	<option value="<?php echo $row->id;?>" <?php echo ($row->id==$item->minor_id)?'selected="selected"':'';?>>---| <?php echo $row->minor_name;?></option>
-                            	<?php 
-                            	   } 
+                        	<?php
+                            for ($i=0; $i<count($major_items); $i++) {
+                                $row_major = $major_items[$i]; ?>
+                            	<option value="0" disabled>-| <?php echo $row_major->major_name; ?></option>
+                                <?php
+                                for ($j=0; $j<count($minor_items); $j++) {
+                                    $row = $minor_items[$j];
+                                    if ($row_major->id==$row->major_id) {
+                                        ?>
+                            	<option value="<?php echo $row->id; ?>" <?php echo ($row->id==$item->minor_id)?'selected="selected"':''; ?>>---| <?php echo $row->minor_name; ?></option>
+                            	<?php
+                                    }
                                 }
                             }
                             ?>
@@ -58,34 +57,6 @@
                     <label class="uk-form-label" for="form-h-it">กลุ่มการเรียน</label>
                     <div class="uk-form-controls">
                         <input type="text" id="form-h-it" name="group_name" value="<?php echo $item->group_name;?>">
-                    </div>
-                </div>
-                <div class="uk-form-row">
-                    <label class="uk-form-label" for="form-h-it">ครูที่ปรึกษาหลัก</label>
-                    <div class="uk-form-controls">
-                        <select name="advisor_id"  class="uk-width-1-2">
-                        	<option value="0">- เลือกครูที่ปรึกษาหลัก -</option>
-                        	<?php 
-                        	for($i=0; $i<count($advisor_items); $i++){
-                        	    $row = $advisor_items[$i];
-                        	?>
-                        	<option value="<?php echo $row->id;?>" <?php echo ($row->id==$item->advisor_id)?'selected="selected"':'';?>><?php echo $row->firstname.' '.$row->lastname;?></option>
-                        	<?php } ?>
-                        </select>
-                    </div>
-                </div>
-                <div class="uk-form-row">
-                    <label class="uk-form-label" for="form-h-it">ครูที่ปรึกษาร่วม</label>
-                    <div class="uk-form-controls">
-                        <select name="coadvisor_id"  class="uk-width-1-2">
-                        	<option value="0">- เลือกครูที่ปรึกษาร่วม -</option>
-                        	<?php 
-                        	for($i=0; $i<count($advisor_items); $i++){
-                        	    $row = $advisor_items[$i];
-                        	?>
-                        	<option value="<?php echo $row->id;?>" <?php echo ($row->id==$item->coadvisor_id)?'selected="selected"':'';?>><?php echo $row->firstname.' '.$row->lastname;?></option>
-                        	<?php } ?>
-                        </select>
                     </div>
                 </div>
                 

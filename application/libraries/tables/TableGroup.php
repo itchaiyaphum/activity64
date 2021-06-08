@@ -1,26 +1,27 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
 
 class TableGroup extends JTable
 {
-    public $id = NULL;
-    public $college_id = NULL;
-    public $major_id = NULL;
-    public $minor_id = NULL;
-    public $advisor_id = NULL;
-    public $coadvisor_id = NULL;
-    public $grouup_code = NULL;
-    public $group_name = NULL;
-    public $created_at = NULL;
-    public $updated_at = NULL;
-    public $status = NULL;
+    public $id = null;
+    public $college_id = null;
+    public $major_id = null;
+    public $minor_id = null;
+    public $grouup_code = null;
+    public $group_name = null;
+    public $created_at = null;
+    public $updated_at = null;
+    public $status = null;
     
     // Join Field (Hidden)
-    private $major_name = NULL;
-    private $minor_name = NULL;
-    private $advisor_firstname = NULL;
-    private $advisor_lastname = NULL;
+    private $major_name = null;
+    private $minor_name = null;
+    private $advisor_firstname = null;
+    private $advisor_lastname = null;
     
-    public function __construct($db=NULL){
+    public function __construct($db=null)
+    {
         parent::__construct('groups', 'id', $db);
     }
 }
