@@ -34,24 +34,8 @@
 	<li class="<?php echo $this->helper_lib->getActiveMenu('users');?>">
 		<a href="<?php echo base_url('admin/users'); ?>"><span class="uk-icon-cube"></span> จัดการผู้ใช้งาน</a>
 	</li>
-	<!-- 
-	<li class="<?php echo $this->helper_lib->getActiveMenu('student');?>">
-		<a href="<?php echo base_url('admin/student'); ?>"><span class="uk-icon-cube"></span> จัดการนักศึกษา</a>
+	<li class="<?php echo $this->helper_lib->getActiveMenu('importdata');?>">
+		<a href="<?php echo base_url('admin/importdata'); ?>"><span class="uk-icon-cube"></span> Import Data</a>
 	</li>
-	<li class="<?php echo $this->helper_lib->getActiveMenu('advisor');?>">
-		<a href="<?php echo base_url('admin/advisor'); ?>"><span class="uk-icon-cube"></span> จัดการอาจารย์ที่ปรึกษา</a>
-	</li>
-	<li class="<?php echo $this->helper_lib->getActiveMenu('trainer');?>">
-		<a href="<?php echo base_url('admin/trainer'); ?>"><span class="uk-icon-cube"></span> จัดการผู้ควบคุมฝึกงาน</a>
-	</li>
-	<li class="<?php echo $this->helper_lib->getActiveMenu('staff');?>">
-		<a href="<?php echo base_url('admin/staff'); ?>"><span class="uk-icon-cube"></span> จัดการเจ้าหน้าที่สถานศึกษา</a>
-	</li>
-	-->
 	<li><hr></li>
-	<!-- 
-	<li class="<?php echo $this->helper_lib->getActiveMenu('survey');?>">
-		<a href="<?php echo base_url('admin/survey'); ?>"><span class="uk-icon-cube"></span> จัดการแบบสำรวจความพึงพอใจ</a>
-	</li>
-	 -->
 </ul>
