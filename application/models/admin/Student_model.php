@@ -21,7 +21,7 @@ class Student_model extends BaseModel
         }
         // get all students belong advisor logined
         $sql = 'SELECT users_student.id  FROM users_student
-                WHERE users_student.group_id IN( SELECT group_id FROM advisors_groups WHERE advisor_id='.$advisor_id.')';
+                WHERE users_student.group_id IN( SELECT group_id FROM advisors_groups WHERE advisor_id='.$advisor_id.' AND status=1)';
         $query = $this->ci->db->query($sql);
         $items = $query->result();
         return count($items);
@@ -41,7 +41,7 @@ class Student_model extends BaseModel
                 LEFT JOIN groups ON (users_student.group_id=groups.id)
                 LEFT JOIN minors ON (groups.minor_id=minors.id)
                 LEFT JOIN majors ON (minors.major_id=majors.id)
-                WHERE users_student.group_id IN( SELECT group_id FROM advisors_groups WHERE advisor_id={$advisor_id} )";
+                WHERE users_student.group_id IN( SELECT group_id FROM advisors_groups WHERE advisor_id={$advisor_id} AND status=1 )";
         $query = $this->ci->db->query($sql);
         $students = $query->result();
         
