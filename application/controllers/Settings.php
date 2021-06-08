@@ -74,7 +74,7 @@ class Settings extends CI_Controller
             }
         }
                 
-        $data['college_items'] = $this->college_model->getItems(array('status'=>1));
+        $data['college_items'] = $this->college_model->getItems(array('status'=>1,'no_limit' => true));
                 
         $this->load->view('nav');
         $this->load->view('settings/profile_advisor', $data);
@@ -100,7 +100,7 @@ class Settings extends CI_Controller
             }
         }
                 
-        $data['college_items'] = $this->college_model->getItems(array('status'=>1));
+        $data['college_items'] = $this->college_model->getItems(array('status'=>1,'no_limit' => true));
                 
         $this->load->view('nav');
         $this->load->view('settings/profile_headadvisor', $data);
@@ -126,7 +126,7 @@ class Settings extends CI_Controller
             }
         }
                 
-        $data['college_items'] = $this->college_model->getItems(array('status'=>1));
+        $data['college_items'] = $this->college_model->getItems(array('status'=>1,'no_limit' => true));
                 
         $this->load->view('nav');
         $this->load->view('settings/profile_staff', $data);
@@ -152,8 +152,8 @@ class Settings extends CI_Controller
             }
         }
             
-        $data['college_items'] = $this->college_model->getItems(array('status'=>1));
-        $data['major_items'] = $this->major_model->getItems(array('status'=>1));
+        $data['college_items'] = $this->college_model->getItems(array('status'=>1,'no_limit' => true));
+        $data['major_items'] = $this->major_model->getItems(array('status'=>1,'no_limit' => true));
             
         $this->load->view('nav');
         $this->load->view('settings/profile_headdepartment', $data);
@@ -179,7 +179,7 @@ class Settings extends CI_Controller
             }
         }
             
-        $data['college_items'] = $this->college_model->getItems(array('status'=>1));
+        $data['college_items'] = $this->college_model->getItems(array('status'=>1,'no_limit' => true));
             
         $this->load->view('nav');
         $this->load->view('settings/profile_executive', $data);

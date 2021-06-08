@@ -55,8 +55,8 @@ class Userscontroller extends BaseController
         $data['pagination'] = $this->headadvisorusers_model->getPagination();
         $data['item'] = $this->headadvisorusers_model->getItem($id);
         $data['item_profile'] = $this->headadvisorusers_model->getProfileItem($id);
-        $data['college_items'] = $this->college_model->getItems(array('status'=>1));
-        $data['major_items'] = $this->major_model->getItems(array('status'=>1));
+        $data['college_items'] = $this->college_model->getItems(array('status'=>1,'no_limit' => true));
+        $data['major_items'] = $this->major_model->getItems(array('status'=>1,'no_limit' => true));
         
         $this->load->view('nav');
         $this->load->view('headadvisor/users/form', $data);
