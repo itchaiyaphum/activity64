@@ -186,10 +186,10 @@ CREATE TABLE `homeroom_obedience_attachments` (
 
 ALTER TABLE `homeroom_obedience_attachments`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `homeroom_id` (`homeroom_id`,`group_id`);
+  ADD KEY `homeroom_id` (`homeroom_id`,`advisor_id`);
 
 ALTER TABLE `homeroom_obedience_attachments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสอ้างอิง';
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสอ้างอิง', AUTO_INCREMENT=3;
 
 
 

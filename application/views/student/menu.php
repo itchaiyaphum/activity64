@@ -1,4 +1,4 @@
-<?php 
+<?php
 $profileData = $this->profile_lib->getData();
 ?>
 <div class="uk-panel  uk-text-center">
@@ -9,17 +9,8 @@ $profileData = $this->profile_lib->getData();
 <hr />
 <ul class="tm-nav uk-nav" data-uk-nav="">
 	<li class="uk-nav-header">เมนูหลัก</li>
-	<li class="<?php echo $this->helper_lib->getActiveMenu('profile');?>">
-		<a href="<?php echo base_url('profile'); ?>"><span class="uk-icon-home"></span> หน้าหลัก</a>
-	</li>
-	<li class="<?php echo $this->helper_lib->getActiveMenu('activity');?>">
-		<a href="<?php echo base_url('profile/activity/'); ?>"><span class="uk-icon-book"></span> บันทึกการเรียน</a>
-	</li>
-	<li class="<?php echo $this->helper_lib->getActiveMenu('time');?>">
-		<a href="<?php echo base_url('profile/time/'); ?>"><span class="uk-icon-clock-o"></span> บันทึกเวลาเรียน</a>
-	</li>
-	<li class="<?php echo $this->helper_lib->getActiveMenu('evaluation');?>">
-		<a href="<?php echo base_url('profile/evaluation/'); ?>"><span class="uk-icon-pie-chart"></span> สรุปผลการฝึกงาน</a>
+	<li class="<?php echo $this->helper_lib->getActiveMenu('student');?>">
+		<a href="<?php echo base_url('student'); ?>"><span class="uk-icon-home"></span> หน้าหลัก</a>
 	</li>
 </ul>
 <br/><br/>

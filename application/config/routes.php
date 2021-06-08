@@ -100,3 +100,6 @@ $route['headadvisor_restricted_access']	= "home/headadvisor_restricted_access";
 
 $route['executive']	= "executive/home";
 $route['executive_restricted_access']	= "home/executive_restricted_access";
+
+$route['student']	= "student/home";
+$route['student_restricted_access']	= "home/student_restricted_access";

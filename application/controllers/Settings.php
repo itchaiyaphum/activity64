@@ -43,12 +43,8 @@ class Settings extends CI_Controller
             }
         }
                 
-        $data['colleges'] = $this->college_model->getItems(array('status'=>1));
-        $data['departments'] = $this->department_model->getItems(array('status'=>1));
-        $data['internship_items'] = $this->internship_model->getItems(array('status'=>1));
-        $data['company_items'] = $this->company_model->getItems(array('status'=>1));
-        $data['trainer_items'] = $this->profile_lib->getTrainer();
-        $data['advisor_items'] = $this->profile_lib->getAdvisor();
+        $data['college_items'] = $this->college_model->getItems(array('status'=>1,'no_limit'=>true));
+        $data['major_items'] = $this->major_model->getItems(array('status'=>1,'no_limit'=>true));
                 
         $this->load->view('nav');
         $this->load->view('settings/profile_student', $data);

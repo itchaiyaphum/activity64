@@ -1,27 +1,27 @@
 <?php
 $login = array(
-	'name'	=> 'login',
-	'id'	=> 'login',
-	'value' => set_value('login'),
-	'maxlength'	=> 80,
-	'size'	=> 30,
+    'name'	=> 'login',
+    'id'	=> 'login',
+    'value' => set_value('login'),
+    'maxlength'	=> 80,
+    'size'	=> 30,
 );
-if ($login_by_username AND $login_by_email) {
-	$login_label = 'อีเมล์ หรือ ชื่อผู้ใช้';
-} else if ($login_by_username) {
-	$login_label = 'ชื่อผู้ใช้';
+if ($login_by_username and $login_by_email) {
+    $login_label = 'อีเมล์ หรือ ชื่อผู้ใช้';
+} elseif ($login_by_username) {
+    $login_label = 'ชื่อผู้ใช้';
 } else {
-	$login_label = 'อีเมล์';
+    $login_label = 'อีเมล์';
 }
 $password = array(
-	'name'	=> 'password',
-	'id'	=> 'password',
-	'size'	=> 30,
+    'name'	=> 'password',
+    'id'	=> 'password',
+    'size'	=> 30,
 );
 $captcha = array(
-	'name'	=> 'captcha',
-	'id'	=> 'captcha',
-	'maxlength'	=> 8,
+    'name'	=> 'captcha',
+    'id'	=> 'captcha',
+    'maxlength'	=> 8,
 );
 $attributes = array('class' => 'uk-panel uk-panel-box uk-panel-box-secondary uk-form uk-form-horizontal', 'id' => 'loginform', 'method'=>'post');
 ?>
@@ -49,10 +49,10 @@ $attributes = array('class' => 'uk-panel uk-panel-box uk-panel-box-secondary uk-
                 </div>
             </div>
         </div>
-        <?php 
+        <?php
         if ($show_captcha) {
-            if ($use_recaptcha) { 
-        ?>
+            if ($use_recaptcha) {
+                ?>
         <div class="uk-form-row">
             <div class="uk-form-controls" style="margin-left: 50px;">
                 <div id="recaptcha_image"></div>
@@ -63,13 +63,12 @@ $attributes = array('class' => 'uk-panel uk-panel-box uk-panel-box-secondary uk-
             <div class="uk-form-controls"">
             	<label class="uk-form-label" for="form-h-it">กรอกรหัสที่ปรากฏ</label>
                 <div>
-                	 <?php 
-                	 echo form_input(array(
-                    	'name'	=> 'recaptcha_response_field',
-                    	'id'	=> 'recaptcha_response_field',
-                	    'size'	=> 30,
-                     )); 
-                	 ?>
+                	 <?php
+                     echo form_input(array(
+                        'name'	=> 'recaptcha_response_field',
+                        'id'	=> 'recaptcha_response_field',
+                        'size'	=> 30,
+                     )); ?>
                 </div>
                 <div>
                 	<?php echo form_error('recaptcha_response_field'); ?>
@@ -77,7 +76,8 @@ $attributes = array('class' => 'uk-panel uk-panel-box uk-panel-box-secondary uk-
                 <?php echo $recaptcha_html; ?>
             </div>
         </div>
-        <?php } else { ?>
+        <?php
+            } else { ?>
         <div class="uk-form-row">
             <label class="uk-form-label" for="form-h-it">กรอกรหัสที่ปรากฏ:</label>
             <div class="uk-form-controls">
@@ -93,9 +93,9 @@ $attributes = array('class' => 'uk-panel uk-panel-box uk-panel-box-secondary uk-
                 </div>
             </div>
         </div>
-        <?php 
+        <?php
             }
-        } 
+        }
         ?>
         <div class="uk-form-row">
             <label class="uk-form-label" for="form-h-it"></label>
@@ -103,10 +103,14 @@ $attributes = array('class' => 'uk-panel uk-panel-box uk-panel-box-secondary uk-
                 <input type="submit" value="เข้าสู่ระบบ" class="uk-button uk-button-success">
             </div>
         </div>
+        <!--
         <hr/>
         <div class="uk-text-center">
-            <div><?php echo anchor('/auth/forgot_password/', 'ลืมรหัสผ่าน'); ?> | <?php if ($this->config->item('allow_registration', 'tank_auth')) echo anchor('/auth/register/', 'สมัครสมาชิกใหม่'); ?></div>
+            <div><?php echo anchor('/auth/forgot_password/', 'ลืมรหัสผ่าน'); ?> | <?php if ($this->config->item('allow_registration', 'tank_auth')) {
+            echo anchor('/auth/register/', 'สมัครสมาชิกใหม่');
+        } ?></div>
         </div>
+        -->
         <input type="hidden" name="remember" value="1"/>
         <?php echo form_close(); ?>
 	</div>
