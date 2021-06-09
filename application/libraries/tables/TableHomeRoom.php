@@ -1,23 +1,26 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
 
 class TableHomeRoom extends JTable
 {
-    public $id = NULL;
-    public $semester_id = NULL;
-    public $week = NULL;
-    public $join_start = NULL;
-    public $join_end = NULL;
-    public $coverr_img = NULL;
-    public $created_at = NULL;
-    public $updated_at = NULL;
-    public $status = NULL;
-    public $created_by_user_id = NULL;
-    public $remark = NULL;
+    public $id = null;
+    public $semester_id = null;
+    public $week = null;
+    public $join_start = null;
+    public $join_end = null;
+    public $cover_img = null;
+    public $created_at = null;
+    public $updated_at = null;
+    public $status = null;
+    public $created_by_user_id = null;
+    public $remark = null;
     
     // Join Field (Hidden)
-    private $semester_name = NULL;
+    private $semester_name = null;
     
-    public function __construct($db=NULL){
+    public function __construct($db=null)
+    {
         parent::__construct('homerooms', 'id', $db);
     }
 }

@@ -8,13 +8,11 @@ class Advisorhomeroom extends BaseController
     {
         parent::__construct();
         
-        $this->load->model('admin/semester_model');
-        $this->load->model('admin/homeroom_model');
+        $this->load->model('base_homeroom_model');
         $this->load->model('homeroomactivity_model');
         $this->load->model('homeroomobedience_model');
         $this->load->model('homeroomrisk_model');
         $this->load->model('homeroomconfirm_model');
-        $this->load->model('admin/adminusers_model');
         $this->load->model('admin/student_model');
         $this->load->library('form_validation');
         $this->load->library('profile_lib');
@@ -25,8 +23,7 @@ class Advisorhomeroom extends BaseController
     {
         $data = array();
         $data['leftmenu'] = $this->load->view('advisor/menu', '', true);
-        $data['pagination'] = $this->homeroom_model->getPagination();
-        $data['items'] = $this->homeroom_model->getItems();
+        $data['homeroom_items'] = $this->base_homeroom_model->getItems();
 
         $this->load->view('nav');
         $this->load->view('advisor/homeroom/index', $data);

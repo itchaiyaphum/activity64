@@ -132,6 +132,74 @@ class Homeroom_lib
         return $html;
     }
 
+    public function getAdvisorStatusHtml($user_type='advisor', $checkStatus='')
+    {
+        $html = '';
+        $checkStatusHtml = '';
+
+        if ($user_type=='advisor') {
+            if ($checkStatus=='viewed') {
+                $checkStatusHtml = '<div class="uk-button-group">
+                                            <button class="uk-button uk-button-mini"><i class="uk-icon-eye"></i></button>
+                                            <button class="uk-button uk-button-mini">ครูที่ปรึกษาหลัก (กำลังบันทึกข้อมูล)</button>
+                                        </div>';
+            } elseif ($checkStatus=='confirmed') {
+                $checkStatusHtml = '<div class="uk-button-group">
+                                            <button class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-check"></i></button>
+                                            <button class="uk-button uk-button-success uk-button-mini">ครูที่ปรึกษาหลัก (ยืนยันการกรอกข้อมูลแล้ว)</button>
+                                        </div>';
+            } else {
+                $checkStatusHtml = '<div class="uk-button-group">
+                                            <button class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i></button>
+                                            <button class="uk-button uk-button-mini">ครูที่ปรึกษาหลัก (รอการบันทึกข้อมูล)</button>
+                                        </div>';
+            }
+            $html .= $checkStatusHtml;
+        } elseif ($user_type=='coadvisor') {
+            if ($checkStatus=='viewed') {
+                $checkStatusHtml = '<div class="uk-button-group">
+                                            <button class="uk-button uk-button-mini"><i class="uk-icon-eye"></i></button>
+                                            <button class="uk-button uk-button-mini">ครูที่ปรึกษาร่วม (กำลังบันทึกข้อมูล)</button>
+                                        </div>';
+            } elseif ($checkStatus=='confirmed') {
+                $checkStatusHtml = '<div class="uk-button-group">
+                                            <button class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-check"></i></button>
+                                            <button class="uk-button uk-button-success uk-button-mini">ครูที่ปรึกษาร่วม (ยืนยันการกรอกข้อมูลแล้ว)</button>
+                                        </div>';
+            } else {
+                $checkStatusHtml = '<div class="uk-button-group">
+                                            <button class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i></button>
+                                            <button class="uk-button uk-button-mini">ครูที่ปรึกษาร่วม (รอการบันทึกข้อมูล)</button>
+                                        </div>';
+            }
+            $html .= $checkStatusHtml;
+        }
+        
+        return $html;
+    }
+
+    public function getEditButtonHtml($homeroom_id=0, $group_id=0, $link='')
+    {
+        $html = '';
+        $checkStatusHtml = '';
+        
+        $checkStatusHtml = "<a href='{$link}' class='uk-button uk-button-primary uk-button-small'><i class='uk-icon-pencil'></i> บันทึกข้อมูล</a>";
+        $html .= $checkStatusHtml;
+        
+        return $html;
+    }
+
+    public function getPrintButtonHtml($homeroom_id=0, $group_id=0, $user_type='advisor')
+    {
+        $html = '';
+        $checkStatusHtml = '';
+        
+        $checkStatusHtml = '<button disabled class="uk-button uk-button-small"><i class="uk-icon-print"></i></button>';
+        $html .= $checkStatusHtml;
+        
+        return $html;
+    }
+
     public function getHomeroomAction($homeroom_id=0, $user_id=0)
     {
         if ($user_id==0) {
@@ -141,5 +209,17 @@ class Homeroom_lib
         $query = $this->ci->db->query($sql);
         $row = $query->row();
         return $row;
+    }
+
+    
+    public function getAdvisorTypeText($advisor_type='')
+    {
+        $advisor_text = '';
+        if ($advisor_type=='advisor') {
+            $advisor_text = '<div class="uk-badge">เป็นที่ปรึกษาหลัก</div>';
+        } elseif ($advisor_type=='coadvisor') {
+            $advisor_text = '<div class="uk-badge uk-badge-warning">เป็นที่ปรึกษาร่วม</div>';
+        }
+        return $advisor_text;
     }
 }
