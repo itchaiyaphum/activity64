@@ -307,4 +307,53 @@ class Homeroom_lib
         // insert homeroom action
         return $this->ci->db->insert('homeroom_actions', $action_item);
     }
+
+    public function getGroupsByAdvisor($advisor_id=0)
+    {
+        if ($advisor_id==0) {
+            $advisor_id = $this->ci->tank_auth->get_user_id();
+        }
+        $sql = "SELECT groups.*,majors.major_name,minors.minor_name FROM groups 
+                    LEFT JOIN majors ON (groups.major_id=majors.id)
+                    LEFT JOIN minors ON (groups.minor_id=minors.id)
+                    WHERE groups.id IN (SELECT group_id FROM advisors_groups WHERE advisor_id={$advisor_id}) 
+                            AND groups.status=1";
+        $query = $this->ci->db->query($sql);
+        $items = $query->result();
+        return $items;
+    }
+
+    public function getActionItems($group_id=0)
+    {
+        //get all groups items
+        $group_items = $this->getGroupsByAdvisor();
+        $groups = array();
+        foreach ($group_items as $group) {
+            array_push($groups, $group->id);
+        }
+        $group_ids = implode(',', $groups);
+
+        $sql = "SELECT * FROM homeroom_actions 
+                    WHERE user_id IN (SELECT DISTINCT advisor_id FROM advisors_groups WHERE group_id IN({$group_ids})) 
+                            AND status=1";
+        $query = $this->ci->db->query($sql);
+        $items = $query->result();
+        return $items;
+    }
+
+    public function getAdvisorGroupsItems()
+    {
+        //get all groups items
+        $group_items = $this->getGroupsByAdvisor();
+        $groups = array();
+        foreach ($group_items as $group) {
+            array_push($groups, $group->id);
+        }
+        $group_ids = implode(',', $groups);
+
+        $sql = "SELECT * FROM advisors_groups WHERE group_id IN({$group_ids}) AND status=1";
+        $query = $this->ci->db->query($sql);
+        $items = $query->result();
+        return $items;
+    }
 }
