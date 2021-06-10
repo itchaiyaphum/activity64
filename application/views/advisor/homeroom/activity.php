@@ -12,17 +12,17 @@
 			<hr/>
             <form action="<?php echo base_url('advisor/homeroom/activity_save');?>" method="post" name="adminForm" id="adminForm">
             	<div class="uk-button-group uk-width-1-1">
-                    <a class="uk-button uk-width-1-4 uk-button-primary" href="<?php echo base_url("advisor/homeroom/activity/?id=".$homeroom->id);?>">STEP 1: เช็คชื่อ</a>
-                    <a  class="uk-button uk-width-1-4" href="<?php echo base_url("advisor/homeroom/obedience/?id=".$homeroom->id);?>">STEP 2: การให้โอวาท</a>
-                    <a  class="uk-button uk-width-1-4" href="<?php echo base_url("advisor/homeroom/risk/?id=".$homeroom->id);?>">STEP 3: ประเมินความเสี่ยง</a>
-                    <a  class="uk-button uk-width-1-4" href="<?php echo base_url("advisor/homeroom/confirm/?id=".$homeroom->id);?>">STEP 4: ยืนยันการบันทึกข้อมูล</a>
+                    <a class="uk-button uk-width-1-4 uk-button-primary" href="<?php echo base_url("advisor/homeroom/activity/?id=".$homeroom->id."&group_id=".$group_id);?>">STEP 1: เช็คชื่อ</a>
+                    <a  class="uk-button uk-width-1-4" href="<?php echo base_url("advisor/homeroom/obedience/?id=".$homeroom->id."&group_id=".$group_id);?>">STEP 2: การให้โอวาท</a>
+                    <a  class="uk-button uk-width-1-4" href="<?php echo base_url("advisor/homeroom/risk/?id=".$homeroom->id."&group_id=".$group_id);?>">STEP 3: ประเมินความเสี่ยง</a>
+                    <a  class="uk-button uk-width-1-4" href="<?php echo base_url("advisor/homeroom/confirm/?id=".$homeroom->id."&group_id=".$group_id);?>">STEP 4: ยืนยันการบันทึกข้อมูล</a>
                 </div>
-            	
+
             	<?php
-                foreach ($student_items as $group) {
+                foreach ($homeroom->groups as $group) {
                     ?>
             	<div class="uk-panel uk-panel-box uk-panel-box-default uk-margin-top">
-                    <h3 class="uk-panel-title">กลุ่มการเรียน: <?php echo $group['group_name'].' / '.$group['minor_name'].' / '.$group['major_name']; ?></h3>
+                    <h3 class="uk-panel-title">กลุ่มการเรียน: <?php echo $group->group_name.' / '.$group->minor_name.' / '.$group->major_name; ?></h3>
                 	<hr/>
                 	<table class="uk-table uk-table-hover" cellpadding="1">
                 		<thead>
@@ -41,44 +41,29 @@
                 		</thead>
                 		<tbody>
                 		<?php
-                        if (count($group['items'])<=0) {
+                        if (count($group->students)<=0) {
                             echo '<tr><td colspan="6" class="uk-text-center"><p>ไม่มีข้อมูล</p></td></tr>';
                         } else {
-                            $k = 0;
-                            
-                            $join_status_items = array();
-                            foreach ($homeroom_activity_items as $item) {
-                                $join_status_items[$item->student_id] = $item->check_status;
-                            }
-                            
-                            for ($i=0, $n=count($group['items']); $i < $n; $i++) {
-                                $row 	=& $group['items'][$i];
-                                
-                                if (!isset($join_status_items[$row->id])) {
-                                    $join_status_items[$row->id] = 'come';
-                                } ?>
-                			<tr class="<?php echo "row$k"; ?>">
+                            for ($i=0, $n=count($group->students); $i < $n; $i++) {
+                                $student 	=& $group->students[$i]; ?>
+                			<tr>
                 				<td>
                 					<?php echo($i+1); ?>
                 				</td>
                 				<td>
-                					<?php echo $row->student_id; ?>
+                					<?php echo $student->student_code; ?>
                 				</td>
                 				<td>
-                					<?php echo $row->firstname; ?> <?php echo $row->lastname; ?>
+                					<?php echo $student->firstname; ?> <?php echo $student->lastname; ?>
                 				</td>
                 				<td>
-                					<input class="uk-radio" type="radio" name="join_status[<?php echo $row->id; ?>]" value="come" <?php echo ($join_status_items[$row->id]=='come')?'checked="1"':''; ?>> มา
-                					<input class="uk-radio" type="radio" name="join_status[<?php echo $row->id; ?>]" value="not_come" <?php echo ($join_status_items[$row->id]=='not_come')?'checked="1"':''; ?>> ขาด
-                					<input class="uk-radio" type="radio" name="join_status[<?php echo $row->id; ?>]" value="late" <?php echo ($join_status_items[$row->id]=='late')?'checked="1"':''; ?>> สาย
-                					<input class="uk-radio" type="radio" name="join_status[<?php echo $row->id; ?>]" value="leave" <?php echo ($join_status_items[$row->id]=='leave')?'checked="1"':''; ?>> ลา
-                				</td>
-                				<td>
-                					<?php //echo $row->operation_status_name;?>
+                					<input class="uk-radio" type="radio" name="join_status[<?php echo $student->id; ?>]" value="come" <?php echo ($student->activity_status=='come')?'checked="1"':''; ?>> มา
+                					<input class="uk-radio" type="radio" name="join_status[<?php echo $student->id; ?>]" value="not_come" <?php echo ($student->activity_status=='not_come')?'checked="1"':''; ?>> ขาด
+                					<input class="uk-radio" type="radio" name="join_status[<?php echo $student->id; ?>]" value="late" <?php echo ($student->activity_status=='late')?'checked="1"':''; ?>> สาย
+                					<input class="uk-radio" type="radio" name="join_status[<?php echo $student->id; ?>]" value="leave" <?php echo ($student->activity_status=='leave')?'checked="1"':''; ?>> ลา
                 				</td>
                 			</tr>
                 		<?php
-                            $k = 1 - $k;
                             }
                         } ?>
                 		</tbody>
@@ -87,30 +72,15 @@
             	<?php
                 } ?>
             
-            	<input type="hidden" name="id" value="<?php echo $homeroom_activity->id;?>" />
             	<input type="hidden" name="homeroom_id" value="<?php echo $homeroom->id;?>" />
-            	<input type="hidden" name="advisor_id" value="<?php echo $advisor_id;?>" />
+            	<input type="hidden" name="group_id" value="<?php echo $group_id;?>" />
             </form>
             
             <br/><br/>
         	<div class="uk-panel uk-panel-box uk-panel-box-primary uk-margin-top uk-text-center">
 				<?php
-                $rowAction = $this->homeroom_lib->getHomeroomAction($homeroom->id);
-                $actionStatusButton = '';
-                $actionTextButton = 'บันทึกข้อมูล';
-                if (isset($rowAction)) {
-                    if ($rowAction->action_status=='confirmed') {
-                        $actionStatusButton = 'disabled';
-                        $actionTextButton = 'ยืนยันการบันทึกข้อมูลเรียบร้อยแล้ว';
-                    }
-                }
-                if ($actionStatusButton!='') {
-                    ?>
-				<a class="uk-button uk-button-primary uk-button-large" href="<?php echo base_url('/advisor/homeroom'); ?>"><i class="uk-icon-home"></i> กลับหน้าหลัก</a>
-				<?php
-                }
+                echo $this->homeroom_lib->getActivityButton($homeroom->id, $group_id, 'advisor/homeroom');
                 ?>
-				<button <?php echo $actionStatusButton; ?> class="uk-button uk-button-primary uk-button-large" data-uk-modal="{target:'#confirm-form'}"><?php echo $actionTextButton; ?></button>
         		<div id="confirm-form" class="uk-modal">
                     <div class="uk-modal-dialog">
                     	<a class="uk-modal-close uk-close"></a>

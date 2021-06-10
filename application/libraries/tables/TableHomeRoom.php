@@ -14,6 +14,7 @@ class TableHomeRoom extends JTable
     public $updated_at = null;
     public $status = null;
     public $created_by_user_id = null;
+    public $is_lock = null;
     public $remark = null;
     
     // Join Field (Hidden)

@@ -33,14 +33,12 @@ class Advisorhomeroom extends BaseController
     public function activity()
     {
         $id = $this->input->get_post('id', 0);
+        $group_id = $this->input->get_post('group_id', 0);
         
         $data = array();
         $data['leftmenu'] = $this->load->view('advisor/menu', '', true);
-        $data['homeroom'] = $this->homeroom_model->getItem($id);
-        $data['student_items'] = $this->student_model->getStudentsByAdvisor();
-        $data['homeroom_activity'] = $this->homeroomactivity_model->getItem($id);
-        $data['homeroom_activity_items'] = $this->homeroomactivity_model->getActivityItems($id);
-        $data['advisor_id'] = $this->tank_auth->get_user_id();
+        $data['homeroom'] = $this->homeroomactivity_model->getActivities($id, $group_id);
+        $data['group_id'] = $group_id;
         
         $this->load->view('nav');
         $this->load->view('advisor/homeroom/activity', $data);
@@ -50,8 +48,15 @@ class Advisorhomeroom extends BaseController
     public function activity_save()
     {
         $homeroom_id = $this->input->get_post('homeroom_id', 0);
-        $this->homeroomactivity_model->save();
+        $group_id = $this->input->get_post('group_id', 0);
+        $advisor_id = $this->profile_lib->getUserId();
+
+        $data = $this->input->post();
+        $data['advisor_id'] = $advisor_id;
+
+        $this->homeroomactivity_model->save($data);
         $this->homeroomactivity_model->saveItems();
+        $this->homeroom_lib->saveAction('saving', $homeroom_id, $group_id, $advisor_id);
         redirect('/advisor/homeroom/obedience/?id='.$homeroom_id);
     }
     
@@ -127,7 +132,12 @@ class Advisorhomeroom extends BaseController
 
     public function confirm_save()
     {
-        $this->homeroomconfirm_model->saveData();
+        $homeroom_id = $this->input->get_post('homeroom_id', 0);
+        $group_id = $this->input->get_post('group_id', 0);
+        $advisor_id = $this->profile_lib->getUserId();
+
+        // $this->homeroomconfirm_model->saveData();
+        $this->homeroom_lib->saveAction('confirmed', $homeroom_id, $group_id, $advisor_id);
         redirect('/advisor/homeroom/');
     }
 }

@@ -21,6 +21,10 @@ class Profile_lib
         }
         return 'guest';
     }
+    public function getUserId()
+    {
+        return $this->ci->tank_auth->get_user_id();
+    }
 
     public function getData()
     {

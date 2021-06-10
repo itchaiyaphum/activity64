@@ -83,12 +83,13 @@ CREATE TABLE `homerooms` (
   `updated_at` datetime NOT NULL,
   `status` int(1) NOT NULL DEFAULT '1',
   `created_by_user_id` int(11) NOT NULL,
+  `is_lock` int(1) NOT NULL DEFAULT '0',
   `remark` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `homerooms` (`id`, `semester_id`, `week`, `join_start`, `join_end`, `cover_img`, `created_at`, `updated_at`, `status`, `created_by_user_id`, `remark`) VALUES
-(3, 3, 1, '2021-05-27 00:00:00', '2021-05-31 00:00:00', 'homeroom/2021/id-1.jpg', '2021-05-27 15:15:03', '2021-05-27 15:15:03', 1, 1, ''),
-(4, 3, 2, '2021-05-28 00:00:00', '2021-05-29 00:00:00', 'homeroom/2021/id-2.jpg', '2021-05-27 15:15:03', '2021-05-27 15:15:03', 1, 1, '');
+INSERT INTO `homerooms` (`id`, `semester_id`, `week`, `join_start`, `join_end`, `cover_img`, `created_at`, `updated_at`, `status`, `created_by_user_id`, `is_lock`, `remark`) VALUES
+(3, 3, 1, '2021-05-27 00:00:00', '2021-05-31 00:00:00', 'homeroom/2021/id-1.jpg', '2021-05-27 15:15:03', '2021-05-27 15:15:03', 1, 1, 0,''),
+(4, 3, 2, '2021-05-28 00:00:00', '2021-05-29 00:00:00', 'homeroom/2021/id-2.jpg', '2021-05-27 15:15:03', '2021-05-27 15:15:03', 1, 1, 0,'');
 
 ALTER TABLE `homerooms`
   ADD PRIMARY KEY (`id`);
@@ -122,6 +123,7 @@ ALTER TABLE `homeroom_activities`
 CREATE TABLE `homeroom_activity_items` (
   `id` int(11) NOT NULL COMMENT 'รหัสอ้างอิง',
   `homeroom_id` int(11) NOT NULL COMMENT 'รหัสกิจกรรมโฮมรูม',
+  `group_id` int(11) NOT NULL COMMENT 'รหัสกลุ่มการเรียน',
   `student_id` int(11) NOT NULL COMMENT 'รหัสนักเรียน',
   `created_at` datetime NOT NULL COMMENT 'บันทึกข้อมูลเมื่อไหร่',
   `updated_at` datetime NOT NULL COMMENT 'แก้ไขข้อมูลล่าสุดเมื่อไหร่',
@@ -131,7 +133,7 @@ CREATE TABLE `homeroom_activity_items` (
 
 ALTER TABLE `homeroom_activity_items`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `homeroom_id` (`homeroom_id`,`student_id`);
+  ADD KEY `homeroom_id` (`homeroom_id`,`group_id`,`student_id`);
 
 ALTER TABLE `homeroom_activity_items`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'รหัสอ้างอิง';
@@ -514,6 +516,7 @@ ALTER TABLE `advisors_groups`
 CREATE TABLE `homeroom_actions` (
   `id` int(11) NOT NULL,
   `homeroom_id` int(11) NOT NULL,
+  `group_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `user_type` varchar(15) NOT NULL,
   `action_status` varchar(15) NOT NULL,
@@ -524,7 +527,7 @@ CREATE TABLE `homeroom_actions` (
 
 ALTER TABLE `homeroom_actions`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `homeroom_id` (`homeroom_id`,`user_id`,`user_type`);
+  ADD KEY `homeroom_id` (`homeroom_id`,`group_id`,`user_id`);
 
 ALTER TABLE `homeroom_actions`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
