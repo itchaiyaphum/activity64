@@ -13,15 +13,6 @@ class Homeroomactivity_model extends BaseModel
         $this->table = $this->ci->factory_lib->getTable('HomeRoomActivity');
     }
 
-    // public function getHomeroomItems()
-    // {
-    //     $this->ci->load->model('admin/homeroom_model', 'homeroom_model');
-    //     $items = $this->ci->homeroom_model->getItems(array(
-    //         'status' => 1
-    //     ));
-    //     return $items;
-    // }
-
     public function saveItems()
     {
         $homeroom_id = $this->ci->input->get_post('homeroom_id', 0);
@@ -30,15 +21,17 @@ class Homeroomactivity_model extends BaseModel
         
         $activity_items = array();
         foreach ($students as $key => $val) {
-            array_push($activity_items, array(
-                'homeroom_id' => $homeroom_id,
-                'group_id' => $group_id,
-                'student_id' => $key,
-                'created_at' => mdate('%Y-%m-%d %H:%i:%s', time()),
-                'updated_at' => mdate('%Y-%m-%d %H:%i:%s', time()),
-                'status' => 1,
-                'check_status' => $val
-            ));
+            if (isset($val)) {
+                array_push($activity_items, array(
+                    'homeroom_id' => $homeroom_id,
+                    'group_id' => $group_id,
+                    'student_id' => $key,
+                    'created_at' => mdate('%Y-%m-%d %H:%i:%s', time()),
+                    'updated_at' => mdate('%Y-%m-%d %H:%i:%s', time()),
+                    'status' => 1,
+                    'check_status' => $val
+                ));
+            }
         }
         
         // clear old homeroom data

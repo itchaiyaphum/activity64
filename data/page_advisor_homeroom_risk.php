@@ -2,7 +2,7 @@
 //
 //		- login as user_type: advisor
 //		- user_id: 1
-//		- models/Homeroomactivity_model: getActivities($homeroom_id, $group_id);
+//		- models/Homeroomrisk_model: getRisks($homeroom_id, $group_id);
 //
 $homeroom_item = stdClass Object(
     [id] 				=> 1
@@ -27,28 +27,18 @@ $homeroom_item = stdClass Object(
                     [student_code] 		=> '5839010002'
                     [firstname] 		=> 'จุฑามาศ'
                     [lastname] 		    => 'ปะกาเวสูง'
-                    [activity_status] 	=> 'come'
+                    [risk_detail] 	    => ''
+                    [risk_comment] 	    => ''
+                    [risk_status] 	    => 'risk'
                 ),
                 [1] => stdClass Object(
                     [id] 				=> 2
                     [student_code] 		=> '5839010024'
                     [firstname] 		=> 'นาย ชยานนท์'
                     [lastname] 		    => 'แก้วปิ่น'
-                    [activity_status] 	=> 'not_come'
-                ),
-                [2] => stdClass Object(
-                    [id] 				=> 3
-                    [student_code] 		=> '5839010010'
-                    [firstname] 		=> 'น.ส.ปวีณา'
-                    [lastname] 		    => 'จันทสอ'
-                    [activity_status] 	=> 'late'
-                ),
-                [3] => stdClass Object(
-                    [id] 				=> 4
-                    [student_code] 		=> '5839010004'
-                    [firstname] 		=> 'ฑิฆัมพร'
-                    [lastname] 		    => 'เทพา'
-                    [activity_status] 	=> 'leave'
+                    [risk_detail] 	    => ''
+                    [risk_comment] 	    => ''
+                    [risk_status] 	    => 'not_risk'
                 )
             )
         )

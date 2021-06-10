@@ -260,7 +260,7 @@ class Homeroom_lib
         return $items;
     }
 
-    public function getActivityButton($homeroom_id=0, $group_id=0, $link='advisor/homeroom')
+    public function getSaveButton($homeroom_id=0, $group_id=0, $link='advisor/homeroom')
     {
         $activity_action_item = $this->getActivityActionItem($homeroom_id, $group_id);
 
@@ -352,6 +352,18 @@ class Homeroom_lib
         $group_ids = implode(',', $groups);
 
         $sql = "SELECT * FROM advisors_groups WHERE group_id IN({$group_ids}) AND status=1";
+        $query = $this->ci->db->query($sql);
+        $items = $query->result();
+        return $items;
+    }
+
+    /*
+    // RISK
+    */
+    public function getRiskItems($homeroom_id=0, $group_id=0)
+    {
+        $sql = "SELECT * FROM homeroom_risk_items 
+                    WHERE homeroom_id={$homeroom_id} AND group_id={$group_id} AND status=1";
         $query = $this->ci->db->query($sql);
         $items = $query->result();
         return $items;

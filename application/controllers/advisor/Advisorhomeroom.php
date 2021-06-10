@@ -87,15 +87,13 @@ class Advisorhomeroom extends BaseController
     
     public function risk()
     {
-        $id = $this->input->get_post('id', 0);
+        $homeroom_id = $this->input->get_post('id', 0);
+        $group_id = $this->input->get_post('group_id', 0);
         
         $data = array();
         $data['leftmenu'] = $this->load->view('advisor/menu', '', true);
-        $data['homeroom'] = $this->homeroom_model->getItem($id);
-        $data['student_items'] = $this->student_model->getStudentsByAdvisor();
-        $data['homeroom_risk'] = $this->homeroomrisk_model->getItem($id);
-        $data['homeroom_risk_items'] = $this->homeroomrisk_model->getRiskItems($id);
-        $data['advisor_id'] = $this->tank_auth->get_user_id();
+        $data['homeroom'] = $this->homeroomrisk_model->getRisks($homeroom_id, $group_id);
+        $data['group_id'] = $group_id;
         
         $this->load->view('nav');
         $this->load->view('advisor/homeroom/risk', $data);
@@ -105,7 +103,12 @@ class Advisorhomeroom extends BaseController
     public function risk_save()
     {
         $homeroom_id = $this->input->get_post('homeroom_id', 0);
-        $this->homeroomrisk_model->save();
+        $advisor_id = $this->profile_lib->getUserId();
+
+        $data = $this->input->post();
+        $data['advisor_id'] = $advisor_id;
+
+        $this->homeroomrisk_model->save($data);
         $this->homeroomrisk_model->saveItems();
         redirect('/advisor/homeroom/confirm/?id='.$homeroom_id);
     }
