@@ -76,7 +76,6 @@ $route['advisor/homeroom']	= "advisor/advisorhomeroom";
 $route['advisor/homeroom/activity']	= "advisor/advisorhomeroom/activity";
 $route['advisor/homeroom/activity_save']	= "advisor/advisorhomeroom/activity_save";
 $route['advisor/homeroom/obedience']	= "advisor/advisorhomeroom/obedience";
-$route['advisor/homeroom/obedience_save']	= "advisor/advisorhomeroom/obedience_save";
 $route['advisor/homeroom/risk']	= "advisor/advisorhomeroom/risk";
 $route['advisor/homeroom/risk_save']	= "advisor/advisorhomeroom/risk_save";
 $route['advisor/homeroom/confirm']	= "advisor/advisorhomeroom/confirm";

@@ -51,8 +51,8 @@ class Homeroomactivity_model extends BaseModel
         $this->ci->load->model('admin/group_model', 'admin_group_model');
         $group_item = $this->ci->homeroom_lib->getGroupItem($group_id);
 
-        //get activity action items
-        $activity_action_item = $this->ci->homeroom_lib->getActivityActionItem($homeroom_id, $group_id);
+        //get action items
+        $action_item = $this->ci->homeroom_lib->getActionItem($homeroom_id, $group_id);
 
         //get students items by group_id
         $student_items = $this->ci->homeroom_lib->getStudentItems($group_id);
@@ -74,10 +74,10 @@ class Homeroomactivity_model extends BaseModel
             $advisor_id = 0;
             $advisor_type = '';
             $advisor_status = 'pending';
-            if (isset($activity_action_item)) {
-                if ($activity_action_item->homeroom_id==$homeroom_item->id && $activity_action_item->group_id==$group_item->id) {
-                    $advisor_type = $activity_action_item->user_type;
-                    $advisor_status = $activity_action_item->action_status;
+            if (isset($action_item)) {
+                if ($action_item->homeroom_id==$homeroom_item->id && $action_item->group_id==$group_item->id) {
+                    $advisor_type = $action_item->user_type;
+                    $advisor_status = $action_item->action_status;
                 }
             } else {
                 $advisor_id = $this->ci->profile_lib->getUserId();

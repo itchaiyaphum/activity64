@@ -10,22 +10,204 @@ class Homeroom_lib
         $this->ci = & get_instance();
     }
 
-    private function getRoles()
+
+    /*
+    //  ==================== Student ====================
+    */
+    public function getStudentItems($group_id=0)
     {
-        $ROLES = array(
-            'student',
-            'advisor',
-            'headdepartment',
-            'headadvisor',
-            'staff',
-            'executive',
-            'admin'
-        );
-        return $ROLES;
+        $sql = "SELECT group_id, user_id, student_id as student_code, firstname, lastname FROM users_student 
+                    WHERE group_id={$group_id} AND status=1";
+        $query = $this->ci->db->query($sql);
+        $items = $query->result();
+        return $items;
     }
 
-    public function checkPermission($user_id=0, $permissions=array())
+
+
+
+    /*
+    // ==================== Groups ====================
+    */
+    public function getGroupsByAdvisor($advisor_id=0)
     {
+        if ($advisor_id==0) {
+            $advisor_id = $this->ci->profile_lib->getUserId();
+        }
+        $sql = "SELECT groups.*,majors.major_name,minors.minor_name FROM groups 
+                    LEFT JOIN majors ON (groups.major_id=majors.id)
+                    LEFT JOIN minors ON (groups.minor_id=minors.id)
+                    WHERE groups.id IN (SELECT group_id FROM advisors_groups WHERE advisor_id={$advisor_id}) 
+                            AND groups.status=1";
+        $query = $this->ci->db->query($sql);
+        $items = $query->result();
+        return $items;
+    }
+
+    public function getGroupItem($group_id=0)
+    {
+        $sql = "SELECT groups.*,majors.major_name,minors.minor_name FROM groups 
+                    LEFT JOIN majors ON (groups.major_id=majors.id)
+                    LEFT JOIN minors ON (groups.minor_id=minors.id)
+                    WHERE groups.id={$group_id} AND groups.status=1";
+        $query = $this->ci->db->query($sql);
+        $item = $query->row();
+        return $item;
+    }
+
+    
+
+
+    
+    /*
+    //  ==================== Homeroom ====================
+    */
+    public function getSaveButton($homeroom_id=0, $group_id=0, $link='advisor/homeroom')
+    {
+        $action_item = $this->getActionItem($homeroom_id, $group_id);
+
+        $advisor_status = 'pending';
+        if (isset($action_item)) {
+            if ($action_item->homeroom_id==$homeroom_id && $action_item->group_id==$group_id) {
+                $advisor_status = $action_item->action_status;
+            }
+        }
+
+        $html = '';
+        if ($advisor_status=='confirmed') {
+            $link_to = base_url($link);
+            $html .= "<a class='uk-button uk-button-primary uk-button-large' href='{$link_to}'><i class='uk-icon-home'></i> กลับหน้าหลัก</a> ";
+            $html .= "<button disabled class='uk-button uk-button-primary uk-button-large' data-uk-modal=\"{target:'#confirm-form'}\">ยืนยันการบันทึกข้อมูลเรียบร้อยแล้ว</button>";
+        } else {
+            $html .= "<button class='uk-button uk-button-primary uk-button-large' data-uk-modal=\"{target:'#confirm-form'}\">กดบันทึกข้อมูล</button>";
+        }
+        return $html;
+    }
+
+    // TODO: disable when action status has confirmed
+    public function getEditButtonHtml($homeroom_id=0, $group_id=0, $link='')
+    {
+        $html = '';
+        $checkStatusHtml = '';
+        
+        $checkStatusHtml = "<a href='{$link}' class='uk-button uk-button-primary uk-button-small'><i class='uk-icon-pencil'></i> บันทึกข้อมูล</a>";
+        $html .= $checkStatusHtml;
+        
+        return $html;
+    }
+
+    // TODO: enable when all user_type has approved
+    public function getPrintButtonHtml($homeroom_id=0, $group_id=0, $user_type='advisor')
+    {
+        $html = '';
+        $checkStatusHtml = '';
+        
+        $checkStatusHtml = '<button disabled class="uk-button uk-button-small"><i class="uk-icon-print"></i></button>';
+        $html .= $checkStatusHtml;
+        
+        return $html;
+    }
+
+    
+
+
+
+    /*
+    //  ==================== Homeroom Action ================================
+    */
+    public function saveAction($action_status='viewed', $homeroom_id=0, $group_id=0, $advisor_id=0)
+    {
+        //TODO: get user_type from advisor_group table
+        $user_type = 'advisor';
+        if ($advisor_id==0) {
+            $advisor_id = $this->ci->profile_lib->getUserId();
+        }
+        
+        $action_item = array(
+            'homeroom_id' => $homeroom_id,
+            'group_id' => $group_id,
+            'user_id' => $advisor_id,
+            'user_type' => $user_type,
+            'action_status' => $action_status,
+            'created_at' => mdate('%Y-%m-%d %H:%i:%s', time()),
+            'updated_at' => mdate('%Y-%m-%d %H:%i:%s', time()),
+            'status' => 1
+        );
+        
+        // clear old homeroom action
+        $this->ci->db->delete('homeroom_actions', array('homeroom_id' => $homeroom_id, 'group_id' => $group_id, 'user_id' => $advisor_id));
+        
+        // insert homeroom action
+        return $this->ci->db->insert('homeroom_actions', $action_item);
+    }
+
+    public function getActionItem($homeroom_id=0, $group_id=0)
+    {
+        $sql = "SELECT * FROM homeroom_actions 
+                    WHERE homeroom_id={$homeroom_id} AND group_id={$group_id} AND status=1";
+        $query = $this->ci->db->query($sql);
+        $item = $query->row();
+        return $item;
+    }
+
+    public function getActionItems($homeroom_id=0, $group_id=0, $advisor_id=0)
+    {
+        if ($advisor_id==0) {
+            $advisor_id = $this->ci->profile_lib->getUserId();
+        }
+        
+        $group_ids = $group_id;
+        if ($group_id==0) {
+            $group_items = $this->getGroupsByAdvisor($advisor_id);
+            $groups = array();
+            foreach ($group_items as $group) {
+                array_push($groups, $group->id);
+            }
+            $group_ids = implode(',', $groups);
+        }
+
+        $sql = "SELECT * FROM homeroom_actions 
+                    WHERE homeroom_id={$homeroom_id} AND user_id IN (SELECT DISTINCT advisor_id FROM advisors_groups WHERE group_id IN({$group_ids})) 
+                            AND status=1";
+        $query = $this->ci->db->query($sql);
+        $items = $query->result();
+        return $items;
+    }
+
+
+
+
+    /*
+    //  ==================== Advisor ====================
+    */
+    public function getAdvisorGroupsItems($group_id=0)
+    {
+        $group_ids = $group_id;
+        if ($group_id==0) {
+            //get all groups items
+            $group_items = $this->getGroupsByAdvisor();
+            $groups = array();
+            foreach ($group_items as $group) {
+                array_push($groups, $group->id);
+            }
+            $group_ids = implode(',', $groups);
+        }
+
+        $sql = "SELECT * FROM advisors_groups WHERE group_id IN({$group_ids}) AND status=1";
+        $query = $this->ci->db->query($sql);
+        $items = $query->result();
+        return $items;
+    }
+
+    public function getAdvisorTypeText($advisor_type='')
+    {
+        $advisor_text = '';
+        if ($advisor_type=='advisor') {
+            $advisor_text = '<div class="uk-badge">เป็นที่ปรึกษาหลัก</div>';
+        } elseif ($advisor_type=='coadvisor') {
+            $advisor_text = '<div class="uk-badge uk-badge-warning">เป็นที่ปรึกษาร่วม</div>';
+        }
+        return $advisor_text;
     }
 
     public function getActionStatusHtml($user_type='advisor', $checkStatus='')
@@ -178,70 +360,12 @@ class Homeroom_lib
         return $html;
     }
 
-    public function getEditButtonHtml($homeroom_id=0, $group_id=0, $link='')
-    {
-        $html = '';
-        $checkStatusHtml = '';
-        
-        $checkStatusHtml = "<a href='{$link}' class='uk-button uk-button-primary uk-button-small'><i class='uk-icon-pencil'></i> บันทึกข้อมูล</a>";
-        $html .= $checkStatusHtml;
-        
-        return $html;
-    }
 
-    public function getPrintButtonHtml($homeroom_id=0, $group_id=0, $user_type='advisor')
-    {
-        $html = '';
-        $checkStatusHtml = '';
-        
-        $checkStatusHtml = '<button disabled class="uk-button uk-button-small"><i class="uk-icon-print"></i></button>';
-        $html .= $checkStatusHtml;
-        
-        return $html;
-    }
 
-    public function getHomeroomAction($homeroom_id=0, $user_id=0)
-    {
-        if ($user_id==0) {
-            $user_id = $this->ci->tank_auth->get_user_id();
-        }
-        $sql = 'SELECT * FROM homeroom_actions WHERE homeroom_id='. $homeroom_id.' AND user_id='.$user_id;
-        $query = $this->ci->db->query($sql);
-        $row = $query->row();
-        return $row;
-    }
-    
-    public function getAdvisorTypeText($advisor_type='')
-    {
-        $advisor_text = '';
-        if ($advisor_type=='advisor') {
-            $advisor_text = '<div class="uk-badge">เป็นที่ปรึกษาหลัก</div>';
-        } elseif ($advisor_type=='coadvisor') {
-            $advisor_text = '<div class="uk-badge uk-badge-warning">เป็นที่ปรึกษาร่วม</div>';
-        }
-        return $advisor_text;
-    }
 
-    public function getActivityActionItem($homeroom_id=0, $group_id=0)
-    {
-        $sql = "SELECT * FROM homeroom_actions 
-                    WHERE homeroom_id={$homeroom_id} AND group_id={$group_id} AND status=1";
-        $query = $this->ci->db->query($sql);
-        $item = $query->row();
-        return $item;
-    }
-
-    public function getGroupItem($group_id=0)
-    {
-        $sql = "SELECT groups.*,majors.major_name,minors.minor_name FROM groups 
-                    LEFT JOIN majors ON (groups.major_id=majors.id)
-                    LEFT JOIN minors ON (groups.minor_id=minors.id)
-                    WHERE groups.id={$group_id} AND groups.status=1";
-        $query = $this->ci->db->query($sql);
-        $item = $query->row();
-        return $item;
-    }
-
+    /*
+    // ==================== Activity ====================
+    */
     public function getActivityItems($homeroom_id=0, $group_id=0)
     {
         $sql = "SELECT * FROM homeroom_activity_items 
@@ -251,114 +375,10 @@ class Homeroom_lib
         return $items;
     }
 
-    public function getStudentItems($group_id=0)
-    {
-        $sql = "SELECT group_id, user_id, student_id as student_code, firstname, lastname FROM users_student 
-                    WHERE group_id={$group_id} AND status=1";
-        $query = $this->ci->db->query($sql);
-        $items = $query->result();
-        return $items;
-    }
 
-    public function getSaveButton($homeroom_id=0, $group_id=0, $link='advisor/homeroom')
-    {
-        $activity_action_item = $this->getActivityActionItem($homeroom_id, $group_id);
-
-        $advisor_status = 'pending';
-        if (isset($activity_action_item)) {
-            if ($activity_action_item->homeroom_id==$homeroom_id && $activity_action_item->group_id==$group_id) {
-                $advisor_status = $activity_action_item->action_status;
-            }
-        }
-
-        $html = '';
-        if ($advisor_status=='confirmed') {
-            $link_to = base_url($link);
-            $html .= "<a class='uk-button uk-button-primary uk-button-large' href='{$link_to}'><i class='uk-icon-home'></i> กลับหน้าหลัก</a> ";
-            $html .= "<button disabled class='uk-button uk-button-primary uk-button-large' data-uk-modal=\"{target:'#confirm-form'}\">ยืนยันการบันทึกข้อมูลเรียบร้อยแล้ว</button>";
-        } else {
-            $html .= "<button class='uk-button uk-button-primary uk-button-large' data-uk-modal=\"{target:'#confirm-form'}\">กดบันทึกข้อมูล</button>";
-        }
-        return $html;
-    }
-
-    public function saveAction($action_status='viewed', $homeroom_id=0, $group_id=0, $advisor_id=0)
-    {
-        //TODO: get user_type from advisor_group table
-        $user_type = 'advisor';
-        if ($advisor_id==0) {
-            $advisor_id = $this->ci->profile_lib->getUserId();
-        }
-        
-        $action_item = array(
-            'homeroom_id' => $homeroom_id,
-            'group_id' => $group_id,
-            'user_id' => $advisor_id,
-            'user_type' => $user_type,
-            'action_status' => $action_status,
-            'created_at' => mdate('%Y-%m-%d %H:%i:%s', time()),
-            'updated_at' => mdate('%Y-%m-%d %H:%i:%s', time()),
-            'status' => 1
-        );
-        
-        // clear old homeroom action
-        $this->ci->db->delete('homeroom_actions', array('homeroom_id' => $homeroom_id, 'group_id' => $group_id, 'user_id' => $advisor_id));
-        
-        // insert homeroom action
-        return $this->ci->db->insert('homeroom_actions', $action_item);
-    }
-
-    public function getGroupsByAdvisor($advisor_id=0)
-    {
-        if ($advisor_id==0) {
-            $advisor_id = $this->ci->tank_auth->get_user_id();
-        }
-        $sql = "SELECT groups.*,majors.major_name,minors.minor_name FROM groups 
-                    LEFT JOIN majors ON (groups.major_id=majors.id)
-                    LEFT JOIN minors ON (groups.minor_id=minors.id)
-                    WHERE groups.id IN (SELECT group_id FROM advisors_groups WHERE advisor_id={$advisor_id}) 
-                            AND groups.status=1";
-        $query = $this->ci->db->query($sql);
-        $items = $query->result();
-        return $items;
-    }
-
-    public function getActionItems($group_id=0)
-    {
-        //get all groups items
-        $group_items = $this->getGroupsByAdvisor();
-        $groups = array();
-        foreach ($group_items as $group) {
-            array_push($groups, $group->id);
-        }
-        $group_ids = implode(',', $groups);
-
-        $sql = "SELECT * FROM homeroom_actions 
-                    WHERE user_id IN (SELECT DISTINCT advisor_id FROM advisors_groups WHERE group_id IN({$group_ids})) 
-                            AND status=1";
-        $query = $this->ci->db->query($sql);
-        $items = $query->result();
-        return $items;
-    }
-
-    public function getAdvisorGroupsItems()
-    {
-        //get all groups items
-        $group_items = $this->getGroupsByAdvisor();
-        $groups = array();
-        foreach ($group_items as $group) {
-            array_push($groups, $group->id);
-        }
-        $group_ids = implode(',', $groups);
-
-        $sql = "SELECT * FROM advisors_groups WHERE group_id IN({$group_ids}) AND status=1";
-        $query = $this->ci->db->query($sql);
-        $items = $query->result();
-        return $items;
-    }
 
     /*
-    // RISK
+    // ==================== Risk ====================
     */
     public function getRiskItems($homeroom_id=0, $group_id=0)
     {

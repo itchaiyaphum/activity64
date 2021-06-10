@@ -57,32 +57,33 @@ class Advisorhomeroom extends BaseController
         $this->homeroomactivity_model->save($data);
         $this->homeroomactivity_model->saveItems();
         $this->homeroom_lib->saveAction('saving', $homeroom_id, $group_id, $advisor_id);
-        redirect('/advisor/homeroom/obedience/?id='.$homeroom_id);
+        redirect('/advisor/homeroom/obedience/?id='.$homeroom_id.'&group_id='.$group_id);
     }
     
     public function obedience()
     {
-        $id = $this->input->get_post('id', 0);
+        $homeroom_id = $this->input->get_post('id', 0);
+        $group_id = $this->input->get_post('group_id', 0);
+        $advisor_id = $this->profile_lib->getUserId();
+
+        $this->form_validation->set_rules('obe_detail', 'เรื่องที่ให้คำแนะนำ นักเรียน นักศึกษา', 'trim|required|xss_clean', array('required' => 'กรุณากรอกข้อมูล เรื่องที่ให้คำแนะนำ นักเรียน นักศึกษา'));
+        $this->form_validation->set_rules('survey_amount', 'จำนวนผู้ตอบแบบสอบถาม', 'trim|required|xss_clean|integer', array('required' => 'กรุณากรอกข้อมูล จำนวนผู้ตอบแบบสอบถาม'));
+        if ($this->form_validation->run()) {
+            $data = $this->input->post();
+            $data['advisor_id'] = $advisor_id;
+            $this->homeroomobedience_model->saveData($data);
+            redirect('/advisor/homeroom/risk/?id='.$homeroom_id.'&group_id='.$group_id);
+            exit();
+        }
         
         $data = array();
         $data['leftmenu'] = $this->load->view('advisor/menu', '', true);
-        $data['homeroom'] = $this->homeroom_model->getItem($id);
-        $data['student_items'] = $this->student_model->getStudentsByAdvisor();
-        $data['student_amount'] = $this->student_model->getStudentsByAdvisorAmount();
-        $data['obedience'] = $this->homeroomobedience_model->getItem($id);
-        $data['obedience_attactments'] = $this->homeroomobedience_model->getAttactments($id);
-        $data['advisor_id'] = $this->tank_auth->get_user_id();
+        $data['homeroom'] = $this->homeroomobedience_model->getObediences($homeroom_id, $group_id);
+        $data['group_id'] = $group_id;
         
         $this->load->view('nav');
         $this->load->view('advisor/homeroom/obedience', $data);
         $this->load->view('footer');
-    }
-    
-    public function obedience_save()
-    {
-        $homeroom_id = $this->input->get_post('homeroom_id', 0);
-        $this->homeroomobedience_model->saveData();
-        redirect('/advisor/homeroom/risk/?id='.$homeroom_id);
     }
     
     public function risk()
@@ -103,6 +104,7 @@ class Advisorhomeroom extends BaseController
     public function risk_save()
     {
         $homeroom_id = $this->input->get_post('homeroom_id', 0);
+        $group_id = $this->input->get_post('group_id', 0);
         $advisor_id = $this->profile_lib->getUserId();
 
         $data = $this->input->post();
@@ -110,7 +112,7 @@ class Advisorhomeroom extends BaseController
 
         $this->homeroomrisk_model->save($data);
         $this->homeroomrisk_model->saveItems();
-        redirect('/advisor/homeroom/confirm/?id='.$homeroom_id);
+        redirect('/advisor/homeroom/confirm/?id='.$homeroom_id.'&group_id='.$group_id);
     }
     
     public function confirm()

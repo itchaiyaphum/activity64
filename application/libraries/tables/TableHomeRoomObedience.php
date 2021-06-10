@@ -6,6 +6,7 @@ class TableHomeRoomObedience extends JTable
 {
     public $id = null;
     public $homeroom_id = null;
+    public $group_id = null;
     public $advisor_id = null;
     public $created_at = null;
     public $updated_at = null;
