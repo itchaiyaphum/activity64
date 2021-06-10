@@ -67,7 +67,7 @@ class Homeroomrisk_model extends BaseModel
             foreach ($student_items as $student) {
                 $risk_detail = '';
                 $risk_comment = '';
-                $risk_status = '';
+                $risk_status = 'not_risk';//set default value
                 //check risk status on each students
                 foreach ($risk_items as $risk_item) {
                     if ($risk_item->homeroom_id==$homeroom_item->id && $risk_item->group_id==$group_item->id && $risk_item->student_id==$student->user_id) {

@@ -93,7 +93,7 @@ class Homeroomactivity_model extends BaseModel
             $item_group->students           = array();
 
             foreach ($student_items as $student) {
-                $activity_status = '';
+                $activity_status = 'come'; //set default value
                 //check activity status on each students
                 foreach ($activity_items as $activity_item) {
                     if ($activity_item->homeroom_id==$homeroom_item->id && $activity_item->group_id==$group_item->id && $activity_item->student_id==$student->user_id) {
