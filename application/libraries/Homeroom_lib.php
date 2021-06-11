@@ -106,6 +106,30 @@ class Homeroom_lib
         return $html;
     }
 
+    public function getConfirmButton($advisors=null, $link='advisor/homeroom')
+    {
+        $advisor_id = $this->ci->profile_lib->getUserId();
+
+        $advisor_status = '';
+        if (!is_null($advisors)) {
+            foreach ($advisors as $advisor) {
+                if ($advisor->advisor_id==$advisor_id) {
+                    $advisor_status = $advisor->advisor_status;
+                }
+            }
+        }
+
+        $html = '';
+        if ($advisor_status=='confirmed') {
+            $link_to = base_url($link);
+            $html .= "<a class='uk-button uk-button-primary uk-button-large' href='{$link_to}'><i class='uk-icon-home'></i> กลับหน้าหลัก</a> ";
+            $html .= "<button disabled class='uk-button uk-button-primary uk-button-large' data-uk-modal=\"{target:'#confirm-form'}\">ยืนยันการบันทึกข้อมูลเรียบร้อยแล้ว</button>";
+        } else {
+            $html .= "<button class='uk-button uk-button-primary uk-button-large' data-uk-modal=\"{target:'#confirm-form'}\"><i class='uk-icon-save'></i> กดยืนยันการบันทึกข้อมูล</button>";
+        }
+        return $html;
+    }
+
 
 
     /*
