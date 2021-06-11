@@ -32,7 +32,7 @@
                 				<th>
                 					สถานะการบันทึกข้อมูล
                 				</th>
-								<th width="15%">
+								<th width="20%">
                 					
                 				</th>
                 			</tr>
@@ -56,14 +56,14 @@
 									<div><?php echo $group->major_name; ?></div>
                 				</td>
                 				<td>
-									<?php echo $this->homeroom_lib->getAdvisorTypeText($group->advisors); ?>
+									<?php echo $this->base_homeroom_model->getAdvisorTypeText($group->advisors); ?>
                 				</td>
                 				<td>
-									<?php echo $this->homeroom_lib->getAdvisorStatusHtml($group->advisors); ?>
+									<?php echo $this->base_homeroom_model->getAdvisorStatusHtml($group->advisors); ?>
                 				</td>
                 				<td class="uk-text-center">
-									<?php echo $this->homeroom_lib->getEditButtonHtml($group->advisors, $link_activity); ?>
-									<?php // echo $this->homeroom_lib->getPrintButtonHtml($homeroom->id, $group->id, $group->advisor_type);?>
+									<?php echo $this->base_homeroom_model->getEditButtonHtml($group->advisors, $link_activity); ?>
+									<?php echo $this->base_homeroom_model->getPrintButtonHtml($group->advisors); ?>
 								</td>
                 			</tr>
                 		<?php

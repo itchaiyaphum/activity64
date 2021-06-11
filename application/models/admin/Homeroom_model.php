@@ -1,11 +1,11 @@
 <?php
-if (! defined('BASEPATH'))
+if (! defined('BASEPATH')) {
     exit('No direct script access allowed');
+}
 
 class Homeroom_model extends BaseModel
 {
-
-    public $table = NULL;
+    public $table = null;
 
     public function __construct()
     {
@@ -24,8 +24,9 @@ class Homeroom_model extends BaseModel
         ));
     }
     
-    public function getStudentItems($activity_id=0){
-        $advisor_majors = "1,2";
+    public function getStudentItems($activity_id=0)
+    {
+        $advisor_majors = "1,2"; //TODO: what?
         $sql = "SELECT 
                     users_student.*, 
                     groups.group_name, 
@@ -72,5 +73,4 @@ class Homeroom_model extends BaseModel
         // render query
         return $this->renderQueryWhere($wheres, $options);
     }
-
 }
