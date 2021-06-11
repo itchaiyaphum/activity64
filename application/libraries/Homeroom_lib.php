@@ -10,6 +10,25 @@ class Homeroom_lib
         $this->ci = & get_instance();
     }
 
+    public function convertStatusText($key=null)
+    {
+        $values = array(
+            'come' => '<div class="uk-badge uk-badge-success">มา</div>',
+            'not_come' => '<div class="uk-badge uk-badge-danger">ขาด</div>',
+            'late' => '<div class="uk-badge uk-badge-warning">สาย</div>',
+            'leave' => '<div class="uk-badge uk-badge-warning">ลา</div>',
+            'risk' => '<div class="uk-badge uk-badge-danger">เสี่ยง</div>',
+            'not_risk' => '<div class="uk-badge uk-badge-success">ไม่เสี่ยง</div>'
+        );
+        $value = $key;
+        if (isset($key)) {
+            if (isset($values[$key])) {
+                $value = $values[$key];
+            }
+        }
+        return $value;
+    }
+
 
     /*
     //  ==================== Student ====================
@@ -37,7 +56,7 @@ class Homeroom_lib
         $sql = "SELECT groups.*,majors.major_name,minors.minor_name FROM groups 
                     LEFT JOIN majors ON (groups.major_id=majors.id)
                     LEFT JOIN minors ON (groups.minor_id=minors.id)
-                    WHERE groups.id IN (SELECT group_id FROM advisors_groups WHERE advisor_id={$advisor_id}) 
+                    WHERE groups.id IN (SELECT group_id FROM advisors_groups WHERE advisor_id={$advisor_id} AND status=1) 
                             AND groups.status=1";
         $query = $this->ci->db->query($sql);
         $items = $query->result();
@@ -85,13 +104,14 @@ class Homeroom_lib
     }
 
     // TODO: disable when action status has confirmed
-    public function getEditButtonHtml($homeroom_id=0, $group_id=0, $link='')
+    public function getEditButtonHtml($advisors=array(), $link='')
     {
-        $html = '';
-        $checkStatusHtml = '';
-        
-        $checkStatusHtml = "<a href='{$link}' class='uk-button uk-button-primary uk-button-small'><i class='uk-icon-pencil'></i> บันทึกข้อมูล</a>";
-        $html .= $checkStatusHtml;
+        $html = "<a href='{$link}' class='uk-button uk-button-primary uk-button-small'><i class='uk-icon-pencil'></i> บันทึกข้อมูล</a>";
+        foreach ($advisors as $advisor) {
+            if ($advisor->advisor_status=='confirmed') {
+                $html = "<a href='{$link}' class='uk-button uk-button-success uk-button-small'><i class='uk-icon-eye'></i> เรียกดูข้อมูล</a>";
+            }
+        }
         
         return $html;
     }
@@ -117,8 +137,7 @@ class Homeroom_lib
     */
     public function saveAction($action_status='viewed', $homeroom_id=0, $group_id=0, $advisor_id=0)
     {
-        //TODO: get user_type from advisor_group table
-        $user_type = 'advisor';
+        $advisor_type = $this->getUserType($group_id);
         if ($advisor_id==0) {
             $advisor_id = $this->ci->profile_lib->getUserId();
         }
@@ -127,7 +146,7 @@ class Homeroom_lib
             'homeroom_id' => $homeroom_id,
             'group_id' => $group_id,
             'user_id' => $advisor_id,
-            'user_type' => $user_type,
+            'user_type' => $advisor_type,
             'action_status' => $action_status,
             'created_at' => mdate('%Y-%m-%d %H:%i:%s', time()),
             'updated_at' => mdate('%Y-%m-%d %H:%i:%s', time()),
@@ -148,6 +167,14 @@ class Homeroom_lib
         $query = $this->ci->db->query($sql);
         $item = $query->row();
         return $item;
+    }
+
+    public function getAllActionItems()
+    {
+        $sql = "SELECT * FROM homeroom_actions WHERE status=1";
+        $query = $this->ci->db->query($sql);
+        $items = $query->result();
+        return $items;
     }
 
     public function getActionItems($homeroom_id=0, $group_id=0, $advisor_id=0)
@@ -180,6 +207,19 @@ class Homeroom_lib
     /*
     //  ==================== Advisor ====================
     */
+    public function getUserType($group_id=0)
+    {
+        $sql = "SELECT advisor_type FROM advisors_groups WHERE group_id={$group_id}";
+        $query = $this->ci->db->query($sql);
+        $item = $query->row();
+
+        $advisor_type = '';
+        if (isset($item)) {
+            $advisor_type = $item->advisor_type;
+        }
+        return $advisor_type;
+    }
+
     public function getAdvisorGroupsItems($group_id=0)
     {
         $group_ids = $group_id;
@@ -199,14 +239,46 @@ class Homeroom_lib
         return $items;
     }
 
-    public function getAdvisorTypeText($advisor_type='')
+    public function getAllAdvisorGroups()
     {
-        $advisor_text = '';
-        if ($advisor_type=='advisor') {
-            $advisor_text = '<div class="uk-badge">เป็นที่ปรึกษาหลัก</div>';
-        } elseif ($advisor_type=='coadvisor') {
-            $advisor_text = '<div class="uk-badge uk-badge-warning">เป็นที่ปรึกษาร่วม</div>';
+        $sql = "SELECT * FROM advisors_groups WHERE status=1";
+        $query = $this->ci->db->query($sql);
+        $items = $query->result();
+        return $items;
+    }
+
+    public function getAdvisorType($group_id=0, $advisor_id=0)
+    {
+        if ($advisor_id==0) {
+            $advisor_id = $this->ci->profile_lib->getUserId();
         }
+        $advisor_groups = $this->getAdvisorGroupsItems($group_id);
+
+        $advisor_type = '';
+        foreach ($advisor_groups as $advisor) {
+            $advisor_type = $advisor->advisor_type;
+            break;
+        }
+        return $advisor_type;
+    }
+
+    public function getAdvisorTypeText($advisors=null, $advisor_id=0)
+    {
+        if ($advisor_id==0) {
+            $advisor_id = $this->ci->profile_lib->getUserId();
+        }
+
+        $advisor_text = '';
+        if (!is_null($advisors)) {
+            foreach ($advisors as $advisor) {
+                if ($advisor->advisor_type=='advisor' && $advisor->advisor_id==$advisor_id) {
+                    $advisor_text = '<div class="uk-badge">เป็นที่ปรึกษาหลัก</div>';
+                } elseif ($advisor->advisor_type=='coadvisor' && $advisor->advisor_id==$advisor_id) {
+                    $advisor_text = '<div class="uk-badge uk-badge-warning">เป็นที่ปรึกษาร่วม</div>';
+                }
+            }
+        }
+        
         return $advisor_text;
     }
 
@@ -314,49 +386,77 @@ class Homeroom_lib
         return $html;
     }
 
-    public function getAdvisorStatusHtml($user_type='advisor', $checkStatus='')
+    private function genAdvisorButtonStatus($advisor_status='')
     {
-        $html = '';
-        $checkStatusHtml = '';
-
-        if ($user_type=='advisor') {
-            if ($checkStatus=='viewed') {
-                $checkStatusHtml = '<div class="uk-button-group">
-                                            <button class="uk-button uk-button-mini"><i class="uk-icon-eye"></i></button>
-                                            <button class="uk-button uk-button-mini">ครูที่ปรึกษาหลัก (กำลังบันทึกข้อมูล)</button>
+        $checkStatusHtml = "";
+        if ($advisor_status=='viewed') {
+            $checkStatusHtml = '<div class="uk-button-group">
+                                            <div class="uk-button uk-button-mini"><i class="uk-icon-eye"></i></div>
+                                            <div class="uk-button uk-button-mini">ครูที่ปรึกษาหลัก (กำลังบันทึกข้อมูล)</div>
                                         </div>';
-            } elseif ($checkStatus=='confirmed') {
-                $checkStatusHtml = '<div class="uk-button-group">
-                                            <button class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-check"></i></button>
-                                            <button class="uk-button uk-button-success uk-button-mini">ครูที่ปรึกษาหลัก (ยืนยันการกรอกข้อมูลแล้ว)</button>
+        } elseif ($advisor_status=='confirmed') {
+            $checkStatusHtml = '<div class="uk-button-group">
+                                            <div class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-check"></i></div>
+                                            <div class="uk-button uk-button-success uk-button-mini">ครูที่ปรึกษาหลัก (ยืนยันการกรอกข้อมูลแล้ว)</div>
                                         </div>';
-            } else {
-                $checkStatusHtml = '<div class="uk-button-group">
-                                            <button class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i></button>
-                                            <button class="uk-button uk-button-mini">ครูที่ปรึกษาหลัก (รอการบันทึกข้อมูล)</button>
+        } elseif ($advisor_status=='saving') {
+            $checkStatusHtml = '<div class="uk-button-group">
+                                            <div class="uk-button uk-button-primary uk-button-mini"><i class="uk-icon-gears"></i></div>
+                                            <div class="uk-button uk-button-primary uk-button-mini">ครูที่ปรึกษาหลัก (กำลังบันทึกข้อมูล)</div>
                                         </div>';
-            }
-            $html .= $checkStatusHtml;
-        } elseif ($user_type=='coadvisor') {
-            if ($checkStatus=='viewed') {
-                $checkStatusHtml = '<div class="uk-button-group">
-                                            <button class="uk-button uk-button-mini"><i class="uk-icon-eye"></i></button>
-                                            <button class="uk-button uk-button-mini">ครูที่ปรึกษาร่วม (กำลังบันทึกข้อมูล)</button>
+        } else {
+            $checkStatusHtml = '<div class="uk-button-group">
+                                            <div class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i></div>
+                                            <div class="uk-button uk-button-mini">ครูที่ปรึกษาหลัก (รอการบันทึกข้อมูล)</div>
                                         </div>';
-            } elseif ($checkStatus=='confirmed') {
-                $checkStatusHtml = '<div class="uk-button-group">
-                                            <button class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-check"></i></button>
-                                            <button class="uk-button uk-button-success uk-button-mini">ครูที่ปรึกษาร่วม (ยืนยันการกรอกข้อมูลแล้ว)</button>
-                                        </div>';
-            } else {
-                $checkStatusHtml = '<div class="uk-button-group">
-                                            <button class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i></button>
-                                            <button class="uk-button uk-button-mini">ครูที่ปรึกษาร่วม (รอการบันทึกข้อมูล)</button>
-                                        </div>';
-            }
-            $html .= $checkStatusHtml;
         }
-        
+        return $checkStatusHtml;
+    }
+
+    private function genCoAdvisorButtonStatus($advisor_status='')
+    {
+        $advisor_status_html = "";
+        if ($advisor_status=='viewed') {
+            $advisor_status_html = '<div class="uk-button-group">
+                                        <div class="uk-button uk-button-mini"><i class="uk-icon-eye"></i></div>
+                                        <div class="uk-button uk-button-mini">ครูที่ปรึกษาร่วม (กำลังบันทึกข้อมูล)</div>
+                                    </div>';
+        } elseif ($advisor_status=='confirmed') {
+            $advisor_status_html = '<div class="uk-button-group">
+                                        <div class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-check"></i></div>
+                                        <div class="uk-button uk-button-success uk-button-mini">ครูที่ปรึกษาร่วม (ยืนยันการกรอกข้อมูลแล้ว)</div>
+                                    </div>';
+        } elseif ($advisor_status=='saving') {
+            $advisor_status_html = '<div class="uk-button-group">
+                                        <div class="uk-button uk-button-warning uk-button-mini"><i class="uk-icon-gears"></i></div>
+                                        <div class="uk-button uk-button-warning uk-button-mini">ครูที่ปรึกษาร่วม (กำลังบันทึกข้อมูล)</div>
+                                    </div>';
+        } else {
+            $advisor_status_html = '<div class="uk-button-group">
+                                        <div class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i></div>
+                                        <div class="uk-button uk-button-mini">ครูที่ปรึกษาร่วม (รอการบันทึกข้อมูล)</div>
+                                    </div>';
+        }
+        return $advisor_status_html;
+    }
+
+    public function getAdvisorStatusHtml($advisors=null, $advisor_id=0)
+    {
+        if ($advisor_id==0) {
+            $advisor_id = $this->ci->profile_lib->getUserId();
+        }
+
+        $html = '';
+        if (!is_null($advisors)) {
+            foreach ($advisors as $advisor) {
+                if ($advisor->advisor_type=='advisor') {
+                    $html .= $this->genAdvisorButtonStatus($advisor->advisor_status);
+                } elseif ($advisor->advisor_type=='coadvisor') {
+                    $html .= $this->genCoAdvisorButtonStatus($advisor->advisor_status);
+                }
+            }
+        }
+
         return $html;
     }
 

@@ -62,7 +62,7 @@ class Homeroomactivity_model extends BaseModel
         
         $item = new stdClass();
         $item->id               = $homeroom_item->id;
-        $item->semester_id    = $homeroom_item->semester_id;
+        $item->semester_id      = $homeroom_item->semester_id;
         $item->week             = $homeroom_item->week;
         $item->join_start       = $homeroom_item->join_start;
         $item->join_end         = $homeroom_item->join_end;

@@ -6,273 +6,223 @@ if (! defined('BASEPATH')) {
 class Homeroomconfirm_model extends BaseModel
 {
     public $table = null;
+    public $table_obedience = null;
 
     public function __construct()
     {
         parent::__construct();
         $this->table = $this->ci->factory_lib->getTable('HomeRoomConfirm');
+        $this->table_obedience = $this->ci->factory_lib->getTable('HomeRoomObedience');
     }
 
-    public function getStats($homeroom_id = 0, $advisor_id = 0)
+    public function getConfirm($homeroom_id=0, $group_id=0)
     {
-        if ($advisor_id==0) {
-            $advisor_id = $this->ci->tank_auth->get_user_id();
-        }
+        //get homeroom item
+        $this->ci->load->model('admin/homeroom_model', 'admin_homeroom_model');
+        $homeroom_item = $this->ci->admin_homeroom_model->getItem($homeroom_id);
 
-        $student_items = $this->getStudentItems($homeroom_id, $advisor_id);
-        $activity_items = $this->getActivityItems($homeroom_id, $advisor_id);
-        $risk_items = $this->getRiskItems($homeroom_id, $advisor_id);
+        //get group item
+        $group_item = $this->ci->homeroom_lib->getGroupItem($group_id);
 
-        $stats = array(
-            'totals' => count($student_items),
-            'come' => 0,
-            'not_come' => 0,
-            'late' => 0,
-            'leave' => 0,
-            'risk' => 0
-        );
+        //get action items
+        $action_items = $this->ci->homeroom_lib->getActionItems($homeroom_id, $group_id);
 
-        // calculate activity stats
-        foreach ($activity_items as $item) {
-            if ($item->check_status=='come') {
-                $stats['come']++;
-            } elseif ($item->check_status=='not_come') {
-                $stats['not_come']++;
-            } elseif ($item->check_status=='late') {
-                $stats['late']++;
-            } elseif ($item->check_status=='leave') {
-                $stats['leave']++;
+        //get Obedience item
+        $obedience_item = $this->getObedienceItem($homeroom_id, $group_id);
+
+        //get students items by group_id
+        $student_items = $this->ci->homeroom_lib->getStudentItems($group_id);
+
+        //get activity items
+        $activity_items = $this->ci->homeroom_lib->getActivityItems($homeroom_id, $group_id);
+
+        //get risk items
+        $risk_items = $this->ci->homeroom_lib->getRiskItems($homeroom_id, $group_id);
+
+        //get advisors items by group_id
+        $advisor_items = $this->ci->homeroom_lib->getAdvisorGroupsItems($group_id);
+        
+        //get attachments items
+        $attactment_items = $this->getAttachments($homeroom_id, $group_id);
+
+        $item = new stdClass();
+        $item->id               = $homeroom_item->id;
+        $item->semester_id      = $homeroom_item->semester_id;
+        $item->week             = $homeroom_item->week;
+        $item->join_start       = $homeroom_item->join_start;
+        $item->join_end         = $homeroom_item->join_end;
+        $item->is_lock          = $homeroom_item->is_lock;
+        $item->is_lock_remark   = $homeroom_item->remark;
+        
+        $tmp_summary                       = new stdClass();
+        $tmp_summary->student_totals       = count($student_items);
+        $tmp_summary->student_come         = 0;
+        $tmp_summary->student_not_come     = 0;
+        $tmp_summary->student_late         = 0;
+        $tmp_summary->student_leave        = 0;
+        $tmp_summary->student_risk         = 0;
+        $tmp_summary->student_not_risk     = 0;
+
+        $item->groups           = array();
+        if (isset($group_item)) {
+            $item_group                     = new stdClass();
+            $item_group->group_id           = $group_item->id;
+            $item_group->group_name         = $group_item->group_name;
+            $item_group->minor_name         = $group_item->minor_name;
+            $item_group->major_name         = $group_item->major_name;
+
+            $obe_id             = 0;
+            $obe_detail         = '';
+            $survey_amount      = 0;
+            $student_totals     = count($student_items);
+            if (isset($obedience_item)) {
+                $obe_id             = $obedience_item->id;
+                $obe_detail         = $obedience_item->obe_detail;
+                $survey_amount      = $obedience_item->survey_amount;
             }
-        }
+            $tmp_obedience                  = new stdClass();
+            $tmp_obedience->obe_id          = $obe_id;
+            $tmp_obedience->obe_detail      = $obe_detail;
+            $tmp_obedience->survey_amount   = $survey_amount;
+            $tmp_obedience->student_totals  = $student_totals;
+            $item_group->obedience          = $tmp_obedience;
 
-        // calculate risk stats
-        foreach ($risk_items as $item) {
-            if ($item->risk_status=='risk') {
-                $stats['risk']++;
+            $item_group->advisors           = array();
+            foreach ($advisor_items as $advisor) {
+                $advisor_status = 'pending';
+                foreach ($action_items as $action) {
+                    if ($action->homeroom_id==$homeroom_item->id && $action->group_id==$group_item->id && $action->user_id==$advisor->advisor_id) {
+                        $advisor_status = $action->action_status;
+                    }
+                }
+                $item_advisor                     = new stdClass();
+                $item_advisor->advisor_id         = $advisor->advisor_id;
+                $item_advisor->advisor_type       = $advisor->advisor_type;
+                $item_advisor->advisor_status     = $advisor_status;
+
+                array_push($item_group->advisors, $item_advisor);
             }
-        }
 
-        return $stats;
-    }
+            $item_group->students           = array();
+            foreach ($student_items as $student) {
+                $risk_detail = '';
+                $risk_comment = '';
+                $risk_status = 'not_risk';//set default value
+                //check risk status on each students
+                foreach ($risk_items as $risk_item) {
+                    if ($risk_item->homeroom_id==$homeroom_item->id && $risk_item->group_id==$group_item->id && $risk_item->student_id==$student->user_id) {
+                        $risk_detail    = $risk_item->risk_detail;
+                        $risk_comment   = $risk_item->risk_comment;
+                        $risk_status    = $risk_item->risk_status;
+                    }
+                }
+                $activity_status = '';//set default value
+                //check activity status on each students
+                foreach ($activity_items as $activity_item) {
+                    if ($activity_item->homeroom_id==$homeroom_item->id && $activity_item->group_id==$group_item->id && $activity_item->student_id==$student->user_id) {
+                        $activity_status    = $activity_item->check_status;
+                    }
+                }
+                $item_student                       = new stdClass();
+                $item_student->id                   = $student->user_id;
+                $item_student->student_code         = $student->student_code;
+                $item_student->firstname            = $student->firstname;
+                $item_student->lastname             = $student->lastname;
+                $item_student->risk_detail          = $risk_detail;
+                $item_student->risk_comment         = $risk_comment;
+                $item_student->risk_status          = $risk_status;
+                $item_student->activity_status      = $activity_status;
+                array_push($item_group->students, $item_student);
 
-    private function getStudentItems($homeroom_id = 0, $advisor_id = 0)
-    {
-        // get all students belong advisor logined
-        $sql = 'SELECT
-                    users_student.id, users_student.student_id, 
-                    users_student.firstname, users_student.lastname, 
-                    users_student.group_id
-                FROM users_student
-                WHERE users_student.group_id IN( SELECT group_id FROM advisors_groups WHERE advisor_id='.$advisor_id.')';
-        $query = $this->ci->db->query($sql);
-        $items = $query->result();
-        return $items;
-    }
-
-    private function getActivityItems($homeroom_id = 0, $advisor_id = 0)
-    {
-        // get all activity content belong advisor logined
-        $sql = 'SELECT
-                    users_student.id as student_id, users_student.group_id,
-                    hai.homeroom_id, hai.check_status
-                FROM users_student
-                LEFT JOIN homeroom_activity_items hai ON (hai.student_id=users_student.id)
-                WHERE users_student.group_id IN( SELECT group_id FROM advisors_groups WHERE advisor_id='.$advisor_id.') 
-                    AND hai.homeroom_id='.$homeroom_id;
-        $query = $this->ci->db->query($sql);
-        $items = $query->result();
-        return $items;
-    }
-
-    private function getRiskItems($homeroom_id = 0, $advisor_id = 0)
-    {
-        // get all risk content belong advisor logined
-        $sql = 'SELECT
-                    users_student.id as student_id, users_student.group_id,
-                    hri.homeroom_id, hri.risk_detail, hri.risk_comment, hri.risk_status
-                FROM users_student
-                LEFT JOIN homeroom_risk_items hri ON (hri.student_id=users_student.id)
-                WHERE users_student.group_id IN( SELECT group_id FROM advisors_groups WHERE advisor_id='.$advisor_id.') 
-                    AND hri.homeroom_id='.$homeroom_id;
-        $query = $this->ci->db->query($sql);
-        $items = $query->result();
-        return $items;
-    }
-
-    public function getSummaryItems($homeroom_id = 0, $advisor_id = 0)
-    {
-        if ($advisor_id==0) {
-            $advisor_id = $this->ci->tank_auth->get_user_id();
-        }
-
-        $student_items = $this->getStudentItems($homeroom_id, $advisor_id);
-        $activity_items = $this->getActivityItems($homeroom_id, $advisor_id);
-        $risk_items = $this->getRiskItems($homeroom_id, $advisor_id);
-
-        $items = array();
-        foreach ($student_items as $student) {
-            $student_data = array(
-                'student_id' => $student->id,
-                'student_code' => $student->student_id,
-                'firstname' => $student->firstname,
-                'lastname' => $student->lastname,
-                'group_id' => $student->group_id,
-                'activity' => array(
-                    'check_status'=>'',
-                    'check_status_text'=>''
-                ),
-                'risk' => array(
-                    'risk_detail'=>'',
-                    'risk_comment'=>'',
-                    'risk_status'=>'',
-                    'risk_status_text'=>'')
-            );
-            array_push($items, $student_data);
-        }
-
-        // activity
-        for ($i=0; $i<count($activity_items); $i++) {
-            $rowi = $activity_items[$i];
-            for ($j=0; $j<count($items); $j++) {
-                $rowj = $items[$j];
-                if ($rowi->student_id == $rowj['student_id']) {
-                    $items[$j]['activity'] = array(
-                        'check_status' => $rowi->check_status,
-                        'check_status_text' => $this->activityStatusText($rowi->check_status)
-                    );
+                //calculate stats: risk
+                if ($risk_status=='risk') {
+                    $tmp_summary->student_risk++;
+                } elseif ($risk_status=='not_risk') {
+                    $tmp_summary->student_not_risk++;
+                }
+                //calculate stats: activity
+                if ($activity_status=='come') {
+                    $tmp_summary->student_come++;
+                } elseif ($activity_status=='not_come') {
+                    $tmp_summary->student_not_come++;
+                } elseif ($activity_status=='late') {
+                    $tmp_summary->student_late++;
+                } elseif ($activity_status=='leave') {
+                    $tmp_summary->student_leave++;
                 }
             }
-        }
+            
+            $item_group->attachments        = array();
+            foreach ($attactment_items as $attachment) {
+                $item_file                  = new stdClass();
+                $item_file->img_id          = $attachment->id;
+                $item_file->img_path        = $attachment->img;
 
-        // risk
-        for ($i=0; $i<count($risk_items); $i++) {
-            $rowi = $risk_items[$i];
-            for ($j=0; $j<count($items); $j++) {
-                $rowj = $items[$j];
-                if ($rowi->student_id == $rowj['student_id']) {
-                    $items[$j]['risk'] = array(
-                        'risk_detail' => $rowi->risk_detail,
-                        'risk_comment' => $rowi->risk_comment,
-                        'risk_status' => $rowi->risk_status,
-                        'risk_status_text' => $this->riskStatusText($rowi->risk_status)
-                    );
-                }
+                array_push($item_group->attachments, $item_file);
             }
+
+            array_push($item->groups, $item_group);
         }
 
-        $group_items = $this->getStudentGroupsByAdvisor($advisor_id);
-        $group_data = array();
-        for ($i=0; $i<count($group_items); $i++) {
-            $row =& $group_items[$i];
-            $group_tmp = array(
-                'group_id' => $row->group_id,
-                'group_name' => $row->group_name,
-                'major_name' => $row->major_name,
-                'minor_name' => $row->minor_name,
-                'students' => array(),
-            );
-            for ($j=0; $j<count($items); $j++) {
-                $student = $items[$j];
-                if ($row->group_id==$student['group_id']) {
-                    array_push($group_tmp['students'], $student);
-                }
-            }
-            array_push($group_data, $group_tmp);
-        }
+        $item->summary                      = $tmp_summary;
 
-        return $group_data;
-    }
-
-    private function getStudentGroupsByAdvisor($advisor_id=0)
-    {
-        $sql = "SELECT groups.id AS group_id, groups.group_name, majors.major_name, minors.minor_name
-                FROM groups
-                LEFT JOIN minors ON (groups.minor_id=minors.id)
-                LEFT JOIN majors ON (minors.major_id=majors.id)
-                WHERE groups.id IN( SELECT DISTINCT group_id FROM advisors_groups WHERE advisor_id={$advisor_id} )
-                    AND groups.status=1 ";
-        $query = $this->ci->db->query($sql);
-        $groups = $query->result();
-        return $groups;
-    }
-
-    private function activityStatusText($check_status=null)
-    {
-        if ($check_status=='not_come') {
-            return 'ขาด';
-        } elseif ($check_status=='late') {
-            return 'สาย';
-        } elseif ($check_status=='leave') {
-            return 'ลา';
-        }
-        return 'มา';
-    }
-
-    private function riskStatusText($check_status=null)
-    {
-        if ($check_status=='risk') {
-            return 'เสี่ยง';
-        }
-        return 'ไม่เสี่ยง';
-    }
-
-    private function getObedienceItem($homeroom_id = 0, $advisor_id = 0)
-    {
-        // get obedience content belong advisor logined
-        $sql = 'SELECT
-                    ho.obe_detail, ho.survey_amount
-                FROM homeroom_obediences ho
-                WHERE ho.homeroom_id='.$homeroom_id.' AND ho.advisor_id='.$advisor_id;
-        $query = $this->ci->db->query($sql);
-        $item = $query->row();
         return $item;
     }
 
-    private function getObedienceAttachmentItems($homeroom_id = 0, $advisor_id = 0)
+    public function getObedienceItems($homeroom_id=0, $group_id=0)
     {
-        // get obedience attactments belong advisor logined
-        $sql = 'SELECT hoa.img
-                FROM homeroom_obedience_attachments hoa
-                WHERE hoa.homeroom_id='.$homeroom_id.' AND hoa.advisor_id='.$advisor_id;
+        $sql = 'SELECT * 
+                    FROM homeroom_obediences
+                    WHERE homeroom_id='.$homeroom_id.' AND group_id='.$group_id;
         $query = $this->ci->db->query($sql);
         $items = $query->result();
         return $items;
     }
 
-    public function getObedienceData($homeroom_id = 0, $advisor_id = 0)
+    public function getObedienceItem($homeroom_id=0, $group_id=0)
     {
-        if ($advisor_id==0) {
-            $advisor_id = $this->ci->tank_auth->get_user_id();
+        $items = $this->getObedienceItems($homeroom_id, $group_id);
+
+        $id = 0;
+        if (count($items)) {
+            $id = $items[0]->id;
+            $this->table_obedience->load($id);
         }
-        
-        $obedience_content = $this->getObedienceItem($homeroom_id, $advisor_id);
-        $obedience_attactments = $this->getObedienceAttachmentItems($homeroom_id, $advisor_id);
+        return $this->table_obedience;
+    }
 
-        $items = array('obedience_content'=>$obedience_content, 'obedience_attactments'=>$obedience_attactments);
-
+    private function getAttachments($homeroom_id = 0, $group_id = 0)
+    {
+        // get obedience attactments belong advisor logined
+        $sql = 'SELECT *
+                FROM homeroom_obedience_attachments
+                WHERE homeroom_id='.$homeroom_id.' AND group_id='.$group_id;
+        $query = $this->ci->db->query($sql);
+        $items = $query->result();
         return $items;
     }
 
     public function saveData()
     {
-        $confirm_data = $this->ci->input->post();
-        $homeroom_id = $this->ci->input->post('homeroom_id', 0);
-        $user_id = $this->ci->tank_auth->get_user_id();
-        $user_type = $this->ci->profile_lib->getUserType();
+        $confirm_data   = $this->ci->input->post();
+        $homeroom_id    = $this->ci->input->post('homeroom_id', 0);
+        $group_id       = $this->ci->input->post('group_id', 0);
+        $advisor_id     = $this->ci->profile_lib->getUserId();
+        $advisor_type   = $this->ci->homeroom_lib->getUserType($group_id);
 
         $confirm_items = array();
         array_push($confirm_items, array(
-            'homeroom_id' => $homeroom_id,
-            'user_id' => $user_id,
-            'user_type' => $user_type,
+            'homeroom_id'   => $homeroom_id,
+            'user_id'       => $advisor_id,
+            'user_type'     => $advisor_type,
             'action_status' => 'confirmed',
-            'created_at' => mdate('%Y-%m-%d %H:%i:%s', time()),
-            'updated_at' => mdate('%Y-%m-%d %H:%i:%s', time()),
-            'status' => 1
+            'created_at'    => mdate('%Y-%m-%d %H:%i:%s', time()),
+            'updated_at'    => mdate('%Y-%m-%d %H:%i:%s', time()),
+            'status'        => 1
         ));
         
         // clear old homeroom data
-        $this->ci->db->delete('homeroom_actions', array('homeroom_id' => $homeroom_id, 'user_id' => $user_id));
+        $this->ci->db->delete('homeroom_actions', array('homeroom_id' => $homeroom_id, 'group_id' => $group_id, 'user_id' => $advisor_id));
         
         // insert activity items
         return $this->ci->db->insert_batch('homeroom_actions', $confirm_items);

@@ -31,10 +31,10 @@ class Base_homeroom_model extends BaseModel
         $group_items = $this->ci->homeroom_lib->getGroupsByAdvisor();
 
         //get all action items
-        $action_items = $this->ci->homeroom_lib->getActionItems();
+        $action_items = $this->ci->homeroom_lib->getAllActionItems();
 
-        //get all groups by advisor items
-        $advisor_groups_items = $this->ci->homeroom_lib->getAdvisorGroupsItems();
+        //get all groups items
+        $advisor_groups_items = $this->ci->homeroom_lib->getAllAdvisorGroups();
 
         foreach ($homeroom_items as $homeroom) {
             $temp_item = new stdClass();
@@ -48,32 +48,39 @@ class Base_homeroom_model extends BaseModel
             $temp_item->groups          = array();
             
             foreach ($group_items as $group) {
-                $action_status = '';
-                foreach ($action_items as $action) {
-                    if ($homeroom->id==$action->homeroom_id && $group->id==$action->group_id) {
-                        $action_status = $action->action_status;
-                    }
-                }
-
-                $user_type = '';
-                foreach ($advisor_groups_items as $advisor_group) {
-                    if ($advisor_group->advisor_id==$advisor_id && $group->id==$advisor_group->group_id) {
-                        $user_type = $advisor_group->advisor_type;
-                    }
-                }
-
                 $temp_group = new stdClass();
                 $temp_group->id                 = $group->id;
                 $temp_group->group_name         = $group->group_name;
                 $temp_group->major_name         = $group->major_name;
                 $temp_group->minor_name         = $group->minor_name;
-                $temp_group->advisor_id         = 1;
-                $temp_group->advisor_type       = $user_type;
-                $temp_group->advisor_status     = $action_status;
+
+                $temp_group->advisors           = array();
+                foreach ($advisor_groups_items as $advisor_group) {
+                    if ($advisor_group->group_id==$group->id) {
+                        $action_status = 'pending';
+                        foreach ($action_items as $action) {
+                            if ($action->homeroom_id==$homeroom->id && $action->group_id==$group->id && $action->user_id==$advisor_group->advisor_id) {
+                                $action_status = $action->action_status;
+                            }
+                        }
+
+                        $tmp_advisor_group                  = new stdClass();
+                        $tmp_advisor_group->advisor_id      = $advisor_group->advisor_id;
+                        $tmp_advisor_group->advisor_type    = $advisor_group->advisor_type;
+                        $tmp_advisor_group->advisor_status  = $action_status;
+
+                        array_push($temp_group->advisors, $tmp_advisor_group);
+                    }
+                }
+
                 array_push($temp_item->groups, $temp_group);
             }
             array_push($items, $temp_item);
         }
+
+        // echo "<pre>";
+        // print_r($items);
+        // exit();
         
         return $items;
     }

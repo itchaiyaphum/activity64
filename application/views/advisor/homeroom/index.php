@@ -22,18 +22,18 @@
                 	<table class="uk-table uk-table-hover" cellpadding="1">
                 		<thead>
                 			<tr>
-                				<th width="5%" class="title">#</th>
-                				<th class="title" width="30%">
+                				<th width="5%">#</th>
+                				<th width="30%">
                 					กลุ่มการเรียน
                 				</th>
-                				<th class="title">
+                				<th width="15%">
                 					สถานะที่ปรึกษา
                 				</th>
-                				<th class="title">
+                				<th>
                 					สถานะการบันทึกข้อมูล
                 				</th>
-								<th class="title">
-                					-
+								<th width="15%">
+                					
                 				</th>
                 			</tr>
                 		</thead>
@@ -56,14 +56,14 @@
 									<div><?php echo $group->major_name; ?></div>
                 				</td>
                 				<td>
-									<?php echo $this->homeroom_lib->getAdvisorTypeText($group->advisor_type); ?>
+									<?php echo $this->homeroom_lib->getAdvisorTypeText($group->advisors); ?>
                 				</td>
                 				<td>
-									<?php echo $this->homeroom_lib->getAdvisorStatusHtml($group->advisor_type, $group->advisor_status); ?>
+									<?php echo $this->homeroom_lib->getAdvisorStatusHtml($group->advisors); ?>
                 				</td>
                 				<td class="uk-text-center">
-									<?php echo $this->homeroom_lib->getEditButtonHtml($homeroom->id, $group->id, $link_activity); ?>
-									<?php echo $this->homeroom_lib->getPrintButtonHtml($homeroom->id, $group->id, $group->advisor_type); ?>
+									<?php echo $this->homeroom_lib->getEditButtonHtml($group->advisors, $link_activity); ?>
+									<?php // echo $this->homeroom_lib->getPrintButtonHtml($homeroom->id, $group->id, $group->advisor_type);?>
 								</td>
                 			</tr>
                 		<?php

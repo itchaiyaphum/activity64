@@ -2,7 +2,7 @@
 //
 //		- login as user_type: advisor
 //		- user_id: 1
-//		- models/Homeroom_model: getItems();
+//		- models/Base_homeroom_model: getItems();
 //
 $homeroom_items = Array(
 	[0] => stdClass Object(
@@ -19,18 +19,36 @@ $homeroom_items = Array(
 				[group_name] 		=> 'กลุ่ม 1'
 				[minor_name] 		=> 'สาขางานเครื่องยนต์'
 				[major_name] 		=> 'สาขาวิชาช่างยนต์'
-				[advisor_id] 		=> 1
-				[advisor_type] 		=> 'advisor'
-				[advisor_status] 	=> 'confirm'
+				[advisors] 			=> Array(
+					[0] => stdClass Object(
+						[advisor_id] 		=> 1
+						[advisor_type] 		=> 'advisor'
+						[advisor_status] 	=> 'saving'
+					),
+					[1] => stdClass Object(
+						[advisor_id] 		=> 1
+						[advisor_type] 		=> 'coadvisor'
+						[advisor_status] 	=> 'pending'
+					)
+				)
 			),
 			[1] => stdClass Object(
 				[id] 				=> 2
 				[group_name] 		=> 'กลุ่ม 2'
 				[minor_name] 		=> 'สาขางานเครื่องยนต์'
 				[major_name] 		=> 'สาขาวิชาช่างยนต์'
-				[advisor_id] 		=> 1
-				[advisor_type] 		=> 'advisor'
-				[advisor_status] 	=> 'pendding'
+				[advisors] 			=> Array(
+					[0] => stdClass Object(
+						[advisor_id] 		=> 1
+						[advisor_type] 		=> 'advisor'
+						[advisor_status] 	=> 'saving'
+					),
+					[1] => stdClass Object(
+						[advisor_id] 		=> 1
+						[advisor_type] 		=> 'coadvisor'
+						[advisor_status] 	=> 'pending'
+					)
+				)
 			)
 		)
 	),

@@ -44,11 +44,12 @@
                         if (count($group->students)<=0) {
                             echo '<tr><td colspan="6" class="uk-text-center"><p>ไม่มีข้อมูล</p></td></tr>';
                         } else {
-                            for ($i=0, $n=count($group->students); $i < $n; $i++) {
-                                $student 	=& $group->students[$i]; ?>
+                            $i=0;
+                            foreach ($group->students as $student) {
+                                ?>
                 			<tr>
                 				<td>
-                					<?php echo($i+1); ?>
+                					<?php echo($i++); ?>
                 				</td>
                 				<td>
                 					<?php echo $student->student_code; ?>

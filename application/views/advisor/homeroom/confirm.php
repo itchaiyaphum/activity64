@@ -11,33 +11,33 @@
 			</div>
 			<hr/>
             <form action="<?php echo base_url('advisor/homeroom/confirm_save');?>" method="post" name="adminForm" id="adminForm">
-            	<div class="uk-button-group uk-width-1-1">
-                    <a class="uk-button uk-width-1-4 " href="<?php echo base_url("advisor/homeroom/activity/?id=".$homeroom->id);?>">STEP 1: เช็คชื่อ</a>
-                    <a class="uk-button uk-width-1-4 " href="<?php echo base_url("advisor/homeroom/obedience/?id=".$homeroom->id);?>">STEP 2: การให้โอวาท</a>
-                    <a class="uk-button uk-width-1-4 " href="<?php echo base_url("advisor/homeroom/risk/?id=".$homeroom->id);?>">STEP 3: ประเมินความเสี่ยง</a>
-                    <a class="uk-button uk-width-1-4 uk-button-primary" href="<?php echo base_url("advisor/homeroom/confirm/?id=".$homeroom->id);?>">STEP 4: ยืนยันการบันทึกข้อมูล</a>
+				<div class="uk-button-group uk-width-1-1">
+                    <a class="uk-button uk-width-1-4" href="<?php echo base_url("advisor/homeroom/activity/?id=".$homeroom->id."&group_id=".$group_id);?>">STEP 1: เช็คชื่อ</a>
+                    <a  class="uk-button uk-width-1-4" href="<?php echo base_url("advisor/homeroom/obedience/?id=".$homeroom->id."&group_id=".$group_id);?>">STEP 2: การให้โอวาท</a>
+                    <a  class="uk-button uk-width-1-4" href="<?php echo base_url("advisor/homeroom/risk/?id=".$homeroom->id."&group_id=".$group_id);?>">STEP 3: ประเมินความเสี่ยง</a>
+                    <a  class="uk-button uk-width-1-4 uk-button-primary" href="<?php echo base_url("advisor/homeroom/confirm/?id=".$homeroom->id."&group_id=".$group_id);?>">STEP 4: ยืนยันการบันทึกข้อมูล</a>
                 </div>
                 
                 <br/><br/>
             	<h2>สรุปผลการเช็คชื่อ และ ประเมินความเสี่ยง</h2>
 				<div class="uk-panel uk-panel-box uk-panel-box-primary uk-margin-top">
 					<ul class="uk-list uk-list-line">
-						<li>นักเรียนทั้งหมด: <?php echo $homeroom_confirm_stats['totals']; ?> คน 
-						| มา <?php echo $homeroom_confirm_stats['come']; ?> คน 
-						| ขาด <?php echo $homeroom_confirm_stats['not_come']; ?> คน 
-						| สาย <?php echo $homeroom_confirm_stats['late']; ?> คน 
-						| ลา <?php echo $homeroom_confirm_stats['leave']; ?> คน 
-						| เสี่ยง <?php echo $homeroom_confirm_stats['risk']; ?> คน</li>
+						<li>นักเรียนทั้งหมด: <?php echo $homeroom->summary->student_totals; ?> คน 
+						| มา <?php echo $homeroom->summary->student_come; ?> คน 
+						| ขาด <?php echo $homeroom->summary->student_not_come; ?> คน 
+						| สาย <?php echo $homeroom->summary->student_late; ?> คน 
+						| ลา <?php echo $homeroom->summary->student_leave; ?> คน 
+						| เสี่ยง <?php echo $homeroom->summary->student_risk; ?> คน</li>
 					</ul>
 				</div>
 
 				<?php
-                foreach ($homeroom_confirm_items as $group) {
-                    if (count($group['students'])<=0) {
+                foreach ($homeroom->groups as $group) {
+                    if (count($group->students)<=0) {
                         continue;
                     } ?>
             	<div class="uk-panel uk-panel-box uk-panel-box-default uk-margin-top">
-                    <h3 class="uk-panel-title">กลุ่มการเรียน: <?php echo $group['group_name'].' / '.$group['minor_name'].' / '.$group['major_name']; ?></h3>
+                    <h3 class="uk-panel-title">กลุ่มการเรียน: <?php echo $group->group_name.' / '.$group->minor_name.' / '.$group->major_name; ?></h3>
                 	<hr/>
                 	<table class="uk-table uk-table-hover" cellpadding="1">
                 		<thead>
@@ -62,35 +62,34 @@
                 		</thead>
                 		<tbody>
                 		<?php
-                        if (count($group['students'])<=0) {
+                        if (count($group->students)<=0) {
                             echo '<tr><td colspan="6" class="uk-text-center"><p>ไม่มีข้อมูล</p></td></tr>';
                         } else {
-                            $k = 0;
+                            $i = 0;
                             
-                            for ($i=0, $n=count($group['students']); $i < $n; $i++) {
-                                $row 	=& $group['students'][$i]; ?>
-                			<tr class="<?php echo "row$k"; ?>">
+                            foreach ($group->students as $student) {
+                                ?>
+                			<tr>
                 				<td>
-                					<?php echo($i+1); ?>
+                					<?php echo($i++); ?>
                 				</td>
                 				<td>
-                					<?php echo $row['student_code']; ?>
+                					<?php echo $student->student_code; ?>
                 				</td>
                 				<td>
-                					<?php echo $row['firstname']; ?> <?php echo $row['lastname']; ?>
+                					<?php echo $student->firstname; ?> <?php echo $student->lastname; ?>
                 				</td>
                 				<td>
-                					<input disabled class="uk-radio" type="checkbox" checked="1"> <?php echo $row['activity']['check_status_text']; ?>
+                					<input disabled class="uk-radio" type="checkbox" checked="1"> <?php echo $homeroom_lib->convertStatusText($student->activity_status); ?>
                 				</td>
                 				<td>
-                					<input disabled class="uk-radio" type="checkbox" checked="1"> <?php echo $row['risk']['risk_status_text']; ?>
+                					<input disabled class="uk-radio" type="checkbox" checked="1"> <?php echo $homeroom_lib->convertStatusText($student->risk_status); ?>
                 				</td>
                 				<td>
-								<?php echo $row['risk']['risk_detail']; ?> / <?php echo $row['risk']['risk_comment']; ?>
+								<?php echo $student->risk_detail; ?> / <?php echo $student->risk_comment; ?>
                 				</td>
                 			</tr>
                 		<?php
-                            $k = 1 - $k;
                             }
                         } ?>
                 		</tbody>
@@ -106,55 +105,36 @@
                    <div>
                    		<h3>- เรื่องที่ให้คำแนะนำนักเรียน นักศึกษา</h3>
 						<hr/>
-                   		<div style="border: 1px;">
+                   		<div>
+							<div class="uk-alert">
                    			<?php
-                               if (isset($homeroom_confirm_obedience['obedience_content'])) {
-                                   echo nl2br($homeroom_confirm_obedience['obedience_content']->obe_detail);
+                               if (isset($group->obedience)) {
+                                   echo nl2br($group->obedience->obe_detail);
                                }?>
+							</div>
                    		</div>
                    		<hr/>
 						
                    		<h3>- รูปภาพขณะให้คำแนะนำนักเรียน นักศึกษา เพื่อใช้ประกอบการจัดทำรายงาน</h3>
                    		<div>
 							<?php
-                            for ($i=0; $i<count($homeroom_confirm_obedience['obedience_attactments']); $i++) {
-                                $row = $homeroom_confirm_obedience['obedience_attactments'][$i]; ?>
-                   				<div><img class="uk-thumbnail" src="<?php echo $row->img; ?>" alt=""></div>
+                            foreach ($group->attachments as $file) {
+                                ?>
+                   				<div><img class="uk-thumbnail" src="<?php echo base_url($file->img_path); ?>" alt=""></div>
 							<?php
                             } ?>
 						</div>
                    </div>
             	</div>
             	
-            	
-            	
-            	
-            
             	<input type="hidden" name="homeroom_id" value="<?php echo $homeroom->id;?>" />
-            	<input type="hidden" name="advisor_id" value="<?php echo $advisor_id;?>" />
-            	<input type="hidden" name="advisor_type" value="advisor" />
+            	<input type="hidden" name="group_id" value="<?php echo $group_id;?>" />
             </form>
             
             <br/><br/>
         	<div class="uk-panel uk-panel-box uk-panel-box-primary uk-margin-top uk-text-center">
-			<?php
-                $rowAction = $this->homeroom_lib->getHomeroomAction($homeroom->id);
-                $actionStatusButton = '';
-                $actionTextButton = 'กดยืนยันการบันทึกข้อมูล';
-                if (isset($rowAction)) {
-                    if ($rowAction->action_status=='confirmed') {
-                        $actionStatusButton = 'disabled';
-                        $actionTextButton = 'ยืนยันการบันทึกข้อมูลเรียบร้อยแล้ว';
-                    }
-                }
-                if ($actionStatusButton!='') {
-                    ?>
-				<a class="uk-button uk-button-primary uk-button-large" href="<?php echo base_url('/advisor/homeroom'); ?>"><i class="uk-icon-home"></i> กลับหน้าหลัก</a>
-				<?php
-                }
-                ?>
-				<button <?php echo $actionStatusButton; ?> class="uk-button uk-button-primary uk-button-large" data-uk-modal="{target:'#confirm-form'}"><?php echo $actionTextButton; ?></button>
-        		<div id="confirm-form" class="uk-modal">
+			<?php echo $this->homeroom_lib->getSaveButton($homeroom->id, $group_id, 'advisor/homeroom'); ?>
+			<div id="confirm-form" class="uk-modal">
                     <div class="uk-modal-dialog">
                     	<a class="uk-modal-close uk-close"></a>
                     	<div class="uk-modal-header">คุณต้องการยืนยันการบันทึกข้อมูลจริงหรือไม่?</div>

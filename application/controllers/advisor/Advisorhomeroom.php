@@ -73,7 +73,6 @@ class Advisorhomeroom extends BaseController
             $data['advisor_id'] = $advisor_id;
             $this->homeroomobedience_model->saveData($data);
             redirect('/advisor/homeroom/risk/?id='.$homeroom_id.'&group_id='.$group_id);
-            exit();
         }
         
         $data = array();
@@ -117,18 +116,15 @@ class Advisorhomeroom extends BaseController
     
     public function confirm()
     {
-        $id = $this->input->get_post('id', 0);
+        $homeroom_id = $this->input->get_post('id', 0);
+        $group_id = $this->input->get_post('group_id', 0);
         
         $data = array();
         $data['leftmenu'] = $this->load->view('advisor/menu', '', true);
-        $data['homeroom'] = $this->homeroom_model->getItem($id);
+        $data['homeroom'] = $this->homeroomconfirm_model->getConfirm($homeroom_id, $group_id);
         $data['profile'] = $this->profile_lib->getData();
-        
-        $data['homeroom_confirm_stats'] = $this->homeroomconfirm_model->getStats($id);
-        $data['homeroom_confirm_items'] = $this->homeroomconfirm_model->getSummaryItems($id);
-        $data['homeroom_confirm_obedience'] = $this->homeroomconfirm_model->getObedienceData($id);
-
-        $data['advisor_id'] = $this->tank_auth->get_user_id();
+        $data['homeroom_lib'] = $this->homeroom_lib;
+        $data['group_id'] = $group_id;
         
         $this->load->view('nav');
         $this->load->view('advisor/homeroom/confirm', $data);

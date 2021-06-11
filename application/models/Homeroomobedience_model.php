@@ -20,7 +20,6 @@ class Homeroomobedience_model extends BaseModel
         $homeroom_item = $this->ci->admin_homeroom_model->getItem($homeroom_id);
 
         //get group item
-        $this->ci->load->model('admin/group_model', 'admin_group_model');
         $group_item = $this->ci->homeroom_lib->getGroupItem($group_id);
 
         //get action items
@@ -35,8 +34,8 @@ class Homeroomobedience_model extends BaseModel
         //get advisors items by group_id
         $advisor_items = $this->ci->homeroom_lib->getAdvisorGroupsItems($group_id);
         
-        //get attactments items
-        $attactment_items = $this->getAttactments($homeroom_id, $group_id);
+        //get attachments items
+        $attactment_items = $this->getAttachments($homeroom_id, $group_id);
 
         $item = new stdClass();
         $item->id               = $homeroom_item->id;
@@ -106,7 +105,7 @@ class Homeroomobedience_model extends BaseModel
         return $item;
     }
 
-    public function getAttactments($homeroom_id=0, $group_id=0)
+    public function getAttachments($homeroom_id=0, $group_id=0)
     {
         $sql = 'SELECT * FROM homeroom_obedience_attachments WHERE homeroom_id=' . $homeroom_id.' AND group_id=' . $group_id.' AND status=1';
         $query = $this->ci->db->query($sql);

@@ -20,11 +20,13 @@ class Homeroomrisk_model extends BaseModel
         $homeroom_item = $this->ci->admin_homeroom_model->getItem($homeroom_id);
 
         //get group item
-        $this->ci->load->model('admin/group_model', 'admin_group_model');
         $group_item = $this->ci->homeroom_lib->getGroupItem($group_id);
 
-        //get activity action items
-        $action_item = $this->ci->homeroom_lib->getActionItem($homeroom_id, $group_id);
+        //get action items
+        $action_items = $this->ci->homeroom_lib->getActionItems($homeroom_id, $group_id);
+
+        //get advisors items by group_id
+        $advisor_items = $this->ci->homeroom_lib->getAdvisorGroupsItems($group_id);
 
         //get students items by group_id
         $student_items = $this->ci->homeroom_lib->getStudentItems($group_id);
@@ -59,11 +61,24 @@ class Homeroomrisk_model extends BaseModel
             $item_group->group_name         = $group_item->group_name;
             $item_group->minor_name         = $group_item->minor_name;
             $item_group->major_name         = $group_item->major_name;
-            $item_group->advisor_id         = $advisor_id;
-            $item_group->advisor_type       = $advisor_type;
-            $item_group->advisor_status     = $advisor_status;
-            $item_group->students           = array();
+            
+            $item_group->advisors           = array();
+            foreach ($advisor_items as $advisor) {
+                $advisor_status = 'pending';
+                foreach ($action_items as $action) {
+                    if ($action->homeroom_id==$homeroom_item->id && $action->group_id==$group_item->id && $action->user_id==$advisor->advisor_id) {
+                        $advisor_status = $action->action_status;
+                    }
+                }
+                $item_advisor                     = new stdClass();
+                $item_advisor->advisor_id         = $advisor->advisor_id;
+                $item_advisor->advisor_type       = $advisor->advisor_type;
+                $item_advisor->advisor_status     = $advisor_status;
 
+                array_push($item_group->advisors, $item_advisor);
+            }
+
+            $item_group->students           = array();
             foreach ($student_items as $student) {
                 $risk_detail = '';
                 $risk_comment = '';
@@ -89,7 +104,7 @@ class Homeroomrisk_model extends BaseModel
 
             array_push($item->groups, $item_group);
         }
-        
+
         return $item;
     }
 
