@@ -4,11 +4,11 @@
 			<?php $this->load->view('home/header');?>
 			<hr/>
 			<div class="uk-grid uk-grid-small">
-				<div class="uk-width-8-10" >
+				<div class="uk-width-large-8-10" >
 				ระบบดูแลผู้เรียนและกิจกรรมนักเรียนนักศึกษา<br/>
 				พัฒนาโดย แผนกเทคโนโลยีสารสนเทศ วิทยาลัยเทคนิคชัยภูมิ
 				</div>
-				<div class="uk-width-2-10" style="border-left: 1px solid #fff;">
+				<div class="uk-width-large-2-10" style="border-left: 1px solid #fff;">
 					<?php $this->load->view('home/rightmenu');?>
 				</div>
 			</div>
