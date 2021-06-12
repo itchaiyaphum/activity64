@@ -72,7 +72,11 @@ class Approving extends BaseController
 
     public function approve()
     {
-        $this->headadvisorapproving_model->approve();
+        $homeroom_id = $this->input->get_post('homeroom_id', 0);
+        $group_id = $this->input->get_post('group_id', 0);
+        $advisor_id = $this->profile_lib->getUserId();
+
+        $this->headadvisorapproving_model->saveAction('confirmed', $homeroom_id, $group_id, $advisor_id, 'headadvisor');
         redirect('/headadvisor/approving/');
     }
 

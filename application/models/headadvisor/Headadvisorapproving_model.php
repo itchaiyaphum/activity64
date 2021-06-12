@@ -654,33 +654,6 @@ class Headadvisorapproving_model extends BaseModel
         return $this->ci->db->insert('homeroom_actions', $action_item);
     }
 
-    public function approve()
-    {
-        $confirm_data = $this->ci->input->post();
-        $homeroom_id = $this->ci->input->get_post('homeroom_id', 0);
-        $group_id = $this->ci->input->get_post('group_id', 0);
-        $user_id = $this->ci->tank_auth->get_user_id();
-        $user_type = 'headdepartment';
-
-        $confirm_items = array();
-        array_push($confirm_items, array(
-            'homeroom_id' => $homeroom_id,
-            'group_id' => $group_id,
-            'user_id' => $user_id,
-            'user_type' => $user_type,
-            'action_status' => 'confirmed',
-            'created_at' => mdate('%Y-%m-%d %H:%i:%s', time()),
-            'updated_at' => mdate('%Y-%m-%d %H:%i:%s', time()),
-            'status' => 1
-        ));
-        
-        // clear old homeroom data
-        $this->ci->db->delete('homeroom_actions', array('homeroom_id' => $homeroom_id, 'user_id' => $user_id));
-        
-        // insert activity items
-        return $this->ci->db->insert_batch('homeroom_actions', $confirm_items);
-    }
-
     public function getGroupByMinorId($minor_id=0)
     {
         $sql = "SELECT * FROM groups WHERE minor_id={$minor_id} AND status=1";
