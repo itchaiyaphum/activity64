@@ -66,8 +66,8 @@
                     <label class="uk-form-label" for="form-h-it">ประเภทครูที่ปรึกษา</label>
                     <div class="uk-form-controls">
                         <select name="advisor_type"  class="uk-width-1-2">
-                        	<option value="advisor" <?php echo ($item->advisor_type==1)?'selected="selected"':'';?>>เป็นครูที่ปรึกษาหลัก</option>
-                        	<option value="coadvisor" <?php echo ($item->advisor_type==2)?'selected="selected"':'';?>>เป็นครูที่ปรึกษาร่วม</option>
+                        	<option value="advisor" <?php echo ($item->advisor_type=='advisor')?'selected="selected"':'';?>>เป็นครูที่ปรึกษาหลัก</option>
+                        	<option value="coadvisor" <?php echo ($item->advisor_type=='coadvisor')?'selected="selected"':'';?>>เป็นครูที่ปรึกษาร่วม</option>
                         </select>
                     </div>
                 </div>
