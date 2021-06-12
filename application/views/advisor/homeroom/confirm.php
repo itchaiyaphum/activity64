@@ -137,8 +137,12 @@
 			<div id="confirm-form" class="uk-modal">
                     <div class="uk-modal-dialog">
                     	<a class="uk-modal-close uk-close"></a>
-                    	<div class="uk-modal-header">คุณต้องการยืนยันการบันทึกข้อมูลจริงหรือไม่?</div>
+                    	<div class="uk-modal-header">คุณแน่ใจนะที่จะบันทึกข้อมูลหรือไม่?</div>
                         <div>
+							<h2 class="uk-text-danger">
+							กรุณาตรวจสอบการกรอกข้อมูลให้ถูกต้องและครบถ้วน<br/>
+							เมื่อกดปุ่ม "ยืนยันการบันทึกข้อมูล"<br/>
+							จะไม่สามารถแก้ไขข้อมูลได้</div>
                         	<div class="uk-margin-top uk-margin-bottom"><img src="<?php echo $profile->signature; ?>" /></div>
                         	<button class="uk-button uk-modal-close">ยกเลิก</button>
                         	<button class="uk-button uk-button-primary" onclick="document.getElementById('adminForm').submit();">ยืนยันการบันทึกข้อมูล</button>
