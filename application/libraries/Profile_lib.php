@@ -3,9 +3,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Profile_lib
 {
+    public $table_student = null;
     public function __construct()
     {
         $this->ci = & get_instance();
+        $this->table_student = $this->ci->factory_lib->getTable('Users');
     }
 
     public function getUserType($user_id=0)
@@ -28,90 +30,23 @@ class Profile_lib
 
     public function getData()
     {
-        $profile = new stdClass();
-        $profile->user_id = null;
-        $profile->firstname = null;
-        $profile->firstname_en = null;
-        $profile->lastname = null;
-        $profile->lastname_en = null;
-        $profile->user_type = null;
-        $profile->email = null;
-        $profile->student_id = null;
-        $profile->college_id = null;
-        $profile->department_id = null;
-        $profile->major_id = null;
-        $profile->major_title = null;
-        $profile->group_id = null;
-        $profile->group_title = null;
-        $profile->edulevel = null;
-        $profile->religion_title = null;
-        $profile->dob = null;
-        $profile->age = null;
-        $profile->congenital_disease = null;
-        $profile->drug_allergy = null;
-        $profile->blood_type = null;
-        $profile->experience_work = null;
-        $profile->experience_skill = null;
-        $profile->experience_intesting = null;
-        $profile->experience_status = null;
-        $profile->experience_marry_name = null;
-        $profile->experience_marry_cocupation = null;
-        $profile->emergency_name = null;
-        $profile->emergency_address = null;
-        $profile->emergency_mobile = null;
-        
-        $profile->hometown_no = null;
-        $profile->hometown_moo = null;
-        $profile->hometown_subdistrict = null;
-        $profile->hometown_district = null;
-        $profile->hometown_province = null;
-        $profile->hometown_postcode = null;
-        $profile->hometown_mobile = null;
-        
-        $profile->current_address_no = null;
-        $profile->current_address_moo = null;
-        $profile->current_address_subdistrict = null;
-        $profile->current_address_district = null;
-        $profile->current_address_province = null;
-        $profile->current_address_postcode = null;
-        $profile->current_address_mobile = null;
-        
-        $profile->advisor_id = null;
-        $profile->trainer_id = null;
-        $profile->company_id = null;
-        $profile->internship_id = null;
-        
-        $profile->thumbnail = null;
-        $profile->signature = null;
-        $profile->organization_id = null;
-        
-        $this->ci->db->where('id', $this->ci->tank_auth->get_user_id());
-        $query = $this->ci->db->get('users');
-        if ($query->num_rows()) {
-            $row = $query->row();
+        $user_id = $this->ci->tank_auth->get_user_id();
+        $this->table_student->load($user_id);
+        $profile =& $this->table_student;
+        $profile->user_id = $profile->id;
             
-            $profile->user_id = $row->id;
-            $profile->firstname = $row->firstname;
-            $profile->lastname = $row->lastname;
-            $profile->user_type = $row->user_type;
-            $profile->email = $row->email;
-            
-            $profile->thumbnail = $row->thumbnail;
-            $profile->organization_id = $row->organization_id;
-            
-            if ($profile->user_type=='student') {
-                $profile = $this->getStudentProfile($profile);
-            } elseif ($profile->user_type=='advisor') {
-                $profile = $this->getAdvisorProfile($profile);
-            } elseif ($profile->user_type=='headdepartment') {
-                $profile = $this->getHeadDepartmentProfile($profile);
-            } elseif ($profile->user_type=='headadvisor') {
-                $profile = $this->getHeadAdvisorProfile($profile);
-            } elseif ($profile->user_type=='executive') {
-                $profile = $this->getExecutiveProfile($profile);
-            } elseif ($profile->user_type=='staff') {
-                $profile = $this->getStaffProfile($profile);
-            }
+        if ($profile->user_type=='student') {
+            $profile = $this->getStudentProfile($profile);
+        } elseif ($profile->user_type=='advisor') {
+            $profile = $this->getAdvisorProfile($profile);
+        } elseif ($profile->user_type=='headdepartment') {
+            $profile = $this->getHeadDepartmentProfile($profile);
+        } elseif ($profile->user_type=='headadvisor') {
+            $profile = $this->getHeadAdvisorProfile($profile);
+        } elseif ($profile->user_type=='executive') {
+            $profile = $this->getExecutiveProfile($profile);
+        } elseif ($profile->user_type=='staff') {
+            $profile = $this->getStaffProfile($profile);
         }
         
         return $profile;
@@ -204,69 +139,12 @@ class Profile_lib
         if ($query->num_rows()) {
             $row = $query->row();
             
-            $profile->firstname_en = $row->firstname_en;
-            $profile->lastname_en = $row->lastname_en;
             $profile->student_id = $row->student_id;
             $profile->major_id = $row->major_id;
             $profile->college_id = $row->college_id;
-            $profile->department_id = $row->department_id;
-//             $profile->major_title = $row->major_title;
             $profile->group_id = $row->group_id;
-//             $profile->group_title = $row->group_title;
-            $profile->edulevel = $row->edulevel;
-            $profile->religion_title = $row->religion_title;
-            $profile->dob = $row->dob;
-            $profile->age = $row->age;
-            $profile->congenital_disease = $row->congenital_disease;
-            $profile->drug_allergy = $row->drug_allergy;
-            $profile->blood_type = $row->blood_type;
-            $profile->experience_work = $row->experience_work;
-            $profile->experience_skill = $row->experience_skill;
-            $profile->experience_intesting = $row->experience_intesting;
-            $profile->experience_status = $row->experience_status;
-            $profile->experience_marry_name = $row->experience_marry_name;
-            $profile->experience_marry_cocupation = $row->experience_marry_cocupation;
-            $profile->emergency_name = $row->emergency_name;
-            $profile->emergency_address = $row->emergency_address;
-            $profile->emergency_mobile = $row->emergency_mobile;
-            
-            $profile->hometown_no = $row->hometown_no;
-            $profile->hometown_moo = $row->hometown_moo;
-            $profile->hometown_subdistrict = $row->hometown_subdistrict;
-            $profile->hometown_district = $row->hometown_district;
-            $profile->hometown_province = $row->hometown_province;
-            $profile->hometown_postcode = $row->hometown_postcode;
-            $profile->hometown_mobile = $row->hometown_mobile;
-            
-            $profile->current_address_no = $row->current_address_no;
-            $profile->current_address_moo = $row->current_address_moo;
-            $profile->current_address_subdistrict = $row->current_address_subdistrict;
-            $profile->current_address_district = $row->current_address_district;
-            $profile->current_address_province = $row->current_address_province;
-            $profile->current_address_postcode = $row->current_address_postcode;
-            $profile->current_address_mobile = $row->current_address_mobile;
-            
-            $profile->advisor_id = $row->advisor_id;
-            $profile->trainer_id = $row->trainer_id;
-            $profile->company_id = $row->company_id;
-            $profile->internship_id = $row->internship_id;
         }
         return $profile;
-    }
-    
-    public function checkNotChooseInternship()
-    {
-        $profile = $this->ci->profile_lib->getData();
-        if ($profile->user_type=="student" && empty($profile->internship_id)) {
-            return true;
-        }
-        return false;
-    }
-
-    public function getInternship()
-    {
-        $this->ci->load->model('admin/internship_model');
-        return $this->ci->internship_model->getItems(array('status'=>1));
     }
     
     public function getColleges()
@@ -275,12 +153,6 @@ class Profile_lib
         return $this->ci->college_model->getItems(array('status'=>1));
     }
     
-    public function getCompany()
-    {
-        $this->ci->load->model('admin/company_model');
-        return $this->ci->company_model->getItems(array('status'=>1));
-    }
-
     public function getStaff()
     {
         $this->ci->db->where('user_type', 'staff');
@@ -295,17 +167,6 @@ class Profile_lib
     public function getAdvisor()
     {
         $this->ci->db->where('user_type', 'advisor');
-        $this->ci->db->where('activated', 1);
-        $query = $this->ci->db->get('users');
-        if ($query->num_rows()) {
-            return $query->result();
-        }
-        return null;
-    }
-
-    public function getTrainer()
-    {
-        $this->ci->db->where('user_type', 'trainer');
         $this->ci->db->where('activated', 1);
         $query = $this->ci->db->get('users');
         if ($query->num_rows()) {
@@ -331,7 +192,6 @@ class Profile_lib
         $users_data = array();
         $users_data['firstname'] = $data['firstname'];
         $users_data['lastname'] = $data['lastname'];
-//         $users_data['organization_id'] = $data['organization_id'];
         $users_data['email'] = $data['email'];
         if (!empty($thumbnail)) {
             $users_data['thumbnail'] = $thumbnail;

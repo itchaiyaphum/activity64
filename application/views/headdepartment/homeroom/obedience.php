@@ -78,7 +78,7 @@ $obedience_id = 0;
             
             <br/><br/>
         	<div class="uk-panel uk-panel-box uk-panel-box-primary uk-margin-top uk-text-center">
-				<?php echo $this->homeroom_lib->getSaveButton($homeroom->id, $group_id, 'headdepartment/homeroom'); ?>
+				<?php echo $this->homeroom_lib->getSaveButton($group->advisors, 'headdepartment/homeroom'); ?>
 				<div id="confirm-form" class="uk-modal">
                     <div class="uk-modal-dialog">
                     	<a class="uk-modal-close uk-close"></a>
