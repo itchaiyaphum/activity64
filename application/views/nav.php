@@ -94,6 +94,7 @@ tinymce.init({
             				<?php } ?>
             				<li class="uk-nav-divider"></li>
             				<li><a href="<?php echo base_url('settings/profile'); ?>"><i class="uk-icon-gear"></i> แก้ไขข้อมูลส่วนตัว</a></li>
+            				<li><a href="<?php echo base_url('settings/password'); ?>"><i class="uk-icon-lock"></i> แก้ไขข้อมูลรหัสผ่าน</a></li>
             				<li><a href="<?php echo base_url('auth/logout'); ?>"><i class="uk-icon-power-off"></i> ออกจากระบบ</a></li>
             			<?php
                         } else { ?>

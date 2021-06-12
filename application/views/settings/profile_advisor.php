@@ -5,22 +5,27 @@ $firstname = array(
     'name'	=> 'firstname',
     'id'	=> 'firstname',
     'value'	=> $profile->firstname,
+    'class' => 'uk-width-large-1-1'
 );
 $lastname = array(
     'name'	=> 'lastname',
     'id'	=> 'lastname',
     'value'	=> $profile->lastname,
+    'class' => 'uk-width-large-1-1'
 );
 $email = array(
     'name'	=> 'email',
     'id'	=> 'email',
     'value'	=> $profile->email,
     'size'	=> 30,
+    'class' => 'uk-width-large-1-1'
 );
 
 $attributes = array('class' => 'uk-form uk-form-horizontal', 'id' => 'loginform', 'method'=>'post');
 ?>
 <div class="uk-container uk-container-center">
+    <h1 class='uk-text-large uk-margin-top'><i class="uk-icon-pencil"></i> แก้ไขข้อมูลส่วนตัว</h1>
+    <hr/>
 	<div class="uk-grid">
 		<div class="tm-sidebar uk-width-medium-1-4 uk-hidden-small">
 			<?php $this->load->view('settings/menu');?>
@@ -30,7 +35,7 @@ $attributes = array('class' => 'uk-form uk-form-horizontal', 'id' => 'loginform'
             
             	<?php echo form_open_multipart($this->uri->uri_string(), $attributes); ?>
            	 		<div class="uk-grid">
-           	 			<div class="uk-width-1-2">
+           	 			<div class="uk-width-large-3-4">
                             <div class="uk-form-row">
                                 <label class="uk-form-label" ><?php echo form_label("อีเมล์", $email['id']); ?></label>
                                 <div class="uk-form-controls">
@@ -103,7 +108,7 @@ $attributes = array('class' => 'uk-form uk-form-horizontal', 'id' => 'loginform'
                     <div class="uk-form-row">
                         <label class="uk-form-label" for="form-h-it"></label>
                         <div class="uk-form-controls uk-text-left">
-                            <input type="submit" value="บันทึกข้อมูล" class="uk-button uk-button-success">
+                            <input type="submit" value="บันทึกข้อมูล" class="uk-button uk-button-success uk-width-large-1-2">
                         </div>
                     </div>
                     
