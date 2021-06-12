@@ -3,11 +3,6 @@
 	<li class="<?php echo $this->helper_lib->getActiveMainMenu('');?>">
 		<a href="<?php echo base_url(''); ?>"><span class="uk-icon-home"></span> หน้าหลัก</a>
 	</li>
-	<!-- 
-	<li class="<?php echo $this->helper_lib->getActiveMainMenu('about');?>">
-		<a href="<?php echo base_url('about/'); ?>"><span class="uk-icon-question-circle"></span> เกี่ยวกับเรา</a>
-	</li>
-	 -->
 	<li class="<?php echo $this->helper_lib->getActiveMainMenu('contact');?>">
 		<a href="<?php echo base_url('contact/'); ?>"><span class="uk-icon-comment-o"></span> ติดต่อเรา</a>
 	</li>

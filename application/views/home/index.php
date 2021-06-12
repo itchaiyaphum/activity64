@@ -4,13 +4,10 @@
 			<?php $this->load->view('home/header');?>
 			<hr/>
 			<div class="uk-grid uk-grid-small">
-				<div class="uk-width-2-10">
-					<?php $this->load->view('home/menu');?>
+				<div class="uk-width-large-8-10">
+					<img src="/assets/imgs/homepage_landing.jpg" class='uk-width-1-1'>
 				</div>
-				<div class="uk-width-6-10" style="border-left: 1px solid #fff; padding: 10px;">
-					<img src="/assets/imgs/homepage_landing.jpg">
-				</div>
-				<div class="uk-width-2-10" style="border-left: 1px solid #fff; padding: 10px;">
+				<div class="uk-width-large-2-10" style="border-left: 1px solid #fff; padding: 10px;">
 					<?php $this->load->view('home/rightmenu');?>
 				</div>
 			</div>

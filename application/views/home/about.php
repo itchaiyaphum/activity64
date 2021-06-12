@@ -3,12 +3,9 @@
 		<div class="uk-text-left uk-margin-top">
 			<?php $this->load->view('home/header');?>
 			<hr/>
-			<div class="uk-grid">
-				<div class="uk-width-2-10">
-					<?php $this->load->view('home/menu');?>
-				</div>
-				<div class="uk-width-6-10" style="border-left: 1px solid #fff;">
-				ระบบกิจกรรมนักเรียน นักศึกษาออนไลน์<br/>
+			<div class="uk-grid uk-grid-small">
+				<div class="uk-width-8-10" >
+				ระบบดูแลผู้เรียนและกิจกรรมนักเรียนนักศึกษา<br/>
 				พัฒนาโดย แผนกเทคโนโลยีสารสนเทศ วิทยาลัยเทคนิคชัยภูมิ
 				</div>
 				<div class="uk-width-2-10" style="border-left: 1px solid #fff;">
