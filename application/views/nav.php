@@ -64,7 +64,7 @@ tinymce.init({
             		</div>
             		<a href="#offcanvas" class="uk-navbar-toggle uk-visible-small" data-uk-offcanvas></a>
             		<div class="uk-navbar-brand uk-navbar-center uk-visible-small">
-            			<a href="<?php echo base_url('');?>">IMS</a>
+            			<a href="<?php echo base_url('');?>">ระบบกิจกรรมนักเรียน</a>
             		</div>
             	</div>
             </nav>
@@ -77,17 +77,20 @@ tinymce.init({
                         if ($this->tank_auth->is_logged_in()) {
                             $profileData = $this->profile_lib->getData(); ?>
             				<?php if ($profileData->user_type=='student') { ?>
-            				<li><a href="<?php echo base_url('profile/activity/');?>"><i class="uk-icon-book"></i> บันทึกการเรียน</a></li>
-            				<li><a href="<?php echo base_url('profile/time/');?>"><i class="uk-icon-clock-o"></i> บันทึกเวลาเรียน</a></li>
-            				<li><a href="<?php echo base_url('profile/evaluation/');?>"><i class="uk-icon-pie-chart"></i> สรุปผลการฝึกงาน</a></li>
-            				<?php } elseif ($profileData->user_type=='trainer') { ?>
-            				<li><a href="<?php echo base_url('trainer/');?>"><i class="uk-icon-lock"></i> เข้าระบบจัดการข้อมูล</a></li>
+            				<?php } elseif ($profileData->user_type=='headadvisor') { ?>
+            				<li><a href="<?php echo base_url('headadvisor/');?>"><i class="uk-icon-home"></i> หน้าหลักสำหรับหัวหน้างานครูที่ปรึกษา</a></li>
+            				<li><a href="<?php echo base_url('headadvisor/homeroom/');?>"><i class="uk-icon-home"></i> จัดการตารางกิจกรรมโฮมรูม</a></li>
+            				<li><a href="<?php echo base_url('headadvisor/users/');?>"><i class="uk-icon-user"></i> จัดการครูที่ปรึกษา</a></li>
+            				<li><a href="<?php echo base_url('headadvisor/approving/');?>"><i class="uk-icon-save"></i> อนุมัติการส่งข้อมูลกิจกรรมโฮมรูม</a></li>
             				<?php } elseif ($profileData->user_type=='advisor') { ?>
-            				<li><a href="<?php echo base_url('advisor/');?>"><i class="uk-icon-lock"></i> เข้าระบบจัดการข้อมูล</a></li>
-            				<?php } elseif ($profileData->user_type=='staff') { ?>
-            				<li><a href="<?php echo base_url('staff/');?>"><i class="uk-icon-lock"></i> เข้าระบบจัดการข้อมูล</a></li>
+            				<li><a href="<?php echo base_url('advisor/');?>"><i class="uk-icon-home"></i> หน้าหลักสำหรับครูที่ปรึกษา</a></li>
+            				<li><a href="<?php echo base_url('advisor/homeroom/');?>"><i class="uk-icon-save"></i> บันทึกข้อมูลกิจกรรมโฮมรูม</a></li>
+            				<?php } elseif ($profileData->user_type=='headdepartment') { ?>
+            				<li><a href="<?php echo base_url('headdepartment/');?>"><i class="uk-icon-home"></i> หน้าหลักสำหรับหัวหน้าแผนก</a></li>
+            				<li><a href="<?php echo base_url('headdepartment/homeroom/');?>"><i class="uk-icon-save"></i> บันทึกข้อมูลกิจกรรมโฮมรูม</a></li>
+            				<li><a href="<?php echo base_url('headdepartment/approving/');?>"><i class="uk-icon-lock"></i> รับรองการบันทึกกิจกรรมโฮมรูม</a></li>
             				<?php } elseif ($profileData->user_type=='admin') { ?>
-            				<li><a href="<?php echo base_url('admin/');?>"><i class="uk-icon-lock"></i> เข้าระบบจัดการข้อมูล</a></li>
+            				<li><a href="<?php echo base_url('admin/');?>"><i class="uk-icon-home"></i> เข้าระบบจัดการข้อมูล</a></li>
             				<?php } ?>
             				<li class="uk-nav-divider"></li>
             				<li><a href="<?php echo base_url('settings/profile'); ?>"><i class="uk-icon-gear"></i> แก้ไขข้อมูลส่วนตัว</a></li>
