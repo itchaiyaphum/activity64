@@ -129,7 +129,7 @@ class Homeroom_lib
             if (isset($links)) {
                 foreach ($links as $key=>$link) {
                     if ($key=='approve') {
-                        $approve_button = " <a href='{$link}' class='uk-button uk-button-primary uk-button-mini'><i class='uk-icon-save'></i></a>";
+                        $approve_button = " <a href='{$link}' class='uk-button uk-button-success uk-button-mini'><i class='uk-icon-save'></i></a>";
                     }
                 }
             }
@@ -185,7 +185,7 @@ class Homeroom_lib
             if (isset($links)) {
                 foreach ($links as $key=>$link) {
                     if ($key=='approve') {
-                        $approve_button = " <a href='{$link}' class='uk-button uk-button-primary uk-button-mini'><i class='uk-icon-save'></i></a>";
+                        $approve_button = " <a href='{$link}' class='uk-button uk-button-success uk-button-mini'><i class='uk-icon-save'></i></a>";
                     }
                 }
             }
@@ -227,7 +227,7 @@ class Homeroom_lib
                 if (isset($links)) {
                     foreach ($links as $key=>$link) {
                         if ($key=='approve') {
-                            $html .= " <a href='{$link}' class='uk-button uk-button-primary uk-button-mini'><i class='uk-icon-save'></i> กดยืนยันการส่งข้อมูล</a>";
+                            $html .= " <a href='{$link}' class='uk-button uk-button-success uk-button-mini'><i class='uk-icon-save'></i> กดยืนยันการส่งข้อมูล</a>";
                         } elseif ($key=='unapprove') {
                             $html .= " <a href='{$link}' class='uk-button uk-button-danger uk-button-mini'><i class='uk-icon-remove'></i> กดยกเลิกการส่งข้อมูล</a>";
                         }
@@ -330,9 +330,9 @@ class Homeroom_lib
         if ($advisor_status=='confirmed') {
             $link_to = base_url($link);
             $html .= "<a class='uk-button uk-button-primary uk-button-large' href='{$link_to}'><i class='uk-icon-home'></i> กลับหน้าหลัก</a> ";
-            $html .= "<button disabled class='uk-button uk-button-primary uk-button-large' data-uk-modal=\"{target:'#confirm-form'}\">ยืนยันการบันทึกข้อมูลเรียบร้อยแล้ว</button>";
+            $html .= "<button disabled class='uk-button uk-button-success uk-button-large' data-uk-modal=\"{target:'#confirm-form'}\">ยืนยันการบันทึกข้อมูลเรียบร้อยแล้ว</button>";
         } else {
-            $html .= "<button class='uk-button uk-button-primary uk-button-large' data-uk-modal=\"{target:'#confirm-form'}\"><i class='uk-icon-save'></i> กดยืนยันการบันทึกข้อมูล</button>";
+            $html .= "<button class='uk-button uk-button-success uk-button-large' data-uk-modal=\"{target:'#confirm-form'}\"><i class='uk-icon-save'></i> กดยืนยันการบันทึกข้อมูล</button>";
         }
         return $html;
     }
