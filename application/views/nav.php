@@ -28,6 +28,11 @@ tinymce.init({
     toolbar: "forecolor image link code preview fullscreen"
  });
 </script>
+<style>
+.uk-navbar-center{
+	max-width: 80% !important;
+}
+</style>
 </head>
 <body>
 	<div class="wrapper">
