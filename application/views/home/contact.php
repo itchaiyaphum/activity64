@@ -4,7 +4,7 @@
     <?php $this->load->view('home/header');?>
     <hr/>
     <div class="uk-grid uk-grid-small">
-				<div class="uk-width-8-10">
+				<div class="uk-width-large-8-10">
 				
 					<h1 style="color: #fff;"><u>ติดต่อผู้ดูแลระบบ</u></h1>
           <div>
@@ -48,7 +48,7 @@
                 <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyC4RnT2-iZ5cDLhoMoN5w-_LHWRrDVx1mM&callback=initMap" async defer></script>
 				
 				  </div>
-				<div class="uk-width-2-10" style="border-left: 1px solid #fff;">
+				<div class="uk-width-large-2-10" style="border-left: 1px solid #fff;">
 				  <?php $this->load->view('home/rightmenu');?>
 				</div>
 			</div>
