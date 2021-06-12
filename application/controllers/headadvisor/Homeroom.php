@@ -8,60 +8,81 @@ class Homeroom extends BaseController
     {
         parent::__construct();
         
+        $this->load->model('admin/semester_model');
         $this->load->model('admin/homeroom_model');
-        $this->load->model('headadvisor/headadvisorhomeroom_model');
-        $this->load->model('homeroomconfirm_model');
-        $this->load->library('homeroom_lib');
+        $this->load->library('form_validation');
     }
+
     public function index()
     {
         $data = array();
         $data['leftmenu'] = $this->load->view('headadvisor/menu', '', true);
         $data['pagination'] = $this->homeroom_model->getPagination();
         $data['items'] = $this->homeroom_model->getItems();
-        $data['advisor_items'] = $this->headadvisorhomeroom_model->getAdvisorItems();
-
+        
         $this->load->view('nav');
         $this->load->view('headadvisor/homeroom/index', $data);
         $this->load->view('footer');
     }
-
-    public function confirm()
+    
+    public function edit()
     {
+        $this->form_validation->set_rules('week', 'สัปดาห์', 'trim|required|xss_clean');
+//         $this->form_validation->set_rules('join_start', 'วันที่เริ่มต้นทำกิจกรรมโฮมรูม', 'trim|required|xss_clean');
+//         $this->form_validation->set_rules('join_end', 'วันที่สิ้นสุดทำกิจกรรมโฮมรูม', 'trim|required|xss_clean');
+        
+        if ($this->form_validation->run()) {
+            if ($this->homeroom_model->save()) {
+                redirect('/headadvisor/homeroom/');
+            }
+        }
+            
         $id = $this->input->get_post('id', 0);
-        $advisor_id = $this->input->get_post('advisor_id', 0);
         
         $data = array();
         $data['leftmenu'] = $this->load->view('headadvisor/menu', '', true);
-        $data['homeroom'] = $this->homeroom_model->getItem($id);
-        $data['profile'] = $this->profile_lib->getData();
-        
-        $data['homeroom_confirm_stats'] = $this->homeroomconfirm_model->getStats($id, $advisor_id);
-        $data['homeroom_confirm_items'] = $this->homeroomconfirm_model->getSummaryItems($id, $advisor_id);
-        $data['homeroom_confirm_obedience'] = $this->homeroomconfirm_model->getObedienceData($id, $advisor_id);
-
-        $data['advisor_id'] = $this->tank_auth->get_user_id();
+        $data['pagination'] = $this->homeroom_model->getPagination();
+        $data['item'] = $this->homeroom_model->getItem($id);
+        $data['semester_items'] = $this->semester_model->getItems(array('status'=>'publish','no_limit'=>true));
         
         $this->load->view('nav');
-        $this->load->view('headadvisor/homeroom/confirm', $data);
+        $this->load->view('headadvisor/homeroom/form', $data);
         $this->load->view('footer');
     }
-
-    public function approve()
+    
+    public function publish()
     {
-        $this->headadvisorhomeroom_model->approve();
-        redirect('/headadvisor/homeroom/');
+        $id = $this->input->get_post('id', 0);
+        $this->homeroom_model->publish($id);
+        $per_page = $this->input->get_post('per_page', 1);
+        redirect('headadvisor/homeroom/?per_page='.$per_page);
     }
-
-    public function unapprove()
+    public function unpublish()
     {
-        $this->headadvisorhomeroom_model->unapprove();
-        redirect('/headadvisor/homeroom/');
+        $id = $this->input->get_post('id', 0);
+        $this->homeroom_model->unpublish($id);
+        $per_page = $this->input->get_post('per_page', 1);
+        redirect('headadvisor/homeroom/?per_page='.$per_page);
     }
-
-    public function remove_confirm()
+    public function trash()
     {
-        $this->headadvisorhomeroom_model->remove_confirm();
-        redirect('/headadvisor/homeroom/');
+        $id = $this->input->get_post('id', 0);
+        $this->homeroom_model->trash($id);
+        $per_page = $this->input->get_post('per_page', 1);
+        redirect('headadvisor/homeroom/?per_page='.$per_page);
+    }
+    public function delete()
+    {
+        $id = $this->input->get_post('id', 0);
+        $this->homeroom_model->delete($id);
+        $per_page = $this->input->get_post('per_page', 1);
+        redirect('headadvisor/homeroom/?per_page='.$per_page);
+    }
+    public function restore()
+    {
+        $id = $this->input->get_post('id', 0);
+        $this->homeroom_model->restore($id);
+        $per_page = $this->input->get_post('per_page', 1);
+        redirect('headadvisor/homeroom/?per_page='.$per_page);
     }
 }
