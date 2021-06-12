@@ -1,11 +1,11 @@
 <?php
-if (! defined('BASEPATH'))
+if (! defined('BASEPATH')) {
     exit('No direct script access allowed');
+}
 
 class Advisor_model extends BaseModel
 {
-
-    public $table = NULL;
+    public $table = null;
     
     public function __construct()
     {
@@ -28,7 +28,7 @@ class Advisor_model extends BaseModel
     public function getItems($options = array())
     {
         $where = $this->getQueryWhere($options);
-        $sql = "SELECT * FROM users WHERE user_type='advisor' AND {$where}";
+        $sql = "SELECT * FROM users WHERE (user_type='advisor' || user_type='headdepartment') AND {$where}";
         $query = $this->ci->db->query($sql);
         $items = $query->result();
         return $items;
@@ -55,5 +55,4 @@ class Advisor_model extends BaseModel
         // render query
         return $this->renderQueryWhere($wheres, $options);
     }
-
 }

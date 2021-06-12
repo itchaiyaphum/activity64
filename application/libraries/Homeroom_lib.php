@@ -405,9 +405,12 @@ class Homeroom_lib
     /*
     //  ==================== Advisor ====================
     */
-    public function getUserType($group_id=0)
+    public function getUserType($group_id=0, $advisor_id=0)
     {
-        $sql = "SELECT advisor_type FROM advisors_groups WHERE group_id={$group_id}";
+        if ($advisor_id==0) {
+            $advisor_id = $this->ci->profile_lib->getUserId();
+        }
+        $sql = "SELECT advisor_type FROM advisors_groups WHERE group_id={$group_id} AND advisor_id={$advisor_id}";
         $query = $this->ci->db->query($sql);
         $item = $query->row();
 

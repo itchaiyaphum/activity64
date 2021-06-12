@@ -80,14 +80,21 @@ $route['advisor/homeroom/risk']	= "advisor/advisorhomeroom/risk";
 $route['advisor/homeroom/risk_save']	= "advisor/advisorhomeroom/risk_save";
 $route['advisor/homeroom/confirm']	= "advisor/advisorhomeroom/confirm";
 $route['advisor/homeroom/confirm_save']	= "advisor/advisorhomeroom/confirm_save";
-
-
 $route['advisor']	= "advisor/home";
 $route['advisor_restricted_access']	= "home/advisor_restricted_access";
 
 $route['staff']	= "staff/home";
 $route['staff_restricted_access']	= "home/staff_restricted_access";
 
+
+$route['headdepartment/homeroom']	= "headdepartment/headdepartmenthomeroom";
+$route['headdepartment/homeroom/activity']	= "headdepartment/headdepartmenthomeroom/activity";
+$route['headdepartment/homeroom/activity_save']	= "headdepartment/headdepartmenthomeroom/activity_save";
+$route['headdepartment/homeroom/obedience']	= "headdepartment/headdepartmenthomeroom/obedience";
+$route['headdepartment/homeroom/risk']	= "headdepartment/headdepartmenthomeroom/risk";
+$route['headdepartment/homeroom/risk_save']	= "headdepartment/headdepartmenthomeroom/risk_save";
+$route['headdepartment/homeroom/confirm']	= "headdepartment/headdepartmenthomeroom/confirm";
+$route['headdepartment/homeroom/confirm_save']	= "headdepartment/headdepartmenthomeroom/confirm_save";
 
 $route['headdepartment']	= "headdepartment/home";
 $route['headdepartment_restricted_access']	= "home/headdepartment_restricted_access";
