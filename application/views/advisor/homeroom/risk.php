@@ -11,11 +11,11 @@
 			</div>
 			<hr/>
 			
-			<div class="uk-button-group uk-width-1-1">
-				<a class="uk-button uk-width-1-4" href="<?php echo base_url("advisor/homeroom/activity/?id=".$homeroom->id."&group_id=".$group_id);?>">STEP 1: เช็คชื่อ</a>
-				<a  class="uk-button uk-width-1-4" href="<?php echo base_url("advisor/homeroom/obedience/?id=".$homeroom->id."&group_id=".$group_id);?>">STEP 2: การให้โอวาท</a>
-				<a  class="uk-button uk-width-1-4 uk-button-primary" href="<?php echo base_url("advisor/homeroom/risk/?id=".$homeroom->id."&group_id=".$group_id);?>">STEP 3: ประเมินความเสี่ยง</a>
-				<a  class="uk-button uk-width-1-4" href="<?php echo base_url("advisor/homeroom/confirm/?id=".$homeroom->id."&group_id=".$group_id);?>">STEP 4: ยืนยันการบันทึกข้อมูล</a>
+			<div class="uk-grid uk-grid-small">
+				<a class="uk-button uk-margin-small-bottom uk-width-small-1-1 uk-width-medium-1-1 uk-width-large-1-4" href="<?php echo base_url("advisor/homeroom/activity/?id=".$homeroom->id."&group_id=".$group_id);?>">STEP 1: เช็คชื่อ</a>
+				<a class="uk-button uk-margin-small-bottom uk-width-small-1-1 uk-width-medium-1-1 uk-width-large-1-4" href="<?php echo base_url("advisor/homeroom/obedience/?id=".$homeroom->id."&group_id=".$group_id);?>">STEP 2: การให้โอวาท</a>
+				<a class="uk-button uk-button-primary uk-margin-small-bottom uk-width-small-1-1 uk-width-medium-1-1 uk-width-large-1-4" href="<?php echo base_url("advisor/homeroom/risk/?id=".$homeroom->id."&group_id=".$group_id);?>">STEP 3: ประเมินความเสี่ยง</a>
+				<a class="uk-button uk-margin-small-bottom uk-width-small-1-1 uk-width-medium-1-1 uk-width-large-1-4" href="<?php echo base_url("advisor/homeroom/confirm/?id=".$homeroom->id."&group_id=".$group_id);?>">STEP 4: ยืนยันการบันทึกข้อมูล</a>
 			</div>
 
             <form action="<?php echo base_url('advisor/homeroom/risk_save');?>" method="post" name="adminForm" id="adminForm">

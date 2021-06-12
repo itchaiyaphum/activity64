@@ -11,13 +11,12 @@
 			</div>
 			<hr/>
             <form action="<?php echo base_url('advisor/homeroom/confirm_save');?>" method="post" name="adminForm" id="adminForm">
-				<div class="uk-button-group uk-width-1-1">
-                    <a class="uk-button uk-width-1-4" href="<?php echo base_url("advisor/homeroom/activity/?id=".$homeroom->id."&group_id=".$group_id);?>">STEP 1: เช็คชื่อ</a>
-                    <a  class="uk-button uk-width-1-4" href="<?php echo base_url("advisor/homeroom/obedience/?id=".$homeroom->id."&group_id=".$group_id);?>">STEP 2: การให้โอวาท</a>
-                    <a  class="uk-button uk-width-1-4" href="<?php echo base_url("advisor/homeroom/risk/?id=".$homeroom->id."&group_id=".$group_id);?>">STEP 3: ประเมินความเสี่ยง</a>
-                    <a  class="uk-button uk-width-1-4 uk-button-primary" href="<?php echo base_url("advisor/homeroom/confirm/?id=".$homeroom->id."&group_id=".$group_id);?>">STEP 4: ยืนยันการบันทึกข้อมูล</a>
-                </div>
-                
+				<div class="uk-grid uk-grid-small">
+					<a class="uk-button uk-margin-small-bottom uk-width-small-1-1 uk-width-medium-1-1 uk-width-large-1-4" href="<?php echo base_url("advisor/homeroom/activity/?id=".$homeroom->id."&group_id=".$group_id);?>">STEP 1: เช็คชื่อ</a>
+					<a class="uk-button uk-margin-small-bottom uk-width-small-1-1 uk-width-medium-1-1 uk-width-large-1-4" href="<?php echo base_url("advisor/homeroom/obedience/?id=".$homeroom->id."&group_id=".$group_id);?>">STEP 2: การให้โอวาท</a>
+					<a class="uk-button uk-margin-small-bottom uk-width-small-1-1 uk-width-medium-1-1 uk-width-large-1-4" href="<?php echo base_url("advisor/homeroom/risk/?id=".$homeroom->id."&group_id=".$group_id);?>">STEP 3: ประเมินความเสี่ยง</a>
+					<a class="uk-button uk-margin-small-bottom uk-button-primary uk-width-small-1-1 uk-width-medium-1-1 uk-width-large-1-4" href="<?php echo base_url("advisor/homeroom/confirm/?id=".$homeroom->id."&group_id=".$group_id);?>">STEP 4: ยืนยันการบันทึกข้อมูล</a>
+				</div>
                 <br/><br/>
             	<h2>สรุปผลการเช็คชื่อ และ ประเมินความเสี่ยง</h2>
 				<div class="uk-panel uk-panel-box uk-panel-box-primary uk-margin-top">
