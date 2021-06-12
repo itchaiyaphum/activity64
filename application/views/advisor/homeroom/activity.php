@@ -10,7 +10,7 @@
 				</div>
 			</div>
 			<hr/>
-            <form action="<?php echo base_url('advisor/homeroom/activity_save');?>" method="post" name="adminForm" id="adminForm">
+            <form class="uk-form" action="<?php echo base_url('advisor/homeroom/activity_save');?>" method="post" name="adminForm" id="adminForm">
 				<div class="uk-grid uk-grid-small">
 					<a class="uk-button uk-margin-small-bottom uk-button-primary uk-width-small-1-1 uk-width-medium-1-1 uk-width-large-1-4" href="<?php echo base_url("advisor/homeroom/activity/?id=".$homeroom->id."&group_id=".$group_id);?>">STEP 1: เช็คชื่อ</a>
 					<a class="uk-button uk-margin-small-bottom uk-width-small-1-1 uk-width-medium-1-1 uk-width-large-1-4" href="<?php echo base_url("advisor/homeroom/obedience/?id=".$homeroom->id."&group_id=".$group_id);?>">STEP 2: การให้โอวาท</a>
@@ -58,10 +58,10 @@
                 					<?php echo $student->firstname; ?> <?php echo $student->lastname; ?>
                 				</td>
                 				<td>
-                					<input class="uk-radio" type="radio" name="join_status[<?php echo $student->id; ?>]" value="come" <?php echo ($student->activity_status=='come')?'checked="1"':''; ?>> มา
-                					<input class="uk-radio" type="radio" name="join_status[<?php echo $student->id; ?>]" value="not_come" <?php echo ($student->activity_status=='not_come')?'checked="1"':''; ?>> ขาด
-                					<input class="uk-radio" type="radio" name="join_status[<?php echo $student->id; ?>]" value="late" <?php echo ($student->activity_status=='late')?'checked="1"':''; ?>> สาย
-                					<input class="uk-radio" type="radio" name="join_status[<?php echo $student->id; ?>]" value="leave" <?php echo ($student->activity_status=='leave')?'checked="1"':''; ?>> ลา
+                					<div><input class="uk-radio" type="radio" name="join_status[<?php echo $student->id; ?>]" value="come" <?php echo ($student->activity_status=='come')?'checked="1"':''; ?>> มา</div>
+                					<div><input class="uk-radio" type="radio" name="join_status[<?php echo $student->id; ?>]" value="not_come" <?php echo ($student->activity_status=='not_come')?'checked="1"':''; ?>> ขาด</div>
+                					<div><input class="uk-radio" type="radio" name="join_status[<?php echo $student->id; ?>]" value="late" <?php echo ($student->activity_status=='late')?'checked="1"':''; ?>> สาย</div>
+                					<div><input class="uk-radio" type="radio" name="join_status[<?php echo $student->id; ?>]" value="leave" <?php echo ($student->activity_status=='leave')?'checked="1"':''; ?>> ลา</div>
                 				</td>
                 			</tr>
                 		<?php

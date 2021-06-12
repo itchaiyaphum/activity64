@@ -70,8 +70,8 @@
                 					<input type="text" class="uk-input" name="student_items[<?php echo $student->id; ?>][comment]" value="<?php echo $student->risk_comment; ?>"/>
                 				</td>
                 				<td>
-                					<input class="uk-radio" type="radio" name="student_items[<?php echo $student->id; ?>][status]" value="risk" <?php echo ($student->risk_status=='risk')?'checked="1"':''; ?>> เสี่ยง
-                					<input class="uk-radio" type="radio" name="student_items[<?php echo $student->id; ?>][status]" value="not_risk" <?php echo ($student->risk_status=='not_risk')?'checked="1"':''; ?>> ไม่เสี่ยง
+                					<div><input class="uk-radio" type="radio" name="student_items[<?php echo $student->id; ?>][status]" value="risk" <?php echo ($student->risk_status=='risk')?'checked="1"':''; ?>> เสี่ยง</div>
+                					<div><input class="uk-radio" type="radio" name="student_items[<?php echo $student->id; ?>][status]" value="not_risk" <?php echo ($student->risk_status=='not_risk')?'checked="1"':''; ?>> ไม่เสี่ยง</div>
                 				</td>
                 			</tr>
                 		<?php
