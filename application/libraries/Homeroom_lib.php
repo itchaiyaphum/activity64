@@ -32,6 +32,213 @@ class Homeroom_lib
         return $value;
     }
 
+    private function genAdvisorButtonStatus($advisor_status='', $links=null, $advisor_id=0)
+    {
+        $remove_button = '';
+        if (isset($links)) {
+            foreach ($links as $key=>$link) {
+                if ($key=='remove') {
+                    $remove_button = " <a href='{$link}&advisor_id={$advisor_id}' class='uk-button uk-button-danger uk-button-mini'><i class='uk-icon-remove'></i></a>";
+                }
+            }
+        }
+
+        $html = "";
+        if ($advisor_status=='viewed') {
+            $html = '<div class="uk-button uk-button-mini"><i class="uk-icon-eye"></i> ครูที่ปรึกษาหลัก (กำลังบันทึกข้อมูล)</div>';
+        } elseif ($advisor_status=='confirmed') {
+            $html = '<div class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-check"></i> ครูที่ปรึกษาหลัก (ยืนยันการกรอกข้อมูลแล้ว)</div>';
+            $html .= $remove_button;
+        } elseif ($advisor_status=='saving') {
+            $html = '<div class="uk-button uk-button-primary uk-button-mini">ครูที่ปรึกษาหลัก (กำลังบันทึกข้อมูล)</div>';
+        } else {
+            $html = '<div class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i> ครูที่ปรึกษาหลัก (รอการบันทึกข้อมูล)</div>';
+        }
+        return $html;
+    }
+
+    private function genCoAdvisorButtonStatus($advisor_status='', $links=null, $advisor_id=0)
+    {
+        $remove_button = '';
+        if (isset($links)) {
+            foreach ($links as $key=>$link) {
+                if ($key=='remove') {
+                    $remove_button = " <a href='{$link}&advisor_id={$advisor_id}' class='uk-button uk-button-danger uk-button-mini'><i class='uk-icon-remove'></i></a>";
+                }
+            }
+        }
+
+        $html = "";
+        if ($advisor_status=='viewed') {
+            $html = '<div class="uk-button uk-button-mini"><i class="uk-icon-eye"></i> ครูที่ปรึกษาร่วม (กำลังบันทึกข้อมูล)</div>';
+        } elseif ($advisor_status=='confirmed') {
+            $html = '<div class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-check"></i> ครูที่ปรึกษาร่วม (ยืนยันการกรอกข้อมูลแล้ว)</div>';
+            $html .= $remove_button;
+        } elseif ($advisor_status=='saving') {
+            $html = '<div class="uk-button uk-button-warning uk-button-mini"><i class="uk-icon-gears"></i> ครูที่ปรึกษาร่วม (กำลังบันทึกข้อมูล)</div>';
+        } else {
+            $html = '<div class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i> ครูที่ปรึกษาร่วม (รอการบันทึกข้อมูล)</div>';
+        }
+        return $html;
+    }
+
+    public function getAdvisorStatusHtml($advisors=null, $approving=null, $links=null)
+    {
+        $html = '';
+        if (isset($advisors) && isset($approving)) {
+            foreach ($advisors as $advisor) {
+                $html_advisor = '';
+                foreach ($approving as $approve) {
+                    if ($advisor->advisor_id==$approve->advisor_id) {
+                        if ($advisor->advisor_type=='advisor') {
+                            $html_advisor .= $this->genAdvisorButtonStatus($approve->advisor_status, $links, $approve->advisor_id);
+                        } elseif ($advisor->advisor_type=='coadvisor') {
+                            $html_advisor .= $this->genCoAdvisorButtonStatus($approve->advisor_status, $links, $approve->advisor_id);
+                        }
+                    }
+                }
+                if ($html_advisor!="") {
+                    $html .= $html_advisor;
+                }
+                if ($advisor->advisor_type=='advisor' && $html_advisor=="") {
+                    //set default button
+                    $html .= '<div class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i> ครูที่ปรึกษาหลัก (รอการบันทึกข้อมูล)</div>';
+                } elseif ($advisor->advisor_type=='coadvisor' && $html_advisor=="") {
+                    //set default button
+                    $html .= '<div class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i> ครูที่ปรึกษาร่วม (รอการบันทึกข้อมูล)</div>';
+                }
+            }
+        }
+
+        return $html;
+    }
+
+    private function genHeadDepartmentButtonStatus($approving=null, $advisor_status='', $links=null)
+    {
+        $enable_approve_button = true;
+        if (!is_null($approving)) {
+            foreach ($approving as $approve) {
+                if ($approve->advisor_status=='confirmed' && $approve->advisor_type=='headdepartment') {
+                    $enable_approve_button = false;
+                }
+            }
+        }
+
+        $approve_button = '';
+        if ($enable_approve_button) {
+            if (isset($links)) {
+                foreach ($links as $key=>$link) {
+                    if ($key=='approve') {
+                        $approve_button = " <a href='{$link}' class='uk-button uk-button-primary uk-button-mini'><i class='uk-icon-save'></i></a>";
+                    }
+                }
+            }
+        }
+
+        $remove_button = '';
+        if (isset($links)) {
+            foreach ($links as $key=>$link) {
+                if ($key=='remove') {
+                    $remove_button = " <a href='{$link}' class='uk-button uk-button-danger uk-button-mini'><i class='uk-icon-remove'></i></a>";
+                }
+            }
+        }
+        $view_button = '';
+        if (isset($links)) {
+            foreach ($links as $key=>$link) {
+                if ($key=='view') {
+                    $view_button = " <a href='{$link}' class='uk-button uk-button-mini'><i class='uk-icon-eye'></i></a>";
+                }
+            }
+        }
+
+        $html = "";
+        if ($advisor_status=='viewed') {
+            $html = '<div class="uk-button uk-button-mini"><i class="uk-icon-eye"></i> ยังไม่ได้รับการรับรอง</div>';
+            $html .= $view_button;
+            $html .= $approve_button;
+        } elseif ($advisor_status=='confirmed') {
+            $html = '<div class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-check"></i> รับรองการส่งแล้ว</div>';
+            $html .= $view_button;
+            $html .= $remove_button;
+        } else {
+            $html = '<div class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i> ยังไม่ได้เปิดอ่าน</div>';
+            $html .= $view_button;
+        }
+
+        return $html;
+    }
+
+    public function getHeadDepartmentStatusHtml($approving=null, $links=null)
+    {
+        $enable_approve_button = false;
+        if (!is_null($approving)) {
+            foreach ($approving as $approve) {
+                if ($approve->advisor_status=='confirmed') {
+                    $enable_approve_button = true;
+                }
+            }
+        }
+
+        $approve_button = '';
+        if ($enable_approve_button) {
+            if (isset($links)) {
+                foreach ($links as $key=>$link) {
+                    if ($key=='approve') {
+                        $approve_button = " <a href='{$link}' class='uk-button uk-button-primary uk-button-mini'><i class='uk-icon-save'></i></a>";
+                    }
+                }
+            }
+        }
+
+        $view_button = '';
+        if (isset($links)) {
+            foreach ($links as $key=>$link) {
+                if ($key=='view') {
+                    $view_button = " <a href='{$link}' class='uk-button uk-button-mini'><i class='uk-icon-eye'></i></a>";
+                }
+            }
+        }
+
+        $html = '';
+        if (isset($approving)) {
+            foreach ($approving as $approve) {
+                if ($approve->advisor_type=='headdepartment') {
+                    $html .= $this->genHeadDepartmentButtonStatus($approving, $approve->advisor_status, $links);
+                }
+            }
+
+            //set default button
+            if ($html=="") {
+                $html .= '<div class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i> ยังไม่ได้เปิดอ่าน</div>';
+                $html .= $view_button;
+                $html .= $approve_button;
+            }
+        }
+
+        return $html;
+    }
+
+    public function getApproveAllStatusHtml($minior, $links=null)
+    {
+        $html = '';
+        if (isset($minior->groups)) {
+            if (count($minior->groups)) {
+                if (isset($links)) {
+                    foreach ($links as $key=>$link) {
+                        if ($key=='approve') {
+                            $html .= " <a href='{$link}' class='uk-button uk-button-primary uk-button-mini'><i class='uk-icon-save'></i> กดยืนยันการส่งข้อมูล</a>";
+                        } elseif ($key=='unapprove') {
+                            $html .= " <a href='{$link}' class='uk-button uk-button-danger uk-button-mini'><i class='uk-icon-remove'></i> กดยกเลิกการส่งข้อมูล</a>";
+                        }
+                    }
+                }
+            }
+        }
+
+        return $html;
+    }
+
 
     /*
     //  ==================== Student ====================
@@ -195,7 +402,6 @@ class Homeroom_lib
 
 
 
-
     /*
     //  ==================== Advisor ====================
     */
@@ -244,111 +450,6 @@ class Homeroom_lib
             break;
         }
         return $advisor_type;
-    }
-
-    // Deplicate: will remove soon
-    public function getActionStatusHtml($user_type='advisor', $checkStatus='')
-    {
-        $html = '';
-        $checkStatusHtml = '';
-
-        // user_type: advisor
-        if ($user_type=='advisor') {
-            if ($checkStatus=='viewed') {
-                $checkStatusHtml = '<div class="uk-button-group">
-                                            <button class="uk-button uk-button-mini"><i class="uk-icon-eye"></i></button>
-                                            <button class="uk-button uk-button-mini">ครูที่ปรึกษาหลัก (กำลังบันทึกข้อมูล)</button>
-                                        </div>';
-            } elseif ($checkStatus=='confirmed') {
-                $checkStatusHtml = '<div class="uk-button-group">
-                                            <button class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-check"></i></button>
-                                            <button class="uk-button uk-button-success uk-button-mini">ครูที่ปรึกษาหลัก (ยืนยันการกรอกข้อมูลแล้ว)</button>
-                                        </div>';
-            } else {
-                $checkStatusHtml = '<div class="uk-button-group">
-                                            <button class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i></button>
-                                            <button class="uk-button uk-button-mini">ครูที่ปรึกษาหลัก (รอการบันทึกข้อมูล)</button>
-                                        </div>';
-            }
-            $html .= $checkStatusHtml;
-        }
-        // user_type: coadvisor
-        elseif ($user_type=='coadvisor') {
-            if ($checkStatus=='viewed') {
-                $checkStatusHtml = '<div class="uk-button-group">
-                                            <button class="uk-button uk-button-mini"><i class="uk-icon-eye"></i></button>
-                                            <button class="uk-button uk-button-mini">ครูที่ปรึกษาร่วม (เปิดอ่านแล้ว)</button>
-                                        </div>';
-            } elseif ($checkStatus=='joinded') {
-                $checkStatusHtml = '<div class="uk-button-group">
-                                            <button class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-check"></i></button>
-                                            <button class="uk-button uk-button-success uk-button-mini">ครูที่ปรึกษาร่วม (ยืนยันการเข้าร่วมกิจกรรมแล้ว)</button>
-                                        </div>';
-            } else {
-                $checkStatusHtml = '<div class="uk-button-group">
-                                            <button class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i></button>
-                                            <button class="uk-button uk-button-mini">ครูที่ปรึกษาร่วม (ยังไม่เปิดอ่าน)</button>
-                                        </div>';
-            }
-            $html .= $checkStatusHtml;
-        }
-        // user_type: headdepartment
-        elseif ($user_type=='headdepartment') {
-            if ($checkStatus=='viewed') {
-                $checkStatusHtml = '<div class="uk-button-group">
-                                            <button class="uk-button uk-button-mini"><i class="uk-icon-eye"></i></button>
-                                            <button class="uk-button uk-button-mini">หัวหน้าแผนก (เปิดอ่านแล้ว)</button>
-                                        </div>';
-            } elseif ($checkStatus=='confirmed') {
-                $checkStatusHtml = '<div class="uk-button-group">
-                                            <button class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-check"></i></button>
-                                            <button class="uk-button uk-button-success uk-button-mini">หัวหน้าแผนก (รับรองการส่งแล้ว)</button>
-                                        </div>';
-            } else {
-                $checkStatusHtml = '<div class="uk-button-group">
-                                            <button class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i></button>
-                                            <button class="uk-button uk-button-mini">หัวหน้าแผนก (ยังไม่ได้เปิดอ่าน)</button>
-                                        </div>';
-            }
-            $html .= $checkStatusHtml;
-        }
-        // user_type: headadvisor
-        elseif ($user_type=='headadvisor') {
-            if ($checkStatus=='viewed') {
-                $checkStatusHtml = '<div class="uk-button-group">
-                                            <button class="uk-button uk-button-mini"><i class="uk-icon-eye"></i></button>
-                                            <button class="uk-button uk-button-mini">หัวหน้างานครูที่ปรึกษา (ยังไม่ได้รับการรับรอง)</button>
-                                        </div>';
-            } elseif ($checkStatus=='approved') {
-                $checkStatusHtml = '<div class="uk-button-group">
-                                            <button class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-check"></i></button>
-                                            <button class="uk-button uk-button-success uk-button-mini">หัวหน้างานครูที่ปรึกษา (รับรองการส่งแล้ว)</button>
-                                        </div>';
-            } else {
-                $checkStatusHtml = '<div class="uk-button-group">
-                                            <button class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i></button>
-                                            <button class="uk-button uk-button-mini">หัวหน้างานครูที่ปรึกษา (ยังไม่ได้เปิดอ่าน)</button>
-                                        </div>';
-            }
-            $html .= $checkStatusHtml;
-        }
-        // user_type: executive
-        elseif ($user_type=='executive') {
-            if ($checkStatus=='approved') {
-                $checkStatusHtml = '<div class="uk-button-group">
-                                            <button class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-check"></i></button>
-                                            <button class="uk-button uk-button-success uk-button-mini">ฝ่ายบริหาร (รับรองเรียบร้อยแล้ว)</button>
-                                        </div>';
-            } else {
-                $checkStatusHtml = '<div class="uk-button-group">
-                                            <button class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i></button>
-                                            <button class="uk-button uk-button-mini">ฝ่ายบริหาร (ยังไม่ได้รับการรับรอง)</button>
-                                        </div>';
-            }
-            $html .= $checkStatusHtml;
-        }
-
-        return $html;
     }
 
 

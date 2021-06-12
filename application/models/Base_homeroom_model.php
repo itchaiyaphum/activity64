@@ -141,10 +141,6 @@ class Base_homeroom_model extends BaseModel
 
     public function getAdvisorStatusHtml($advisors=null, $advisor_id=0)
     {
-        if ($advisor_id==0) {
-            $advisor_id = $this->ci->profile_lib->getUserId();
-        }
-
         $html = '';
         if (!is_null($advisors)) {
             foreach ($advisors as $advisor) {

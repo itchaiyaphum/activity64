@@ -1,11 +1,11 @@
 <?php
-if (! defined('BASEPATH'))
+if (! defined('BASEPATH')) {
     exit('No direct script access allowed');
+}
 
 class Major_model extends BaseModel
 {
-
-    public $table = NULL;
+    public $table = null;
 
     public function __construct()
     {
@@ -54,5 +54,4 @@ class Major_model extends BaseModel
         // render query
         return $this->renderQueryWhere($wheres, $options);
     }
-
 }

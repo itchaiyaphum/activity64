@@ -67,4 +67,21 @@ class Student_model extends BaseModel
         }
         return $items;
     }
+
+    public function getItems()
+    {
+        $sql = "SELECT
+                    users_student.id, users_student.student_id, users_student.firstname, users_student.lastname, users_student.group_id,
+                    groups.group_name,
+                    majors.id AS major_id, majors.major_name,
+                    minors.id AS minor_id, minors.minor_name
+                FROM users_student
+                    LEFT JOIN groups ON (users_student.group_id=groups.id)
+                    LEFT JOIN minors ON (groups.minor_id=minors.id)
+                    LEFT JOIN majors ON (minors.major_id=majors.id)
+                WHERE status=1 )";
+        $query = $this->ci->db->query($sql);
+        $items = $query->result();
+        return $items;
+    }
 }
