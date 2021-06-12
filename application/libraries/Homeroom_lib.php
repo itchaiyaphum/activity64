@@ -291,24 +291,46 @@ class Homeroom_lib
     /*
     //  ==================== Homeroom ====================
     */
-    public function getSaveButton($homeroom_id=0, $group_id=0, $link='advisor/homeroom')
-    {
-        $action_item = $this->getActionItem($homeroom_id, $group_id);
+    // public function getSaveButton($homeroom_id=0, $group_id=0, $link='advisor/homeroom')
+    // {
+    //     $action_item = $this->getActionItem($homeroom_id, $group_id);
 
-        $advisor_status = 'pending';
-        if (isset($action_item)) {
-            if ($action_item->homeroom_id==$homeroom_id && $action_item->group_id==$group_id) {
-                $advisor_status = $action_item->action_status;
+    //     $advisor_status = 'pending';
+    //     if (isset($action_item)) {
+    //         if ($action_item->homeroom_id==$homeroom_id && $action_item->group_id==$group_id) {
+    //             $advisor_status = $action_item->action_status;
+    //         }
+    //     }
+
+    //     $html = '';
+    //     if ($advisor_status=='confirmed') {
+    //         $link_to = base_url($link);
+    //         $html .= "<a class='uk-button uk-button-primary uk-button-large' href='{$link_to}'><i class='uk-icon-home'></i> กลับหน้าหลัก</a> ";
+    //         $html .= "<button disabled class='uk-button uk-button-primary uk-button-large' data-uk-modal=\"{target:'#confirm-form'}\">ยืนยันการบันทึกข้อมูลเรียบร้อยแล้ว</button>";
+    //     } else {
+    //         $html .= "<button class='uk-button uk-button-primary uk-button-large' data-uk-modal=\"{target:'#confirm-form'}\">กดบันทึกข้อมูล</button>";
+    //     }
+    //     return $html;
+    // }
+    public function getSaveButton($advisors=null, $link='advisor/homeroom')
+    {
+        $disable_save_button = false;
+        if (!is_null($advisors)) {
+            foreach ($advisors as $advisor) {
+                if ($advisor->advisor_status=='confirmed') {
+                    $disable_save_button = true;
+                }
             }
         }
 
         $html = '';
-        if ($advisor_status=='confirmed') {
-            $link_to = base_url($link);
+        $link_to = base_url($link);
+        if ($disable_save_button) {
             $html .= "<a class='uk-button uk-button-primary uk-button-large' href='{$link_to}'><i class='uk-icon-home'></i> กลับหน้าหลัก</a> ";
             $html .= "<button disabled class='uk-button uk-button-primary uk-button-large' data-uk-modal=\"{target:'#confirm-form'}\">ยืนยันการบันทึกข้อมูลเรียบร้อยแล้ว</button>";
         } else {
-            $html .= "<button class='uk-button uk-button-primary uk-button-large' data-uk-modal=\"{target:'#confirm-form'}\">กดบันทึกข้อมูล</button>";
+            $html .= "<a class='uk-button uk-button-large' href='{$link_to}'><i class='uk-icon-home'></i> กลับหน้าหลัก</a> ";
+            $html .= " <button class='uk-button uk-button-primary uk-button-large' data-uk-modal=\"{target:'#confirm-form'}\">กดบันทึกข้อมูล</button>";
         }
         return $html;
     }

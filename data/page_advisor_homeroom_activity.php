@@ -18,9 +18,18 @@ $homeroom_item = stdClass Object(
             [group_name] 		=> 'กลุ่ม 1'
             [minor_name] 		=> 'สาขางานเครื่องยนต์'
             [major_name] 		=> 'สาขาวิชาช่างยนต์'
-            [advisor_id] 		=> 1
-            [advisor_type] 		=> 'advisor'
-            [advisor_status] 	=> 'confirm'
+            [advisors] 			=> Array(
+                [0] => stdClass Object(
+                    [advisor_id] 		=> 1
+                    [advisor_type] 		=> 'advisor'
+                    [advisor_status] 	=> 'confirmed'
+                )
+                [1] => stdClass Object(
+                    [advisor_id] 		=> 1
+                    [advisor_type] 		=> 'coadvisor'
+                    [advisor_status] 	=> 'viewed'
+                )
+            )
             [students] 	        => Array(
                 [0] => stdClass Object(
                     [id] 				=> 1
