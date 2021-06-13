@@ -226,17 +226,35 @@ class Importdata_model extends BaseModel
             //check valid num field
             if ($num>=$valid_num_field) {
                 array_push($prepare_data, array(
-                    'college_id' => $item[0],
-                    'major_id' => $item[1],
-                    'minor_id' => $item[2],
-                    'group_id' => $item[3],
-                    'firstname' => $item[4],
-                    'lastname' => $item[5],
-                    'email' => $item[6],
-                    'status' => $item[7],
-                    'created_at' => mdate('%Y-%m-%d %H:%i:%s', time()),
-                    'updated_at' => mdate('%Y-%m-%d %H:%i:%s', time())
+                    'college_id'    => $item[0],
+                    'major_id'      => $item[1],
+                    'minor_id'      => $item[2],
+                    'group_id'      => $item[3],
+                    'student_id'    => $item[4],
+                    'firstname'     => $item[5],
+                    'lastname'      => $item[6],
+                    'email'         => $item[7],
+                    'status'        => 1,
+                    'created_at'    => mdate('%Y-%m-%d %H:%i:%s', time()),
+                    'updated_at'    => mdate('%Y-%m-%d %H:%i:%s', time())
                 ));
+            }
+        }
+
+        //get all groups
+        $sql = "SELECT id as group_id, group_code, minor_id, major_id FROM groups";
+        $query = $this->ci->db->query($sql);
+        $group_items = $query->result();
+
+        //get auto key (group_id,major_id,minor_id) on groups by group_code
+        $major_ids = array();
+        foreach ($prepare_data as &$pre_data) {
+            foreach ($group_items as $group) {
+                if ($group->group_code==$pre_data['group_id']) {
+                    $pre_data['group_id'] = $group->group_id;
+                    $pre_data['major_id'] = $group->major_id;
+                    $pre_data['minor_id'] = $group->minor_id;
+                }
             }
         }
 

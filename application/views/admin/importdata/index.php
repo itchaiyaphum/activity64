@@ -62,8 +62,8 @@ $attributes = array('class' => 'uk-form uk-form-horizontal', 'name' => 'adminFor
                         } ?>
 
                     	<textarea rows='20' class="uk-width-1-1" name='csv_data'></textarea>
-
-						<div class="uk-alert uk-alert-success">นักเรียน (Student): [college_id,major_id,minor_id,group_id,firstname,lastname,email,status]</div>
+						
+						<div class="uk-alert uk-alert-success">นักเรียน (Student): [college_id,major_id,minor_id,group_id,student_id,firstname,lastname,email]</div>
 						<div class="uk-alert uk-alert-success">ครูที่ปรึกษา (Advisor): [college_id,major_id,firstname,lastname,email,status]</div>
 						<div class="uk-alert uk-alert-success">สาขาวิชา (Major): [college_id,major_code,major_name,major_eng,status]</div>
 						<div class="uk-alert uk-alert-success">สาขางาน (Minor): [college_id,major_id,minor_code,minor_name,minor_eng,status]</div>
