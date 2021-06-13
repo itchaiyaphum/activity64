@@ -8,7 +8,7 @@ class TableGroup extends JTable
     public $college_id = null;
     public $major_id = null;
     public $minor_id = null;
-    public $grouup_code = null;
+    public $group_code = null;
     public $group_name = null;
     public $created_at = null;
     public $updated_at = null;

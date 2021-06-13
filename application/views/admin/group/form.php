@@ -54,6 +54,12 @@
                     </div>
                 </div>
             	<div class="uk-form-row">
+                    <label class="uk-form-label" for="form-h-it">รหัสกลุ่มเรียน</label>
+                    <div class="uk-form-controls">
+                        <input type="text" id="form-h-it" name="group_code" value="<?php echo $item->group_code;?>">
+                    </div>
+                </div>
+            	<div class="uk-form-row">
                     <label class="uk-form-label" for="form-h-it">กลุ่มการเรียน</label>
                     <div class="uk-form-controls">
                         <input type="text" id="form-h-it" name="group_name" value="<?php echo $item->group_name;?>">
