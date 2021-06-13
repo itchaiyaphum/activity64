@@ -17,6 +17,8 @@ class Importdata_model extends BaseModel
         $result = false;
         if ($data_type=='group') {
             $result = $this->importGroup($items, array('update_exists'=>$update_exists));
+        } elseif ($data_type=='major') {
+            $result = $this->importMajor($items, array('update_exists'=>$update_exists));
         }
         return $result;
     }
@@ -35,12 +37,6 @@ class Importdata_model extends BaseModel
         foreach ($rows as $row) {
             //extract data by tab
             $item = explode("/t", $row);
-            if (count($item)<=1) {
-                $item = explode("	", $row);
-            }
-            if (count($item)<=1) {
-                $item = explode(" ", $row);
-            }
             //extract data by comma
             if (count($item)<=1) {
                 $item = explode(",", $row);
@@ -52,6 +48,7 @@ class Importdata_model extends BaseModel
         return $items;
     }
 
+    // [group_code,group_name,college_id,major_id,minor_id,status]
     public function importGroup($items=null, $options=array())
     {
         $valid_num_field = 6;
@@ -90,31 +87,62 @@ class Importdata_model extends BaseModel
         }
         return false;
     }
+
+    // [college_id,major_code,major_name,major_eng,status]
+    public function importMajor($items=null, $options=array())
+    {
+        $valid_num_field = 5;
+        $update_exists = $options['update_exists'];
+
+        $prepare_data = array();
+        foreach ($items as $item) {
+            $num = count($item);
+
+            //check valid num field
+            if ($num>=$valid_num_field) {
+                array_push($prepare_data, array(
+                    'college_id' => $item[0],
+                    'major_code' => $item[1],
+                    'major_name' => $item[2],
+                    'major_eng' => $item[3],
+                    'status' => $item[4],
+                    'created_at' => mdate('%Y-%m-%d %H:%i:%s', time()),
+                    'updated_at' => mdate('%Y-%m-%d %H:%i:%s', time())
+                ));
+            }
+        }
+
+        // echo "<pre>";
+        // print_r($items);
+        // print_r($prepare_data);
+        // exit();
+        
+        if (count($prepare_data)) {
+            if ($update_exists=='update') {
+                return $this->updateData('majors', $prepare_data, 'major_code');
+            } elseif ($update_exists=='replace') {
+                return $this->insertData('majors', $prepare_data, 'major_code');
+            }
+        }
+        return false;
+    }
+
     private function insertData($table=null, $items=null, $key='id')
     {
         $ids = array();
         foreach ($items as $item) {
-            array_push($ids, $item['group_code']);
+            array_push($ids, $item[$key]);
         }
 
         $this->ci->db->where_in($key, $ids);
         $this->ci->db->delete($table);
         
         $result = $this->ci->db->insert_batch($table, $items);
-        if ($result) {
-            $this->ci->session->set_flashdata('import_status', 'Import data (insert) successfully!...');
-        } else {
-            $this->ci->session->set_flashdata('import_status', 'Import data (insert) not success!...');
-        }
         return $result;
     }
         
     private function updateData($table=null, $items=null, $key='id')
     {
-        // $sql = "SELECT * FROM {$table} ";
-        // $query = $this->ci->db->query($sql);
-        // $items = $query->result();
-
         return $this->ci->db->update_batch($table, $items, $key);
     }
 }
