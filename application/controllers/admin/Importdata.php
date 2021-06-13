@@ -34,4 +34,16 @@ class Importdata extends BaseController
         $this->load->view('admin/importdata/index', $data);
         $this->load->view('footer');
     }
+
+    public function autogen_advisor()
+    {
+        $this->importdata_model->autogenAdvisor();
+        redirect('admin/importdata');
+    }
+
+    public function autogen_student()
+    {
+        $this->importdata_model->autogenStudent();
+        redirect('admin/importdata');
+    }
 }

@@ -68,7 +68,14 @@ $attributes = array('class' => 'uk-form uk-form-horizontal', 'name' => 'adminFor
 						<div class="uk-alert uk-alert-success">สาขาวิชา (Major): [college_id,major_code,major_name,major_eng,status]</div>
 						<div class="uk-alert uk-alert-success">สาขางาน (Minor): [college_id,major_id,minor_code,minor_name,minor_eng,status]</div>
 						<div class="uk-alert uk-alert-success">กลุ่มการเรียน (Group): [group_code,group_name,college_id,major_id,minor_id,status]</div>
-                    </div>
+                    
+						<br/><br/>
+						<div class="uk-button-group">
+							<a class="uk-button uk-button-primary" href="<?php echo base_url('admin/importdata/autogen_advisor');?>">Auto Gen User Advisor</a>
+							<a class="uk-button uk-button-primary" href="<?php echo base_url('admin/importdata/autogen_student');?>">Auto Gen User Student</a>
+						</div>
+
+					</div>
                 </div>
             <?php echo form_close(); ?>
 		</div>

@@ -23,6 +23,7 @@ class TableUsers extends JTable
     public $last_login = null;
     public $created = null;
     public $modified = null;
+    public $college_id = null;
     
     public function __construct($db=null)
     {
