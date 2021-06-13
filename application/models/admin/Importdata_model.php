@@ -19,6 +19,8 @@ class Importdata_model extends BaseModel
             $result = $this->importGroup($items, array('update_exists'=>$update_exists));
         } elseif ($data_type=='major') {
             $result = $this->importMajor($items, array('update_exists'=>$update_exists));
+        } elseif ($data_type=='minor') {
+            $result = $this->importMinor($items, array('update_exists'=>$update_exists));
         }
         return $result;
     }
@@ -122,6 +124,46 @@ class Importdata_model extends BaseModel
                 return $this->updateData('majors', $prepare_data, 'major_code');
             } elseif ($update_exists=='replace') {
                 return $this->insertData('majors', $prepare_data, 'major_code');
+            }
+        }
+        return false;
+    }
+
+    // [college_id,major_id,minor_code,minor_name,minor_eng,status]
+    public function importMinor($items=null, $options=array())
+    {
+        $valid_num_field = 6;
+        $update_exists = $options['update_exists'];
+
+        $prepare_data = array();
+        foreach ($items as $item) {
+            $num = count($item);
+
+            //check valid num field
+            if ($num>=$valid_num_field) {
+                array_push($prepare_data, array(
+                    'college_id' => $item[0],
+                    'major_id' => $item[1],
+                    'minor_code' => $item[2],
+                    'minor_name' => $item[3],
+                    'minor_eng' => $item[4],
+                    'status' => $item[5],
+                    'created_at' => mdate('%Y-%m-%d %H:%i:%s', time()),
+                    'updated_at' => mdate('%Y-%m-%d %H:%i:%s', time())
+                ));
+            }
+        }
+
+        // echo "<pre>";
+        // print_r($items);
+        // print_r($prepare_data);
+        // exit();
+        
+        if (count($prepare_data)) {
+            if ($update_exists=='update') {
+                return $this->updateData('minors', $prepare_data, 'minor_code');
+            } elseif ($update_exists=='replace') {
+                return $this->insertData('minors', $prepare_data, 'minor_code');
             }
         }
         return false;

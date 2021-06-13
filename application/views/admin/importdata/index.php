@@ -66,7 +66,7 @@ $attributes = array('class' => 'uk-form uk-form-horizontal', 'name' => 'adminFor
 						<div class="uk-alert uk-alert-success">นักเรียน (Student): [firstname,lastname,email,college_id,major_id,minor_id,group_id,status]</div>
 						<div class="uk-alert uk-alert-success">ครูที่ปรึกษา (Advisor): [firstname,lastname,email,college_id,major_id,status]</div>
 						<div class="uk-alert uk-alert-success">สาขาวิชา (Major): [college_id,major_code,major_name,major_eng,status]</div>
-						<div class="uk-alert uk-alert-success">สาขางาน (Minor): [minor_code,minor_name,minor_eng,college_id,major_id,status]</div>
+						<div class="uk-alert uk-alert-success">สาขางาน (Minor): [college_id,major_id,minor_code,minor_name,minor_eng,status]</div>
 						<div class="uk-alert uk-alert-success">กลุ่มการเรียน (Group): [group_code,group_name,college_id,major_id,minor_id,status]</div>
                     </div>
                 </div>
