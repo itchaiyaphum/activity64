@@ -14,7 +14,7 @@
 			</div>
 			<hr/>
             <form action="<?php echo base_url('admin/college');?>" method="post" name="adminForm">
-            	<table class="uk-table">
+            	<table class="uk-table uk-table-hover">
             		<tr>
             			<td width="100%">
             				Filter:
@@ -28,7 +28,7 @@
             		</tr>
             	</table>
             
-            	<table class="uk-table" cellpadding="1">
+            	<table class="uk-table uk-table-hover" cellpadding="1">
             		<thead>
             			<tr>
             				<th width="5%" class="title">#</th>
@@ -54,56 +54,55 @@
             			</tr>
             		</tfoot>
             		<tbody>
-            		<?php 
-            		if(count( $items )<=0){
-            		    echo '<tr><td colspan="5" class="uk-text-center"><p>ไม่มีข้อมูล</p></td></tr>';
-            		}else{
-            			$k = 0;
-            			for ($i=0, $n=count( $items ); $i < $n; $i++)
-            			{
-            				$row 	=& $items[$i];
-            				
-            				$per_page = $this->input->get_post('per_page',1);
-            				$link_edit = base_url('admin/college/edit/?id='.$row->id.'&per_page='.$per_page);
-            				$link_restore = base_url('admin/college/restore/?id='.$row->id.'&per_page='.$per_page);
-            				$link_trash = base_url('admin/college/trash/?id='.$row->id.'&per_page='.$per_page);
-            				$link_delete = base_url('admin/college/delete/?id='.$row->id.'&per_page='.$per_page);
-            				
-            				$status_link = base_url('admin/college/unpublish/?id='.$row->id.'&per_page='.$per_page);
-            				if($row->status==0){
-            				    $status_link = base_url('admin/college/publish/?id='.$row->id.'&per_page='.$per_page);
-            				}
-            			?>
+            		<?php
+                    if (count($items)<=0) {
+                        echo '<tr><td colspan="5" class="uk-text-center"><p>ไม่มีข้อมูล</p></td></tr>';
+                    } else {
+                        $k = 0;
+                        for ($i=0, $n=count($items); $i < $n; $i++) {
+                            $row 	=& $items[$i];
+                            
+                            $per_page = $this->input->get_post('per_page', 1);
+                            $link_edit = base_url('admin/college/edit/?id='.$row->id.'&per_page='.$per_page);
+                            $link_restore = base_url('admin/college/restore/?id='.$row->id.'&per_page='.$per_page);
+                            $link_trash = base_url('admin/college/trash/?id='.$row->id.'&per_page='.$per_page);
+                            $link_delete = base_url('admin/college/delete/?id='.$row->id.'&per_page='.$per_page);
+                            
+                            $status_link = base_url('admin/college/unpublish/?id='.$row->id.'&per_page='.$per_page);
+                            if ($row->status==0) {
+                                $status_link = base_url('admin/college/publish/?id='.$row->id.'&per_page='.$per_page);
+                            } ?>
             			<tr class="<?php echo "row$k"; ?>">
             				<td>
-            					<?php echo $this->helper_lib->getPaginationIndex($i+1);?>
+            					<?php echo $this->helper_lib->getPaginationIndex($i+1); ?>
             				</td>
             				<td>
-            					<a href="<?php echo $link_edit;?>"><?php echo $row->name; ?></a>
+            					<a href="<?php echo $link_edit; ?>"><?php echo $row->name; ?></a>
             				</td>
             				<td>
-            					<a href="<?php echo $status_link;?>"><?php echo $this->helper_lib->getStatusIcon($row->status);?></a>
+            					<a href="<?php echo $status_link; ?>"><?php echo $this->helper_lib->getStatusIcon($row->status); ?></a>
             				</td>
             				<td>
             					<?php echo $row->id; ?>
             				</td>
             				<td>
-            					<a href="<?php echo $link_edit;?>" class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-pencil"></i></a>
-            					<?php 
-            					if($this->helper_lib->getFilterStatus('college_filter_status')=='trash'){
-            					?>
-            					<a href="<?php echo $link_restore;?>" class="uk-button uk-button-primary uk-button-mini"><i class="uk-icon-reply"></i></a>
-            					<a href="<?php echo $link_delete;?>" class="uk-button uk-button-danger uk-button-mini"><i class="uk-icon-remove"></i></a>
-            					<?php }else{?>
+            					<a href="<?php echo $link_edit; ?>" class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-pencil"></i></a>
+            					<?php
+                                if ($this->helper_lib->getFilterStatus('college_filter_status')=='trash') {
+                                    ?>
+            					<a href="<?php echo $link_restore; ?>" class="uk-button uk-button-primary uk-button-mini"><i class="uk-icon-reply"></i></a>
+            					<a href="<?php echo $link_delete; ?>" class="uk-button uk-button-danger uk-button-mini"><i class="uk-icon-remove"></i></a>
+            					<?php
+                                } else {?>
             					<a href="<?php echo $link_trash;?>" class="uk-button uk-button-primary uk-button-mini"><i class="uk-icon-trash"></i></a>
-            					<?php }?>
+            					<?php } ?>
             				</td>
             			</tr>
             		<?php
-            			$k = 1 - $k;
-            			}
-            		}
-            		?>
+                        $k = 1 - $k;
+                        }
+                    }
+                    ?>
             		</tbody>
             	</table>
             

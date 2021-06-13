@@ -38,7 +38,7 @@
             		</tr>
             	</table>
 
-            	<table class="uk-table" cellpadding="1">
+            	<table class="uk-table uk-table-hover" cellpadding="1">
             		<thead>
             			<tr>
             				<th width="5%" class="title">#</th>

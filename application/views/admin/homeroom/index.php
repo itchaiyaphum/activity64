@@ -28,7 +28,7 @@
             		</tr>
             	</table>
             
-            	<table class="uk-table" cellpadding="1">
+            	<table class="uk-table uk-table-hover" cellpadding="1">
             		<thead>
             			<tr>
             				<th width="5%" class="title">#</th>
@@ -60,62 +60,61 @@
             			</tr>
             		</tfoot>
             		<tbody>
-            		<?php 
-            		if(count( $items )<=0){
-            		    echo '<tr><td colspan="8" class="uk-text-center"><p>ไม่มีข้อมูล</p></td></tr>';
-            		}else{
-            			$k = 0;
-            			for ($i=0, $n=count( $items ); $i < $n; $i++)
-            			{
-            				$row 	=& $items[$i];
-            				
-            				$per_page = $this->input->get_post('per_page',1);
-            				$link_edit = base_url('admin/homeroom/edit/?id='.$row->id.'&per_page='.$per_page);
-            				$link_restore = base_url('admin/homeroom/restore/?id='.$row->id.'&per_page='.$per_page);
-            				$link_trash = base_url('admin/homeroom/trash/?id='.$row->id.'&per_page='.$per_page);
-            				$link_delete = base_url('admin/homeroom/delete/?id='.$row->id.'&per_page='.$per_page);
-            				
-            				$status_link = base_url('admin/homeroom/unpublish/?id='.$row->id.'&per_page='.$per_page);
-            				if($row->status==0){
-            				    $status_link = base_url('admin/homeroom/publish/?id='.$row->id.'&per_page='.$per_page);
-            				}
-            			?>
+            		<?php
+                    if (count($items)<=0) {
+                        echo '<tr><td colspan="8" class="uk-text-center"><p>ไม่มีข้อมูล</p></td></tr>';
+                    } else {
+                        $k = 0;
+                        for ($i=0, $n=count($items); $i < $n; $i++) {
+                            $row 	=& $items[$i];
+                            
+                            $per_page = $this->input->get_post('per_page', 1);
+                            $link_edit = base_url('admin/homeroom/edit/?id='.$row->id.'&per_page='.$per_page);
+                            $link_restore = base_url('admin/homeroom/restore/?id='.$row->id.'&per_page='.$per_page);
+                            $link_trash = base_url('admin/homeroom/trash/?id='.$row->id.'&per_page='.$per_page);
+                            $link_delete = base_url('admin/homeroom/delete/?id='.$row->id.'&per_page='.$per_page);
+                            
+                            $status_link = base_url('admin/homeroom/unpublish/?id='.$row->id.'&per_page='.$per_page);
+                            if ($row->status==0) {
+                                $status_link = base_url('admin/homeroom/publish/?id='.$row->id.'&per_page='.$per_page);
+                            } ?>
             			<tr class="<?php echo "row$k"; ?>">
             				<td>
-            					<?php echo $this->helper_lib->getPaginationIndex($i+1);?>
+            					<?php echo $this->helper_lib->getPaginationIndex($i+1); ?>
             				</td>
             				<td>
-            					<a href="<?php echo $link_edit;?>"><?php echo $row->semester_name; ?></a>
+            					<a href="<?php echo $link_edit; ?>"><?php echo $row->semester_name; ?></a>
             				</td>
             				<td>
-            					<a href="<?php echo $link_edit;?>"><?php echo $row->week; ?></a>
+            					<a href="<?php echo $link_edit; ?>"><?php echo $row->week; ?></a>
             				</td>
             				<td>
-            					<a href="<?php echo $link_edit;?>"><?php echo date_format(date_create($row->join_start),'Y-m-d'); ?></a>
+            					<a href="<?php echo $link_edit; ?>"><?php echo date_format(date_create($row->join_start), 'Y-m-d'); ?></a>
             				</td>
             				<td>
-            					<a href="<?php echo $link_edit;?>"><?php echo date_format(date_create($row->join_end),'Y-m-d'); ?></a>
+            					<a href="<?php echo $link_edit; ?>"><?php echo date_format(date_create($row->join_end), 'Y-m-d'); ?></a>
             				</td>
             				<td>
-            					<a href="<?php echo $status_link;?>"><?php echo $this->helper_lib->getStatusIcon($row->status);?></a>
+            					<a href="<?php echo $status_link; ?>"><?php echo $this->helper_lib->getStatusIcon($row->status); ?></a>
             				</td>
             				<td>
-            					<a href="<?php echo $link_edit;?>" class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-pencil"></i></a>
-            					<?php 
-            					if($this->helper_lib->getFilterStatus('homeroom_filter_status')=='trash'){
-            					?>
-            					<a href="<?php echo $link_restore;?>" class="uk-button uk-button-primary uk-button-mini"><i class="uk-icon-reply"></i></a>
-            					<a href="<?php echo $link_delete;?>" class="uk-button uk-button-danger uk-button-mini"><i class="uk-icon-remove"></i></a>
-            					<?php }else{?>
+            					<a href="<?php echo $link_edit; ?>" class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-pencil"></i></a>
+            					<?php
+                                if ($this->helper_lib->getFilterStatus('homeroom_filter_status')=='trash') {
+                                    ?>
+            					<a href="<?php echo $link_restore; ?>" class="uk-button uk-button-primary uk-button-mini"><i class="uk-icon-reply"></i></a>
+            					<a href="<?php echo $link_delete; ?>" class="uk-button uk-button-danger uk-button-mini"><i class="uk-icon-remove"></i></a>
+            					<?php
+                                } else {?>
             					<a href="<?php echo $link_trash;?>" class="uk-button uk-button-primary uk-button-mini"><i class="uk-icon-trash"></i></a>
-            					<?php }?>
+            					<?php } ?>
             				</td>
             			</tr>
             		<?php
-            			$k = 1 - $k;
-            			}
-            		}
-            		?>
+                        $k = 1 - $k;
+                        }
+                    }
+                    ?>
             		</tbody>
             	</table>
             

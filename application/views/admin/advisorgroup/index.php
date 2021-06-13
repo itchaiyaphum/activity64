@@ -54,7 +54,7 @@
             		</tr>
             	</table>
             
-            	<table class="uk-table" cellpadding="1">
+            	<table class="uk-table uk-table-hover" cellpadding="1">
             		<thead>
             			<tr>
             				<th width="5%" class="title">#</th>
@@ -101,7 +101,7 @@
                             if ($row->status==0) {
                                 $status_link = base_url('admin/advisorgroup/publish/?id='.$row->id.'&per_page='.$per_page);
                             } ?>
-            			<tr class="<?php echo "row$k"; ?>">
+            			<tr>
             				<td>
             					<?php echo $this->helper_lib->getPaginationIndex($i+1); ?>
             				</td>
