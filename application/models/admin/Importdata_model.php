@@ -173,10 +173,10 @@ class Importdata_model extends BaseModel
         return false;
     }
 
-    // [college_id,major_id,firstname,lastname,email,status]
+    // [college_id,major_id,firstname,lastname,email]
     public function importAdvisor($items=null, $options=array())
     {
-        $valid_num_field = 6;
+        $valid_num_field = 5;
         $update_exists = $options['update_exists'];
 
         $prepare_data = array();
@@ -191,15 +191,28 @@ class Importdata_model extends BaseModel
                     'firstname' => $item[2],
                     'lastname' => $item[3],
                     'email' => $item[4],
-                    'status' => $item[5],
+                    'status' => 1,
                     'created_at' => mdate('%Y-%m-%d %H:%i:%s', time()),
                     'updated_at' => mdate('%Y-%m-%d %H:%i:%s', time())
                 ));
             }
         }
 
+        //get all majors
+        $sql = "SELECT id as major_id, major_code  FROM majors";
+        $query = $this->ci->db->query($sql);
+        $majors_items = $query->result();
+
+        //get auto key (major_id) on table: majors by compare with major_code field
+        foreach ($prepare_data as &$pre_data) {
+            foreach ($majors_items as $major) {
+                if ($major->major_code==$pre_data['major_id']) {
+                    $pre_data['major_id'] = $major->major_id;
+                }
+            }
+        }
+
         // echo "<pre>";
-        // print_r($items);
         // print_r($prepare_data);
         // exit();
         
@@ -213,7 +226,7 @@ class Importdata_model extends BaseModel
         return false;
     }
 
-    // [college_id,major_id,minor_id,group_id,firstname,lastname,email,status]
+    // [college_id,major_id,minor_id,group_id,student_id,firstname,lastname,email]
     public function importStudent($items=null, $options=array())
     {
         $valid_num_field = 8;
@@ -247,7 +260,6 @@ class Importdata_model extends BaseModel
         $group_items = $query->result();
 
         //get auto key (group_id,major_id,minor_id) on groups by group_code
-        $major_ids = array();
         foreach ($prepare_data as &$pre_data) {
             foreach ($group_items as $group) {
                 if ($group->group_code==$pre_data['group_id']) {
