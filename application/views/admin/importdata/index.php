@@ -37,8 +37,8 @@ $attributes = array('class' => 'uk-form uk-form-horizontal', 'name' => 'adminFor
                     <label class="uk-form-label" for="form-h-it">วิธีการนำเข้าข้อมูล</label>
                     <div class="uk-form-controls">
 						<div>
-							<input type="radio" name="update_exists" value="update" checked/> อัพเดตข้อมูลที่มีอยู่แล้ว (Update Exists)
-							<input type="radio" name="update_exists" value="replace" /> เขียนทับข้อมูลที่มีอยู่แล้ว (Replace Exists)
+							<input type="radio" name="update_exists" value="replace" checked /> เขียนทับข้อมูลที่มีอยู่แล้ว (Replace Exists)
+							<input type="radio" name="update_exists" value="update" /> อัพเดตข้อมูลที่มีอยู่แล้ว (Update Exists)
 						</div>
 						<div>
 							<?php echo form_error('update_exists'); ?>

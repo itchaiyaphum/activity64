@@ -21,7 +21,9 @@ class Importdata extends BaseController
         $data = array();
         $data['errors'] = array();
         if ($this->form_validation->run()) {
-            if (!$this->importdata_model->saveData()) {
+            if ($this->importdata_model->saveData()) {
+                $data['errors']['global'] = "นำเข้าข้อมูลเรียบร้อยแล้ว!";
+            } else {
                 $data['errors']['global'] = "ไม่สามารถบันทึกข้อมูลได้ กรุณาตรวจสอบการกรอกข้อมูลและลองใหม่อีกครั้ง!";
             }
         }

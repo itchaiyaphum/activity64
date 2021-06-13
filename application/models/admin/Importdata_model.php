@@ -24,7 +24,7 @@ class Importdata_model extends BaseModel
     public function extractData($csv_data=null)
     {
         if (is_null($csv_data)) {
-            $csv_data = $this->input->get_post('csv_data');
+            $csv_data = $this->ci->input->get_post('csv_data');
         }
         
         //extract data to each block
@@ -37,6 +37,9 @@ class Importdata_model extends BaseModel
             $item = explode("/t", $row);
             if (count($item)<=1) {
                 $item = explode("	", $row);
+            }
+            if (count($item)<=1) {
+                $item = explode(" ", $row);
             }
             //extract data by comma
             if (count($item)<=1) {
@@ -73,6 +76,11 @@ class Importdata_model extends BaseModel
             }
         }
 
+        // echo "<pre>";
+        // print_r($items);
+        // print_r($prepare_data);
+        // exit();
+        
         if (count($prepare_data)) {
             if ($update_exists=='update') {
                 return $this->updateData('groups', $prepare_data, 'group_code');
