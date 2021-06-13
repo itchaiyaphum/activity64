@@ -23,6 +23,8 @@ class Importdata_model extends BaseModel
             $result = $this->importMinor($items, array('update_exists'=>$update_exists));
         } elseif ($data_type=='advisor') {
             $result = $this->importAdvisor($items, array('update_exists'=>$update_exists));
+        } elseif ($data_type=='student') {
+            $result = $this->importStudent($items, array('update_exists'=>$update_exists));
         }
         return $result;
     }
@@ -206,6 +208,48 @@ class Importdata_model extends BaseModel
                 return $this->updateData('users_advisor', $prepare_data, 'email');
             } elseif ($update_exists=='replace') {
                 return $this->insertData('users_advisor', $prepare_data, 'email');
+            }
+        }
+        return false;
+    }
+
+    // [college_id,major_id,minor_id,group_id,firstname,lastname,email,status]
+    public function importStudent($items=null, $options=array())
+    {
+        $valid_num_field = 8;
+        $update_exists = $options['update_exists'];
+
+        $prepare_data = array();
+        foreach ($items as $item) {
+            $num = count($item);
+
+            //check valid num field
+            if ($num>=$valid_num_field) {
+                array_push($prepare_data, array(
+                    'college_id' => $item[0],
+                    'major_id' => $item[1],
+                    'minor_id' => $item[2],
+                    'group_id' => $item[3],
+                    'firstname' => $item[4],
+                    'lastname' => $item[5],
+                    'email' => $item[6],
+                    'status' => $item[7],
+                    'created_at' => mdate('%Y-%m-%d %H:%i:%s', time()),
+                    'updated_at' => mdate('%Y-%m-%d %H:%i:%s', time())
+                ));
+            }
+        }
+
+        // echo "<pre>";
+        // print_r($items);
+        // print_r($prepare_data);
+        // exit();
+        
+        if (count($prepare_data)) {
+            if ($update_exists=='update') {
+                return $this->updateData('users_student', $prepare_data, 'email');
+            } elseif ($update_exists=='replace') {
+                return $this->insertData('users_student', $prepare_data, 'email');
             }
         }
         return false;
