@@ -1,11 +1,11 @@
 <?php
-if (! defined('BASEPATH'))
+if (! defined('BASEPATH')) {
     exit('No direct script access allowed');
+}
 
 class Group_model extends BaseModel
 {
-
-    public $table = NULL;
+    public $table = null;
 
     public function __construct()
     {
@@ -30,11 +30,9 @@ class Group_model extends BaseModel
         $sql = "SELECT 
                     majors.major_name, 
                     minors.minor_name, 
-                    users.firstname AS advisor_firstname, users.lastname AS advisor_lastname, 
                     groups.* FROM groups
                 LEFT JOIN majors ON (groups.major_id=majors.id)
                 LEFT JOIN minors ON (groups.minor_id=minors.id)
-                LEFT JOIN users ON (groups.advisor_id=users.id)
                 WHERE {$where}";
         $query = $this->ci->db->query($sql);
         $items = $query->result();
@@ -62,5 +60,4 @@ class Group_model extends BaseModel
         // render query
         return $this->renderQueryWhere($wheres, $options);
     }
-
 }

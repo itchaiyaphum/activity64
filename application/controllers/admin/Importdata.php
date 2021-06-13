@@ -8,19 +8,20 @@ class Importdata extends BaseController
     {
         parent::__construct();
         
+        $this->load->model('admin/importdata_model');
+        $this->load->library('session');
         $this->load->library('form_validation');
     }
 
     public function index()
     {
-        $this->form_validation->set_rules('data_type', 'ประเภทข้อมูล', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('data_type', 'รูปแบบข้อมูล', 'trim|required|xss_clean', array('required' => 'กรุณาเลือกรูปแบบข้อมูล'));
+        $this->form_validation->set_rules('csv_data', 'ข้อมูล CSV Text', 'trim|required|xss_clean', array('required' => 'กรุณากรอกข้อมูล CSV Text'));
         
         $data = array();
         $data['errors'] = array();
         if ($this->form_validation->run()) {
-            if ($this->importdata_model->save()) {
-                redirect('/admin/importdata/');
-            } else {
+            if (!$this->importdata_model->saveData()) {
                 $data['errors']['global'] = "ไม่สามารถบันทึกข้อมูลได้ กรุณาตรวจสอบการกรอกข้อมูลและลองใหม่อีกครั้ง!";
             }
         }
