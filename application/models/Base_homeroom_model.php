@@ -208,7 +208,8 @@ class Base_homeroom_model extends BaseModel
     // TODO: enable when all user_type has approved
     public function getPrintButtonHtml($advisors=array())
     {
-        $html = '<button disabled class="uk-button uk-button-small"><i class="uk-icon-print"></i></button>';
+        // $html = '<button disabled class="uk-button uk-button-small"><i class="uk-icon-print"></i></button>';
+        $html = '';
         
         return $html;
     }
