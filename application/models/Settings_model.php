@@ -46,8 +46,6 @@ class Settings_model extends BaseModel
     {
         $this->ci->form_validation->set_rules('firstname', 'ชื่อ', 'trim|required|xss_clean');
         $this->ci->form_validation->set_rules('lastname', 'นามสกุล', 'trim|required|xss_clean');
-        $this->ci->form_validation->set_rules('college_id', 'สถานศึกษา', 'trim|required|xss_clean');
-        $this->ci->form_validation->set_rules('major_id', 'แผนกวิชา', 'trim|required|xss_clean');
         $this->ci->form_validation->set_rules('email', 'อีเมล์', 'trim|required|xss_clean');
         
         if ($this->ci->form_validation->run()) {

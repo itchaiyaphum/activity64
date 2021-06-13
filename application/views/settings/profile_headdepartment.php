@@ -61,45 +61,6 @@ $attributes = array('class' => 'uk-form uk-form-horizontal', 'id' => 'loginform'
                                     </div>
                                 </div>
                             </div>
-                            <div class="uk-form-row">
-                                <label class="uk-form-label" >สถานศึกษา</label>
-                                <div class="uk-form-controls">
-                                    <select name="college_id" id="college_id">
-                                	<option value="0">--- เลือกสถานศึกษา ---</option>
-                                    <?php
-                                    for ($i=0; $i<count($college_items); $i++) {
-                                        $college = $college_items[$i]; ?>
-                                        <option value="<?php echo $college->id; ?>" <?php echo ($profile->college_id==$college->id)?' selected="selected" ':''; ?>><?php echo $college->name; ?></option>
-                                        <?php
-                                    }
-                                    ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="uk-form-row">
-                                <label class="uk-form-label" >แผนกวิชา</label>
-                                <div class="uk-form-controls">
-                                    <select name="major_id" id="major_id">
-                                	<option value="0">--- เลือกแผนกวิชา ---</option>
-                                    <?php
-                                    for ($i=0; $i<count($college_items); $i++) {
-                                        $college = $college_items[$i]; ?>
-                                        <option disabled>-| <?php echo $college->name; ?></option>
-                                        <?php
-                                        for ($j=0; $j<count($major_items); $j++) {
-                                            $major = $major_items[$j];
-                                            echo $major->college_id.'===='.$college->id;
-                                            if ($major->college_id==$college->id) {
-                                                ?>
-                                                <option value="<?php echo $major->id; ?>" <?php echo ($profile->major_id==$major->id)?' selected="selected" ':''; ?>>---| <?php echo $major->major_name; ?></option>
-                                            <?php
-                                            }
-                                        }
-                                    }
-                                    ?>
-                                    </select>
-                                </div>
-                            </div>
                             
                             <hr/>
                             <div class="uk-form-row">
