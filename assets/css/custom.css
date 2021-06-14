@@ -2,6 +2,10 @@
   background: #f1f0f0da;
 }
 
+.uk-container {
+  max-width: 1180px !important;
+}
+
 /* Responsive table
  ========================================================================== */
 /* Phone landscape and smaller */

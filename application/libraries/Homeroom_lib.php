@@ -45,14 +45,14 @@ class Homeroom_lib
 
         $html = "";
         if ($advisor_status=='viewed') {
-            $html = '<div class="uk-button uk-button-mini"><i class="uk-icon-eye"></i> ครูที่ปรึกษาหลัก (กำลังบันทึกข้อมูล)</div>';
+            $html = '<div class="uk-button uk-button-mini"><i class="uk-icon-eye"></i> ครูที่ปรึกษาหลัก (กำลังบันทึก)</div>';
         } elseif ($advisor_status=='confirmed') {
-            $html = '<div class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-check"></i> ครูที่ปรึกษาหลัก (ยืนยันการกรอกข้อมูลแล้ว)</div>';
+            $html = '<div class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-check"></i> ครูที่ปรึกษาหลัก</div>';
             $html .= $remove_button;
         } elseif ($advisor_status=='saving') {
-            $html = '<div class="uk-button uk-button-primary uk-button-mini">ครูที่ปรึกษาหลัก (กำลังบันทึกข้อมูล)</div>';
+            $html = '<div class="uk-button uk-button-primary uk-button-mini">ครูที่ปรึกษาหลัก (กำลังบันทึก)</div>';
         } else {
-            $html = '<div class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i> ครูที่ปรึกษาหลัก (รอการบันทึกข้อมูล)</div>';
+            $html = '<div class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i> ครูที่ปรึกษาหลัก (รอบันทึก)</div>';
         }
         return $html;
     }
@@ -70,14 +70,14 @@ class Homeroom_lib
 
         $html = "";
         if ($advisor_status=='viewed') {
-            $html = '<div class="uk-button uk-button-mini"><i class="uk-icon-eye"></i> ครูที่ปรึกษาร่วม (กำลังบันทึกข้อมูล)</div>';
+            $html = '<div class="uk-button uk-button-mini"><i class="uk-icon-eye"></i> ครูที่ปรึกษาร่วม (กำลังบันทึก)</div>';
         } elseif ($advisor_status=='confirmed') {
-            $html = '<div class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-check"></i> ครูที่ปรึกษาร่วม (ยืนยันการกรอกข้อมูลแล้ว)</div>';
+            $html = '<div class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-check"></i> ครูที่ปรึกษาร่วม</div>';
             $html .= $remove_button;
         } elseif ($advisor_status=='saving') {
-            $html = '<div class="uk-button uk-button-warning uk-button-mini"><i class="uk-icon-gears"></i> ครูที่ปรึกษาร่วม (กำลังบันทึกข้อมูล)</div>';
+            $html = '<div class="uk-button uk-button-warning uk-button-mini"><i class="uk-icon-gears"></i> ครูที่ปรึกษาร่วม (กำลังบันทึก)</div>';
         } else {
-            $html = '<div class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i> ครูที่ปรึกษาร่วม (รอการบันทึกข้อมูล)</div>';
+            $html = '<div class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i> ครูที่ปรึกษาร่วม (รอบันทึก)</div>';
         }
         return $html;
     }
@@ -102,10 +102,10 @@ class Homeroom_lib
                 }
                 if ($advisor->advisor_type=='advisor' && $html_advisor=="") {
                     //set default button
-                    $html .= '<div class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i> ครูที่ปรึกษาหลัก (รอการบันทึกข้อมูล)</div>';
+                    $html .= '<div class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i> ครูที่ปรึกษาหลัก (รอบันทึก)</div>';
                 } elseif ($advisor->advisor_type=='coadvisor' && $html_advisor=="") {
                     //set default button
-                    $html .= '<div class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i> ครูที่ปรึกษาร่วม (รอการบันทึกข้อมูล)</div>';
+                    $html .= '<div class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i> ครูที่ปรึกษาร่วม (รอบันทึก)</div>';
                 }
             }
         }
@@ -147,23 +147,23 @@ class Homeroom_lib
         if (isset($links)) {
             foreach ($links as $key=>$link) {
                 if ($key=='view') {
-                    $view_button = " <a href='{$link}' class='uk-button uk-button-mini'><i class='uk-icon-eye'></i></a>";
+                    $view_button = " <a href='{$link}' class='uk-button uk-button-mini'><i class='uk-icon-eye'></i></a> ";
                 }
             }
         }
 
         $html = "";
         if ($advisor_status=='viewed') {
-            $html = '<div class="uk-button uk-button-mini"><i class="uk-icon-eye"></i> ยังไม่ได้รับการรับรอง</div>';
             $html .= $view_button;
+            $html .= '<div class="uk-button uk-button-mini"><i class="uk-icon-eye"></i> ยังไม่ได้รับการรับรอง</div>';
             $html .= $approve_button;
         } elseif ($advisor_status=='confirmed') {
-            $html = '<div class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-check"></i> รับรองการส่งแล้ว</div>';
             $html .= $view_button;
+            $html .= '<div class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-check"></i> รับรองการส่งแล้ว</div>';
             $html .= $remove_button;
         } else {
-            $html = '<div class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i> ยังไม่ได้เปิดอ่าน</div>';
             $html .= $view_button;
+            $html .= ' <div class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i> ยังไม่ได้เปิดอ่าน</div>';
         }
 
         return $html;
@@ -210,8 +210,8 @@ class Homeroom_lib
 
             //set default button
             if ($html=="") {
-                $html .= '<div class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i> ยังไม่ได้เปิดอ่าน</div>';
                 $html .= $view_button;
+                $html .= ' <div class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i> ยังไม่ได้เปิดอ่าน</div>';
                 $html .= $approve_button;
             }
         }

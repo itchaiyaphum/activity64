@@ -96,17 +96,17 @@ class Base_homeroom_model extends BaseModel
         } elseif ($advisor_status=='confirmed') {
             $checkStatusHtml = '<div class="uk-button-group">
                                             <div class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-check"></i></div>
-                                            <div class="uk-button uk-button-success uk-button-mini">ครูที่ปรึกษาหลัก (ยืนยันการกรอกข้อมูลแล้ว)</div>
+                                            <div class="uk-button uk-button-success uk-button-mini">ครูที่ปรึกษาหลัก (ยืนยันกรอกข้อมูลแล้ว)</div>
                                         </div>';
         } elseif ($advisor_status=='saving') {
             $checkStatusHtml = '<div class="uk-button-group">
                                             <div class="uk-button uk-button-primary uk-button-mini"><i class="uk-icon-gears"></i></div>
-                                            <div class="uk-button uk-button-primary uk-button-mini">ครูที่ปรึกษาหลัก (กำลังบันทึกข้อมูล)</div>
+                                            <div class="uk-button uk-button-primary uk-button-mini">ครูที่ปรึกษาหลัก (กำลังบันทึก)</div>
                                         </div>';
         } else {
             $checkStatusHtml = '<div class="uk-button-group">
                                             <div class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i></div>
-                                            <div class="uk-button uk-button-mini">ครูที่ปรึกษาหลัก (รอการบันทึกข้อมูล)</div>
+                                            <div class="uk-button uk-button-mini">ครูที่ปรึกษาหลัก (รอบันทึกข้อมูล)</div>
                                         </div>';
         }
         return $checkStatusHtml;
