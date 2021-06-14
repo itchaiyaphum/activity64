@@ -25,7 +25,7 @@
             	<div class="uk-panel uk-panel-box uk-panel-box-default uk-margin-top">
                     <h3 class="uk-panel-title">กลุ่มการเรียน: <?php echo $group->group_name.' / '.$group->minor_name.' / '.$group->major_name; ?></h3>
                 	<hr/>
-                	<table class="uk-table uk-table-hover" cellpadding="1">
+                	<table class="uk-table uk-table-hover uk-table-responsive uk-table-striped" cellpadding="1">
                 		<thead>
                 			<tr>
                 				<th width="5%" class="title">#</th>
@@ -41,7 +41,7 @@
                 				<th class="title">
                 					หมายเหตุ
                 				</th>
-                				<th class="title" >
+                				<th width="30%" >
                 					สถานะความเสี่ยง
                 				</th>
                 			</tr>
@@ -51,27 +51,54 @@
                         if (count($group->students)<=0) {
                             echo '<tr><td colspan="6" class="uk-text-center"><p>ไม่มีข้อมูล</p></td></tr>';
                         } else {
-                            for ($i=0, $n=count($group->students); $i < $n; $i++) {
-                                $student 	=& $group->students[$i]; ?>
+                            $i = 1;
+                            foreach ($group->students as $student) {
+                                ?>
                 			<tr>
                 				<td>
-                					<?php echo($i+1); ?>
+									<div class="uk-grid uk-grid-collapse">
+										<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">ลำดับที่: </div>
+										<div class="uk-width-small-7-10"><?php echo($i++); ?></div>
+									</div>
                 				</td>
                 				<td>
-                					<?php echo $student->student_code; ?>
+									<div class="uk-grid uk-grid-collapse">
+										<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">รหัสนักเรียน: </div>
+										<div class="uk-width-small-7-10"><?php echo $student->student_code; ?></div>
+									</div>
                 				</td>
                 				<td>
-                					<?php echo $student->firstname; ?> <?php echo $student->lastname; ?>
+									<div class="uk-grid uk-grid-collapse">
+										<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">ชื่อ-นามสกุล: </div>
+										<div class="uk-width-small-7-10">
+											<?php echo $student->firstname; ?> <?php echo $student->lastname; ?>
+										</div>
+									</div>
                 				</td>
 								<td>
-                					<input type="text" class="uk-input" name="student_items[<?php echo $student->id; ?>][detail]" value="<?php echo $student->risk_detail; ?>"/>
+									<div class="uk-grid uk-grid-collapse">
+										<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">รายละเอียด:</div>
+										<div class="uk-width-small-7-10">
+											<input type="text" class="uk-input uk-width-small-1-1" name="student_items[<?php echo $student->id; ?>][detail]" value="<?php echo $student->risk_detail; ?>"/>
+										</div>
+									</div>
                 				</td>
                 				<td>
-                					<input type="text" class="uk-input" name="student_items[<?php echo $student->id; ?>][comment]" value="<?php echo $student->risk_comment; ?>"/>
+									<div class="uk-grid uk-grid-collapse">
+										<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">หมายเหตุ:</div>
+										<div class="uk-width-small-7-10">
+											<input type="text" class="uk-input uk-width-small-1-1" name="student_items[<?php echo $student->id; ?>][comment]" value="<?php echo $student->risk_comment; ?>"/>
+										</div>
+									</div>
                 				</td>
                 				<td>
-                					<div><input class="uk-radio" type="radio" name="student_items[<?php echo $student->id; ?>][status]" value="risk" <?php echo ($student->risk_status=='risk')?'checked="1"':''; ?>> เสี่ยง</div>
-                					<div><input class="uk-radio" type="radio" name="student_items[<?php echo $student->id; ?>][status]" value="not_risk" <?php echo ($student->risk_status=='not_risk')?'checked="1"':''; ?>> ไม่เสี่ยง</div>
+									<div class="uk-grid uk-grid-collapse">
+										<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">สถานะความเสี่ยง: </div>
+										<div class="uk-width-small-7-10">
+											<input class="uk-radio" type="radio" name="student_items[<?php echo $student->id; ?>][status]" value="risk" <?php echo ($student->risk_status=='risk')?'checked="1"':''; ?>> เสี่ยง
+                							<input class="uk-radio" type="radio" name="student_items[<?php echo $student->id; ?>][status]" value="not_risk" <?php echo ($student->risk_status=='not_risk')?'checked="1"':''; ?>> ไม่เสี่ยง
+										</div>
+									</div>
                 				</td>
                 			</tr>
                 		<?php

@@ -24,7 +24,7 @@
             	<div class="uk-panel uk-panel-box uk-panel-box-default uk-margin-top">
                     <h3 class="uk-panel-title">กลุ่มการเรียน: <?php echo $group->group_name.' / '.$group->minor_name.' / '.$group->major_name; ?></h3>
                 	<hr/>
-                	<table class="uk-table uk-table-hover" cellpadding="1">
+                	<table class="uk-table uk-table-hover uk-table-responsive uk-table-striped" cellpadding="1">
                 		<thead>
                 			<tr>
                 				<th width="5%" class="title">#</th>
@@ -34,7 +34,7 @@
                 				<th class="title">
                 					ชื่อ - นามสกุล
                 				</th>
-                				<th class="title" width="30%">
+                				<th class="title" width="40%">
                 					สถานะการเข้าร่วม
                 				</th>
                 			</tr>
@@ -44,24 +44,38 @@
                         if (count($group->students)<=0) {
                             echo '<tr><td colspan="6" class="uk-text-center"><p>ไม่มีข้อมูล</p></td></tr>';
                         } else {
-                            $i=0;
+                            $i=1;
                             foreach ($group->students as $student) {
                                 ?>
                 			<tr>
                 				<td>
-                					<?php echo($i++); ?>
+									<div class="uk-grid uk-grid-collapse">
+										<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">ลำดับที่: </div>
+										<div class="uk-width-small-7-10"><?php echo($i++); ?></div>
+									</div>
                 				</td>
                 				<td>
-                					<?php echo $student->student_code; ?>
+									<div class="uk-grid uk-grid-collapse">
+										<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">รหัสนักเรียน: </div>
+										<div class="uk-width-small-7-10"><?php echo $student->student_code; ?></div>
+									</div>
                 				</td>
                 				<td>
-                					<?php echo $student->firstname; ?> <?php echo $student->lastname; ?>
+									<div class="uk-grid uk-grid-collapse">
+										<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">ชื่อ-นามสกุล: </div>
+										<div class="uk-width-small-7-10"><?php echo $student->firstname; ?> <?php echo $student->lastname; ?></div>
+									</div>
                 				</td>
                 				<td>
-                					<div><input class="uk-radio" type="radio" name="join_status[<?php echo $student->id; ?>]" value="come" <?php echo ($student->activity_status=='come')?'checked="1"':''; ?>> มา</div>
-                					<div><input class="uk-radio" type="radio" name="join_status[<?php echo $student->id; ?>]" value="not_come" <?php echo ($student->activity_status=='not_come')?'checked="1"':''; ?>> ขาด</div>
-                					<div><input class="uk-radio" type="radio" name="join_status[<?php echo $student->id; ?>]" value="late" <?php echo ($student->activity_status=='late')?'checked="1"':''; ?>> สาย</div>
-                					<div><input class="uk-radio" type="radio" name="join_status[<?php echo $student->id; ?>]" value="leave" <?php echo ($student->activity_status=='leave')?'checked="1"':''; ?>> ลา</div>
+									<div class="uk-grid uk-grid-collapse">
+										<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">สถานะเข้าร่วม: </div>
+										<div class="uk-width-small-7-10">
+											<input class="uk-radio" type="radio" name="join_status[<?php echo $student->id; ?>]" value="come" <?php echo ($student->activity_status=='come')?'checked="1"':''; ?>> มา
+											<input class="uk-radio" type="radio" name="join_status[<?php echo $student->id; ?>]" value="not_come" <?php echo ($student->activity_status=='not_come')?'checked="1"':''; ?>> ขาด
+											<input class="uk-radio" type="radio" name="join_status[<?php echo $student->id; ?>]" value="late" <?php echo ($student->activity_status=='late')?'checked="1"':''; ?>> สาย
+											<input class="uk-radio" type="radio" name="join_status[<?php echo $student->id; ?>]" value="leave" <?php echo ($student->activity_status=='leave')?'checked="1"':''; ?>> ลา
+										</div>
+									</div>
                 				</td>
                 			</tr>
                 		<?php

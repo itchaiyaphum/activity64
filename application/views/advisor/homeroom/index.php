@@ -19,7 +19,8 @@
 					( <?php echo $this->helper_lib->getDate($homeroom->join_start); ?> - 
             		<?php echo $this->helper_lib->getDate($homeroom->join_end); ?> )</h3>
                 	<hr/>
-                	<table class="uk-table uk-table-hover" cellpadding="1">
+					<div>
+                	<table class="uk-table uk-table-hover uk-table-responsive uk-table-striped" cellpadding="1">
                 		<thead>
                 			<tr>
                 				<th width="5%">#</th>
@@ -32,7 +33,7 @@
                 				<th>
                 					สถานะการบันทึกข้อมูล
                 				</th>
-								<th width="20%">
+								<th width="25%">
                 					
                 				</th>
                 			</tr>
@@ -42,32 +43,53 @@
                         if (count($homeroom->groups)<=0) {
                             echo '<tr><td colspan="6" class="uk-text-center"><p>ไม่มีข้อมูล</p></td></tr>';
                         } else {
-                            $k = 0;
-                            for ($i=0, $n=count($homeroom->groups); $i < $n; $i++) {
-                                $group 	= $homeroom->groups[$i];
+                            $i = 1;
+                            foreach ($homeroom->groups as $group) {
                                 $link_activity = base_url("advisor/homeroom/activity?id={$homeroom->id}&group_id={$group->id}"); ?>
-                			<tr class="<?php echo "row$k"; ?>">
+                			<tr>
                 				<td>
-                					<?php echo($i+1); ?>
+									<div class="uk-grid uk-grid-collapse">
+										<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">ลำดับที่: </div>
+										<div class="uk-width-small-7-10"><?php echo($i++); ?></div>
+									</div>
                 				</td>
                 				<td>
-									<div><?php echo $group->group_name; ?></div>
-									<div><?php echo $group->minor_name; ?></div>
-									<div><?php echo $group->major_name; ?></div>
+									<div class="uk-grid uk-grid-collapse">
+										<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">กลุ่มการเรียน / สาขางาน / สาขาวิชา</div>
+										<div class="uk-width-small-7-10">
+											<div><?php echo $group->group_name; ?></div>
+											<div><?php echo $group->minor_name; ?></div>
+											<div><?php echo $group->major_name; ?></div>
+										</div>
+									</div>
                 				</td>
                 				<td>
-									<?php echo $this->base_homeroom_model->getAdvisorTypeText($group->advisors); ?>
+									<div class="uk-grid uk-grid-collapse">
+										<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">สถานะที่ปรึกษา</div>
+										<div class="uk-width-small-7-10">
+											<?php echo $this->base_homeroom_model->getAdvisorTypeText($group->advisors); ?>
+										</div>
+									</div>
                 				</td>
                 				<td>
-									<?php echo $this->base_homeroom_model->getAdvisorStatusHtml($group->advisors); ?>
+									<div class="uk-grid uk-grid-collapse">
+										<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">สถานะบันทึก</div>
+										<div class="uk-width-small-7-10">
+											<?php echo $this->base_homeroom_model->getAdvisorStatusHtml($group->advisors); ?>
+										</div>
+									</div>
                 				</td>
-                				<td class="uk-text-center">
-									<?php echo $this->base_homeroom_model->getEditButtonHtml($group->advisors, $link_activity); ?>
-									<?php echo $this->base_homeroom_model->getPrintButtonHtml($group->advisors); ?>
+                				<td>
+									<div class="uk-grid uk-grid-collapse">
+										<div class="uk-width-small-3-10 uk-hidden-large"></div>
+										<div class="uk-width-small-7-10">
+											<?php echo $this->base_homeroom_model->getEditButtonHtml($group->advisors, $link_activity); ?>
+											<?php echo $this->base_homeroom_model->getPrintButtonHtml($group->advisors); ?>
+										</div>
+									</div>
 								</td>
                 			</tr>
                 		<?php
-                            $k = 1 - $k;
                             }
                         } ?>
                 		</tbody>
