@@ -290,8 +290,8 @@ class Headadvisorapproving_model extends BaseModel
 
             //set default button
             if ($html=="") {
-                $html .= '<div class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i> ยังไม่ได้เปิดอ่าน</div>';
                 $html .= $view_button;
+                $html .= ' <div class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i> ยังไม่ได้เปิดอ่าน</div>';
                 $html .= $approve_button;
             }
         }
@@ -340,16 +340,16 @@ class Headadvisorapproving_model extends BaseModel
 
         $html = "";
         if ($user_status=='viewed') {
-            $html = '<div class="uk-button uk-button-mini"><i class="uk-icon-eye"></i> ยังไม่ได้รับการรับรอง</div>';
             $html .= $view_button;
+            $html .= ' <div class="uk-button uk-button-mini"><i class="uk-icon-eye"></i> ยังไม่ได้รับการรับรอง</div>';
             $html .= $approve_button;
         } elseif ($user_status=='confirmed') {
-            $html = '<div class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-check"></i> รับรองการส่งแล้ว</div>';
             $html .= $view_button;
+            $html .= ' <div class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-check"></i> รับรองการส่งแล้ว</div>';
             $html .= $remove_button;
         } else {
-            $html = '<div class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i> ยังไม่ได้เปิดอ่าน</div>';
             $html .= $view_button;
+            $html .= ' <div class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i> ยังไม่ได้เปิดอ่าน</div>';
             $html .= $approve_button;
         }
 

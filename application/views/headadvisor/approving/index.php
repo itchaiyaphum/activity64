@@ -36,19 +36,19 @@
 								</div>
 							</h3>
 							<hr/>
-							<table class="uk-table uk-table-hover" cellpadding="1">
+							<table class="uk-table uk-table-hover uk-table-responsive uk-table-striped" cellpadding="1">
 								<thead>
 									<tr>
 										<th>
 											กลุ่มการเรียน
 										</th>
-										<th width="35%">
+										<th>
 											สถานะบันทึกกิจกรรมโฮมรูม
 										</th>
 										<th width="20%">
 											รับรองจากหัวหน้าแผนก
 										</th>
-										<th width="25%">
+										<th width="35%">
 											รับรองจากหัวหน้างานครูฯ
 										</th>
 									</tr>
@@ -62,39 +62,59 @@
                                         $link_confirm = base_url('headadvisor/approving/confirm/?homeroom_id='.$homeroom->id.'&group_id='.$group->group_id); ?>
 									<tr>
 										<td>
-											<a href="<?php echo $link_confirm; ?>"><?php echo $group->group_name; ?></a>
-											<?php
-                                            foreach ($group->advisors as $advisor) {
-                                                ?>
-												<div><?php echo $advisor->firstname." ".$advisor->lastname; ?></div>
-												<?php
-                                            } ?>
+											<div class="uk-grid uk-grid-collapse">
+												<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">กลุ่มการเรียน:</div>
+												<div class="uk-width-small-7-10">
+													<div><?php echo $group->group_name; ?></div>
+													<?php
+                                                    foreach ($group->advisors as $advisor) {
+                                                        ?>
+														<div><?php echo $advisor->firstname." ".$advisor->lastname; ?></div>
+														<?php
+                                                    } ?>
+												</div>
+											</div>
 										</td>
 										<td>
-											<?php
-                                            $links = array(
-                                                'view' => base_url("headadvisor/approving/confirm/?homeroom_id={$homeroom->id}&group_id={$group->group_id}"),
-                                                'remove' => base_url("headadvisor/approving/remove_confirm/?homeroom_id={$homeroom->id}&group_id={$group->group_id}")
-                                            );
+											<div class="uk-grid uk-grid-collapse">
+												<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">สถานะบันทึกกิจกรรมโฮมรูม:</div>
+												<div class="uk-width-small-7-10">
+													<?php
+                                                    $links = array(
+                                                        'view' => base_url("headadvisor/approving/confirm/?homeroom_id={$homeroom->id}&group_id={$group->group_id}"),
+                                                        'remove' => base_url("headadvisor/approving/remove_confirm/?homeroom_id={$homeroom->id}&group_id={$group->group_id}")
+                                                    );
                                         echo $this->headadvisorapproving_model->getAdvisorStatusHtml($group->advisors, $group->approving, $links); ?>
+												</div>
+											</div>
 										</td>
 										<td>
-											<?php
-                                            $links = array(
-                                                'view' => base_url("headadvisor/approving/confirm/?homeroom_id={$homeroom->id}&group_id={$group->group_id}"),
-                                                'approve' => base_url("headadvisor/approving/approve/?homeroom_id={$homeroom->id}&group_id={$group->group_id}"),
-                                                'remove' => base_url("headadvisor/approving/unapprove/?homeroom_id={$homeroom->id}&group_id={$group->group_id}")
-                                            );
+											<div class="uk-grid uk-grid-collapse">
+												<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">รับรองจากหัวหน้าแผนก:</div>
+												<div class="uk-width-small-7-10">
+													<?php
+                                                    $links = array(
+                                                        'view' => base_url("headadvisor/approving/confirm/?homeroom_id={$homeroom->id}&group_id={$group->group_id}"),
+                                                        'approve' => base_url("headadvisor/approving/approve/?homeroom_id={$homeroom->id}&group_id={$group->group_id}"),
+                                                        'remove' => base_url("headadvisor/approving/unapprove/?homeroom_id={$homeroom->id}&group_id={$group->group_id}")
+                                                    );
                                         echo $this->headadvisorapproving_model->getHeadDepartmentStatusHtml($group->approving, $links); ?>
+												</div>
+											</div>
 										</td>
 										<td>
-										<?php
-                                            $links = array(
-                                                'view' => base_url("headadvisor/approving/confirm/?homeroom_id={$homeroom->id}&group_id={$group->group_id}"),
-                                                'approve' => base_url("headadvisor/approving/approve/?homeroom_id={$homeroom->id}&group_id={$group->group_id}"),
-                                                'remove' => base_url("headadvisor/approving/unapprove/?homeroom_id={$homeroom->id}&group_id={$group->group_id}")
-                                            );
+											<div class="uk-grid uk-grid-collapse">
+												<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">รับรองจากหัวหน้างานครูฯ:</div>
+												<div class="uk-width-small-7-10">
+													<?php
+                                                        $links = array(
+                                                            'view' => base_url("headadvisor/approving/confirm/?homeroom_id={$homeroom->id}&group_id={$group->group_id}"),
+                                                            'approve' => base_url("headadvisor/approving/approve/?homeroom_id={$homeroom->id}&group_id={$group->group_id}"),
+                                                            'remove' => base_url("headadvisor/approving/unapprove/?homeroom_id={$homeroom->id}&group_id={$group->group_id}")
+                                                        );
                                         echo $this->headadvisorapproving_model->getHeadAdvisorStatusHtml($group->approving, $links); ?>
+												</div>
+											</div>
 										</td>
 									</tr>
 								<?php
