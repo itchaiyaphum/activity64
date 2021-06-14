@@ -88,6 +88,9 @@ tinymce.init({
             				<li><a href="<?php echo base_url('headadvisor/homeroom/');?>"><i class="uk-icon-home"></i> จัดการตารางกิจกรรมโฮมรูม</a></li>
             				<li><a href="<?php echo base_url('headadvisor/users/');?>"><i class="uk-icon-user"></i> จัดการครูที่ปรึกษา</a></li>
             				<li><a href="<?php echo base_url('headadvisor/approving/');?>"><i class="uk-icon-save"></i> อนุมัติการส่งข้อมูลกิจกรรมโฮมรูม</a></li>
+            				<?php } elseif ($profileData->user_type=='executive') { ?>
+            				<li><a href="<?php echo base_url('executive/');?>"><i class="uk-icon-home"></i> หน้าหลักสำหรับฝ่ายบริหาร</a></li>
+            				<li><a href="<?php echo base_url('executive/approving/');?>"><i class="uk-icon-save"></i> อนุมัติการส่งข้อมูลกิจกรรมโฮมรูม</a></li>
             				<?php } elseif ($profileData->user_type=='advisor') { ?>
             				<li><a href="<?php echo base_url('advisor/');?>"><i class="uk-icon-home"></i> หน้าหลักสำหรับครูที่ปรึกษา</a></li>
             				<li><a href="<?php echo base_url('advisor/homeroom/');?>"><i class="uk-icon-save"></i> บันทึกข้อมูลกิจกรรมโฮมรูม</a></li>
