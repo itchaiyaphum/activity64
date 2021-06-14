@@ -3,7 +3,7 @@ if (! defined('BASEPATH')) {
     exit('No direct script access allowed');
 }
 
-class Headdepartmentapproving_model extends BaseModel
+class Executiveapproving_model extends BaseModel
 {
     public $table = null;
     public $table_obedience = null;
@@ -63,14 +63,14 @@ class Headdepartmentapproving_model extends BaseModel
     public function getApproving($major_id=0)
     {
         $profile = $this->ci->profile_lib->getData();
-        $major_id = $profile->major_id;
+        $major_id = 170;
 
         //get homeroom item
         $homeroom_items = $this->getHomeroomItems();
         
         //get major item
         $this->ci->load->model('admin/major_model', 'admin_major_model');
-        $major_item = $this->ci->admin_major_model->getItem($major_id);
+        $major_items = $this->ci->admin_major_model->getItems(array('status'=>1, 'no_limit'=>true));
         
         //get minor items
         $this->ci->load->model('admin/minor_model', 'admin_minor_model');
@@ -87,60 +87,66 @@ class Headdepartmentapproving_model extends BaseModel
 
         $items = array();
 
-        foreach ($homeroom_items as $homeroom) {
-            $item = new stdClass();
-            $item->id               = $homeroom->id;
-            $item->semester_name    = $homeroom->semester_name;
-            $item->week             = $homeroom->week;
-            $item->join_start       = $homeroom->join_start;
-            $item->join_end         = $homeroom->join_end;
-            $item->is_lock          = $homeroom->is_lock;
-            $item->is_lock_remark   = $homeroom->remark;
-            $item->major_id         = $major_item->id;
-            $item->major_name       = $major_item->major_name;
+        foreach ($major_items as $major) {
+            $item_major = new stdClass();
+            $item_major->major_id               = $major->id;
+            $item_major->major_name             = $major->major_name;
 
-            $item->minors           = array();
-            foreach ($minor_items as $minor) {
-                $item_minor                 = new stdClass();
-                $item_minor->minor_id       = $minor->id;
-                $item_minor->minor_name     = $minor->minor_name;
+            $item_major->homerooms              = array();
+            foreach ($homeroom_items as $homeroom) {
+                $item_homeroom = new stdClass();
+                $item_homeroom->id               = $homeroom->id;
+                $item_homeroom->semester_name    = $homeroom->semester_name;
+                $item_homeroom->week             = $homeroom->week;
+                $item_homeroom->join_start       = $homeroom->join_start;
+                $item_homeroom->join_end         = $homeroom->join_end;
+                $item_homeroom->is_lock          = $homeroom->is_lock;
+                $item_homeroom->is_lock_remark   = $homeroom->remark;
 
-                $item_minor->groups         = array();
-                foreach ($group_items as $group) {
-                    if ($group->major_id==$major_item->id && $group->minor_id==$minor->id) {
-                        $item_group                     = new stdClass();
-                        $item_group->group_id           = $group->id;
-                        $item_group->group_name         = $group->group_name;
+                $item_homeroom->minors           = array();
+                foreach ($minor_items as $minor) {
+                    $item_minor                 = new stdClass();
+                    $item_minor->minor_id       = $minor->id;
+                    $item_minor->minor_name     = $minor->minor_name;
 
-                        $item_group->advisors           = array();
-                        foreach ($advisor_group_items as $advisor_group) {
-                            if ($advisor_group->group_id==$group->id) {
-                                $item_advisor                       = new stdClass();
-                                $item_advisor->advisor_id           = $advisor_group->advisor_id;
-                                $item_advisor->advisor_type         = $advisor_group->advisor_type;
-                                $item_advisor->firstname            = $advisor_group->firstname;
-                                $item_advisor->lastname             = $advisor_group->lastname;
-                                array_push($item_group->advisors, $item_advisor);
+                    $item_minor->groups         = array();
+                    foreach ($group_items as $group) {
+                        if ($group->major_id==$major->id && $group->minor_id==$minor->id) {
+                            $item_group                     = new stdClass();
+                            $item_group->group_id           = $group->id;
+                            $item_group->group_name         = $group->group_name;
+
+                            $item_group->advisors           = array();
+                            foreach ($advisor_group_items as $advisor_group) {
+                                if ($advisor_group->group_id==$group->id) {
+                                    $item_advisor                       = new stdClass();
+                                    $item_advisor->advisor_id           = $advisor_group->advisor_id;
+                                    $item_advisor->advisor_type         = $advisor_group->advisor_type;
+                                    $item_advisor->firstname            = $advisor_group->firstname;
+                                    $item_advisor->lastname             = $advisor_group->lastname;
+                                    array_push($item_group->advisors, $item_advisor);
+                                }
                             }
-                        }
 
-                        $item_group->approving           = array();
-                        foreach ($action_items as $action) {
-                            if ($action->homeroom_id==$homeroom->id && $action->group_id==$group->id) {
-                                $item_approving                       = new stdClass();
-                                $item_approving->advisor_id           = $action->user_id;
-                                $item_approving->advisor_type         = $action->user_type;
-                                $item_approving->advisor_status       = $action->action_status;
-                                array_push($item_group->approving, $item_approving);
+                            $item_group->approving           = array();
+                            foreach ($action_items as $action) {
+                                if ($action->homeroom_id==$homeroom->id && $action->group_id==$group->id) {
+                                    $item_approving                    = new stdClass();
+                                    $item_approving->user_id           = $action->user_id;
+                                    $item_approving->user_type         = $action->user_type;
+                                    $item_approving->user_status       = $action->action_status;
+                                    array_push($item_group->approving, $item_approving);
+                                }
                             }
-                        }
 
-                        array_push($item_minor->groups, $item_group);
+                            array_push($item_minor->groups, $item_group);
+                        }
                     }
+                    array_push($item_homeroom->minors, $item_minor);
                 }
-                array_push($item->minors, $item_minor);
+                array_push($item_major->homerooms, $item_homeroom);
             }
-            array_push($items, $item);
+            array_push($items, $item_major);
         }
 
         // echo "<pre>";
@@ -148,6 +154,119 @@ class Headdepartmentapproving_model extends BaseModel
         // exit();
         
         return $items;
+    }
+
+    public function getHeadDepartmentStatusButton($approving=null, $links=null)
+    {
+        $html = '';
+        if (isset($approving)) {
+            foreach ($approving as $approve) {
+                if ($approve->user_type=='headdepartment') {
+                    if ($approve->user_status=='viewed') {
+                        $html = '<div class="uk-button uk-button-primary uk-button-mini"><i class="uk-icon-circle-o"></i> ยังไม่ได้รับการรับรอง</div>';
+                    } elseif ($approve->user_status=='confirmed') {
+                        $html = '<div class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-check"></i> รับรองการส่งแล้ว</div>';
+                    } else {
+                        $html = '<div class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i> ยังไม่ได้เปิดอ่าน</div>';
+                    }
+                }
+            }
+        }
+
+        //set default button
+        if ($html=="") {
+            $html .= '<div class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i> ยังไม่ได้เปิดอ่าน</div>';
+        }
+
+        return $html;
+    }
+
+    public function getHeadAdvisorStatusButton($approving=null, $links=null)
+    {
+        $html = '';
+        if (isset($approving)) {
+            foreach ($approving as $approve) {
+                if ($approve->user_type=='headadvisor') {
+                    if ($approve->user_status=='viewed') {
+                        $html = '<div class="uk-button uk-button-mini"><i class="uk-icon-eye"></i> ยังไม่ได้รับการรับรอง</div>';
+                    } elseif ($approve->user_status=='confirmed') {
+                        $html = '<div class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-check"></i> รับรองการส่งแล้ว</div>';
+                    }
+                }
+            }
+        }
+
+        //set default button
+        if ($html=="") {
+            $html .= '<div class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i> ยังไม่ได้เปิดอ่าน</div>';
+        }
+
+        return $html;
+    }
+
+    public function getExecutiveStatusButton($approving=null, $links=null)
+    {
+        $user_status = '';
+
+        $headadvisor_has_approved = false;
+        if (!is_null($approving)) {
+            foreach ($approving as $approve) {
+                // check if headadvisor has confirmed or not
+                if ($approve->user_type=='headadvisor' && $approve->user_status=='confirmed') {
+                    $headadvisor_has_approved = true;
+                }
+                //get user status from executive
+                if ($approve->user_type=='executive') {
+                    $user_status = $approve->user_status;
+                }
+            }
+        }
+
+        $approve_button = '';
+        if ($headadvisor_has_approved) {
+            if (isset($links)) {
+                foreach ($links as $key=>$link) {
+                    if ($key=='approve') {
+                        $approve_button = " <a href='{$link}' class='uk-button uk-button-success uk-button-mini'><i class='uk-icon-save'></i></a>";
+                    }
+                }
+            }
+        }
+
+        $remove_button = '';
+        if (isset($links)) {
+            foreach ($links as $key=>$link) {
+                if ($key=='remove') {
+                    $remove_button = " <a href='{$link}' class='uk-button uk-button-danger uk-button-mini'><i class='uk-icon-remove'></i></a>";
+                }
+            }
+        }
+
+        $view_button = '';
+        if (isset($links)) {
+            foreach ($links as $key=>$link) {
+                if ($key=='view') {
+                    $view_button = " <a href='{$link}' class='uk-button uk-button-mini'><i class='uk-icon-eye'></i></a>";
+                }
+            }
+        }
+
+        $html = "";
+        if ($user_status=='viewed') {
+            $html = '<div class="uk-button uk-button-mini"><i class="uk-icon-eye"></i> ยังไม่ได้รับการรับรอง</div>';
+            $html .= $view_button;
+            $html .= $approve_button;
+        } elseif ($user_status=='confirmed') {
+            $html = '<div class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-check"></i> รับรองการส่งแล้ว</div>';
+            $html .= $view_button;
+            $html .= $remove_button;
+        } else {
+            $html = '<div class="uk-button uk-button-mini"><i class="uk-icon-circle-o"></i> ยังไม่ได้เปิดอ่าน</div>';
+            $html .= $view_button;
+            $html .= $approve_button;
+        }
+
+        return $html;
     }
 
     public function getConfirm($homeroom_id=0, $group_id=0)
@@ -242,7 +361,7 @@ class Headdepartmentapproving_model extends BaseModel
 
             $item_group->approving           = array();
             foreach ($action_all_items as $approve) {
-                if ($approve->user_type=='headdepartment') {
+                if ($approve->user_type=='headdepartment' || $approve->user_type=='headadvisor' || $approve->user_type=='executive') {
                     $item_approve                  = new stdClass();
                     $item_approve->user_id         = $approve->user_id;
                     $item_approve->user_type       = $approve->user_type;
@@ -322,41 +441,46 @@ class Headdepartmentapproving_model extends BaseModel
         return $item;
     }
 
-    public function getConfirmButton($advisors=null, $approving=null, $link='headdepartment/approving')
+    public function getConfirmButton($approving=null, $link='headadvisor/approving')
     {
         $user_id = $this->ci->profile_lib->getUserId();
 
-        $user_status = '';
+        $user_status = '1';
+        $approve_by_headdepartment = false;
+        $approve_by_headadvisor = false;
         if (!is_null($approving)) {
             foreach ($approving as $approve) {
-                if ($approve->user_type=='headdepartment' && $approve->user_id==$user_id) {
+                // get executive action status
+                if ($approve->user_type=='executive' && $approve->user_id==$user_id) {
                     $user_status = $approve->user_status;
                 }
-            }
-        }
-
-        $enable_approve_button = false;
-        if (!is_null($advisors)) {
-            foreach ($advisors as $advisor) {
-                if ($advisor->advisor_status=='confirmed') {
-                    $enable_approve_button = true;
+                //check if headdepartment approved or not
+                if ($approve->user_type=='headadvisor' && $approve->user_status=='confirmed') {
+                    $approve_by_headadvisor = true;
+                }
+                //check if headadvisor approved or not
+                if ($approve->user_type=='headdepartment' && $approve->user_status=='confirmed') {
+                    $approve_by_headdepartment = true;
                 }
             }
         }
 
         $html = '';
         $link_to = base_url($link);
-        if ($user_status=='confirmed') {
-            $html .= "<a class='uk-button uk-button-primary uk-button-large uk-width-large-1-4 uk-margin-top' href='{$link_to}'><i class='uk-icon-home'></i> กลับหน้าหลัก</a> ";
-            $html .= "<button disabled class='uk-button uk-button-primary uk-button-large uk-width-large-2-4 uk-margin-top' data-uk-modal=\"{target:'#confirm-form'}\">รับรองการส่งแล้ว</button>";
-        } else {
-            if ($enable_approve_button) {
-                $html .= "<button class='uk-button uk-button-primary uk-button-large uk-width-large-1-4' data-uk-modal=\"{target:'#confirm-form'}\"><i class='uk-icon-save'></i> กดรับรองการส่ง</button>";
+
+        if ($approve_by_headdepartment && $approve_by_headadvisor) {
+            if ($user_status=='confirmed') {
+                $html .= "<a class='uk-button uk-button-primary uk-button-large uk-width-large-1-4 uk-margin-top' href='{$link_to}'><i class='uk-icon-home'></i> กลับหน้าหลัก</a> ";
+                $html .= "<button disabled class='uk-button uk-button-primary uk-button-large uk-width-large-2-4 uk-margin-top' data-uk-modal=\"{target:'#confirm-form'}\">รับรองการส่งแล้ว</button>";
             } else {
                 $html .= "<a class='uk-button uk-button-primary uk-button-large uk-width-large-1-4 uk-margin-top' href='{$link_to}'><i class='uk-icon-home'></i> กลับหน้าหลัก</a> ";
-                $html .= "<button disabled class='uk-button uk-button-large uk-width-large-2-4 uk-margin-top'><i class='uk-icon-hourglass-o'></i> ...รอครูที่ปรึกษายืนยันการส่งข้อมูลก่อน...</button>";
+                $html .= "<button class='uk-button uk-button-success uk-button-large uk-width-large-2-4 uk-margin-top' data-uk-modal=\"{target:'#confirm-form'}\"><i class='uk-icon-save'></i> กดรับรองการส่ง</button>";
             }
+        } else {
+            $html .= "<a class='uk-button uk-button-primary uk-button-large uk-width-large-1-4 uk-margin-top' href='{$link_to}'><i class='uk-icon-home'></i> กลับหน้าหลัก</a> ";
+            $html .= "<button disabled class='uk-button uk-button-large uk-width-large-2-4 uk-margin-top'><i class='uk-icon-hourglass-o'></i> ...รอหัวหน้างานครูที่ปรึกษายืนยันข้อมูลก่อน...</button>";
         }
+
         return $html;
     }
 
@@ -420,7 +544,7 @@ class Headdepartmentapproving_model extends BaseModel
         return $items;
     }
 
-    public function saveAction($action_status='viewed', $homeroom_id=0, $group_id=0, $advisor_id=0, $advisor_type='headdepartment')
+    public function saveAction($action_status='viewed', $homeroom_id=0, $group_id=0, $advisor_id=0, $advisor_type='headadvisor')
     {
         if ($advisor_id==0) {
             $advisor_id = $this->ci->profile_lib->getUserId();
@@ -444,45 +568,6 @@ class Headdepartmentapproving_model extends BaseModel
         return $this->ci->db->insert('homeroom_actions', $action_item);
     }
 
-    public function approve()
-    {
-        $confirm_data = $this->ci->input->post();
-        $homeroom_id = $this->ci->input->get_post('homeroom_id', 0);
-        $group_id = $this->ci->input->get_post('group_id', 0);
-        $user_id = $this->ci->tank_auth->get_user_id();
-        $user_type = 'headdepartment';
-
-        $confirm_items = array();
-        array_push($confirm_items, array(
-            'homeroom_id' => $homeroom_id,
-            'group_id' => $group_id,
-            'user_id' => $user_id,
-            'user_type' => $user_type,
-            'action_status' => 'confirmed',
-            'created_at' => mdate('%Y-%m-%d %H:%i:%s', time()),
-            'updated_at' => mdate('%Y-%m-%d %H:%i:%s', time()),
-            'status' => 1
-        ));
-        
-        // clear old homeroom data
-        $this->ci->db->delete('homeroom_actions', array('homeroom_id' => $homeroom_id, 'user_id' => $user_id));
-        
-        // insert activity items
-        if (count($confirm_items)) {
-            return $this->ci->db->insert_batch('homeroom_actions', $confirm_items);
-        }
-        return false;
-    }
-
-    public function unapprove()
-    {
-        $homeroom_id = $this->ci->input->get_post('homeroom_id', 0);
-        $group_id = $this->ci->input->get_post('group_id', 0);
-        $user_id = $this->ci->tank_auth->get_user_id();
-        return $this->ci->db->delete('homeroom_actions', array('homeroom_id' => $homeroom_id,'group_id' => $group_id, 'user_id' => $user_id));
-    }
-
-
     public function getGroupByMinorId($minor_id=0)
     {
         $sql = "SELECT * FROM groups WHERE minor_id={$minor_id} AND status=1";
@@ -493,11 +578,10 @@ class Headdepartmentapproving_model extends BaseModel
 
     public function approve_all()
     {
-        $confirm_data = $this->ci->input->post();
         $homeroom_id = $this->ci->input->get_post('homeroom_id', 0);
         $minor_id = $this->ci->input->get_post('minor_id', 0);
         $user_id = $this->ci->profile_lib->getUserId();
-        $user_type = 'headdepartment';
+        $user_type = 'executive';
 
         // get all action items
         $action_all_items = $this->getActionAll($homeroom_id);
@@ -509,14 +593,22 @@ class Headdepartmentapproving_model extends BaseModel
         $group_ids = array();
         foreach ($group_items as $group) {
             //check if this group has saved by advisor or coadvisor already
-            $enable_approve = false;
+            $enable_approve_advisor = false;
             foreach ($action_all_items as $action) {
                 if (($action->user_type=='advisor' || $action->user_type=='coadvisor') && $action->action_status=='confirmed' && $action->group_id==$group->id) {
-                    $enable_approve = true;
+                    $enable_approve_advisor = true;
                 }
             }
-            
-            if ($enable_approve) {
+            //check if this group has confirmed by headdepartment
+            //TODO: bug, it not have reason
+            $enable_approve_headdepartment = false;
+            foreach ($action_all_items as $action) {
+                if ($action->user_type=='headdepartment' && $action->action_status=='confirmed' && $action->group_id==$group->id) {
+                    $enable_approve_headdepartment = true;
+                }
+            }
+
+            if ($enable_approve_advisor) {
                 array_push($group_ids, $group->id);
                 array_push($approve_items, array(
                     'homeroom_id' => $homeroom_id,
@@ -532,17 +624,18 @@ class Headdepartmentapproving_model extends BaseModel
         }
         
         // echo "<pre>";
+        // print_r($action_all_items);
         // print_r($group_ids);
+        // print_r($approve_items);
         // exit();
         
-        // clear old homeroom data
+        //clear old homeroom data
         if (count($group_ids)) {
             $this->ci->db->where('homeroom_id', $homeroom_id);
             $this->ci->db->where('user_id', $user_id);
             $this->ci->db->where_in('group_id', $group_ids);
             $this->ci->db->delete('homeroom_actions');
         }
-
         
         // insert activity items
         if (count($approve_items)) {
@@ -566,6 +659,10 @@ class Headdepartmentapproving_model extends BaseModel
             array_push($group_ids, $group->id);
         }
 
+        // echo "<pre>";
+        // print_r($group_ids);
+        // exit();
+
         // clear old homeroom data
         if (count($group_ids)) {
             $this->ci->db->where('homeroom_id', $homeroom_id);
@@ -573,15 +670,16 @@ class Headdepartmentapproving_model extends BaseModel
             $this->ci->db->where_in('group_id', $group_ids);
             return $this->ci->db->delete('homeroom_actions');
         }
-
+        
         return false;
     }
 
-    public function remove_confirm()
+    public function unapprove()
     {
         $homeroom_id = $this->ci->input->get_post('homeroom_id', 0);
         $group_id = $this->ci->input->get_post('group_id', 0);
-        $advisor_id = $this->ci->input->get_post('advisor_id', 0);
-        return $this->ci->db->delete('homeroom_actions', array('homeroom_id' => $homeroom_id, 'group_id' => $group_id, 'user_id' => $advisor_id));
+        $user_id = $this->ci->profile_lib->getUserId();
+
+        return $this->ci->db->delete('homeroom_actions', array('homeroom_id' => $homeroom_id,'group_id' => $group_id, 'user_id' => $user_id));
     }
 }

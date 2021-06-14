@@ -716,14 +716,19 @@ class Headadvisorapproving_model extends BaseModel
         // exit();
         
         //clear old homeroom data
-        $this->ci->db->where('homeroom_id', $homeroom_id);
-        $this->ci->db->where('user_id', $user_id);
-        $this->ci->db->where_in('group_id', $group_ids);
-        $this->ci->db->delete('homeroom_actions');
-
+        if (count($group_ids)) {
+            $this->ci->db->where('homeroom_id', $homeroom_id);
+            $this->ci->db->where('user_id', $user_id);
+            $this->ci->db->where_in('group_id', $group_ids);
+            $this->ci->db->delete('homeroom_actions');
+        }
         
         // insert activity items
-        return $this->ci->db->insert_batch('homeroom_actions', $approve_items);
+        if (count($approve_items)) {
+            return $this->ci->db->insert_batch('homeroom_actions', $approve_items);
+        }
+
+        return false;
     }
 
     public function unapprove_all()
@@ -745,10 +750,14 @@ class Headadvisorapproving_model extends BaseModel
         // exit();
 
         // clear old homeroom data
-        $this->ci->db->where('homeroom_id', $homeroom_id);
-        $this->ci->db->where('user_id', $user_id);
-        $this->ci->db->where_in('group_id', $group_ids);
-        return $this->ci->db->delete('homeroom_actions');
+        if (count($group_ids)) {
+            $this->ci->db->where('homeroom_id', $homeroom_id);
+            $this->ci->db->where('user_id', $user_id);
+            $this->ci->db->where_in('group_id', $group_ids);
+            return $this->ci->db->delete('homeroom_actions');
+        }
+        
+        return false;
     }
 
     public function unapprove()
