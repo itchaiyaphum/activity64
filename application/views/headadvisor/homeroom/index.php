@@ -14,7 +14,7 @@
 			</div>
 			<hr/>
             <form action="<?php echo base_url('headadvisor/homeroom');?>" method="post" name="adminForm">
-            	<table class="uk-table">
+            	<table class="uk-table uk-table-hover uk-table-responsive uk-table-striped">
             		<tr>
             			<td width="100%">
             				Filter:
@@ -28,7 +28,7 @@
             		</tr>
             	</table>
             
-            	<table class="uk-table" cellpadding="1">
+            	<table class="uk-table uk-table-hover uk-table-responsive uk-table-striped" cellpadding="1">
             		<thead>
             			<tr>
             				<th width="5%" class="title">#</th>
@@ -80,34 +80,69 @@
                             } ?>
             			<tr class="<?php echo "row$k"; ?>">
             				<td>
-            					<?php echo $this->helper_lib->getPaginationIndex($i+1); ?>
+								<div class="uk-grid uk-grid-small">
+									<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">ลำดับที่:</div>
+									<div class="uk-width-small-7-10">
+										<?php echo $this->helper_lib->getPaginationIndex($i+1); ?>
+									</div>
+								</div>
             				</td>
             				<td>
-            					<a href="<?php echo $link_edit; ?>"><?php echo $row->semester_name; ?></a>
+								<div class="uk-grid uk-grid-small">
+									<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">ภาคการเรียน:</div>
+									<div class="uk-width-small-7-10">
+										<a href="<?php echo $link_edit; ?>"><?php echo $row->semester_name; ?></a>
+									</div>
+								</div>
             				</td>
             				<td>
-            					<a href="<?php echo $link_edit; ?>"><?php echo $row->week; ?></a>
+								<div class="uk-grid uk-grid-small">
+									<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">สัปดาห์ที่:</div>
+									<div class="uk-width-small-7-10">
+										<a href="<?php echo $link_edit; ?>"><?php echo $row->week; ?></a>
+									</div>
+								</div>
             				</td>
             				<td>
-            					<a href="<?php echo $link_edit; ?>"><?php echo date_format(date_create($row->join_start), 'Y-m-d'); ?></a>
+								<div class="uk-grid uk-grid-small">
+									<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">วันที่เริ่มต้น:</div>
+									<div class="uk-width-small-7-10">
+										<a href="<?php echo $link_edit; ?>"><?php echo date_format(date_create($row->join_start), 'Y-m-d'); ?></a>
+									</div>
+								</div>
             				</td>
             				<td>
-            					<a href="<?php echo $link_edit; ?>"><?php echo date_format(date_create($row->join_end), 'Y-m-d'); ?></a>
+								<div class="uk-grid uk-grid-small">
+									<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">วันที่สิ้นสุด:</div>
+									<div class="uk-width-small-7-10">
+										<a href="<?php echo $link_edit; ?>"><?php echo date_format(date_create($row->join_end), 'Y-m-d'); ?></a>
+									</div>
+								</div>
             				</td>
             				<td>
-            					<a href="<?php echo $status_link; ?>"><?php echo $this->helper_lib->getStatusIcon($row->status); ?></a>
+								<div class="uk-grid uk-grid-small">
+									<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">สถานะ:</div>
+									<div class="uk-width-small-7-10">
+										<a href="<?php echo $status_link; ?>"><?php echo $this->helper_lib->getStatusIcon($row->status); ?></a>
+									</div>
+								</div>
             				</td>
             				<td>
-            					<a href="<?php echo $link_edit; ?>" class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-pencil"></i></a>
-            					<?php
-                                if ($this->helper_lib->getFilterStatus('homeroom_filter_status')=='trash') {
-                                    ?>
-            					<a href="<?php echo $link_restore; ?>" class="uk-button uk-button-primary uk-button-mini"><i class="uk-icon-reply"></i></a>
-            					<a href="<?php echo $link_delete; ?>" class="uk-button uk-button-danger uk-button-mini"><i class="uk-icon-remove"></i></a>
-            					<?php
-                                } else {?>
-            					<a href="<?php echo $link_trash;?>" class="uk-button uk-button-primary uk-button-mini"><i class="uk-icon-trash"></i></a>
-            					<?php } ?>
+								<div class="uk-grid uk-grid-small">
+									<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold"></div>
+									<div class="uk-width-small-7-10">
+										<a href="<?php echo $link_edit; ?>" class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-pencil"></i></a>
+										<?php
+                                        if ($this->helper_lib->getFilterStatus('homeroom_filter_status')=='trash') {
+                                            ?>
+										<a href="<?php echo $link_restore; ?>" class="uk-button uk-button-primary uk-button-mini"><i class="uk-icon-reply"></i></a>
+										<a href="<?php echo $link_delete; ?>" class="uk-button uk-button-danger uk-button-mini"><i class="uk-icon-remove"></i></a>
+										<?php
+                                        } else {?>
+										<a href="<?php echo $link_trash;?>" class="uk-button uk-button-primary uk-button-mini"><i class="uk-icon-trash"></i></a>
+										<?php } ?>
+									</div>
+								</div>
             				</td>
             			</tr>
             		<?php

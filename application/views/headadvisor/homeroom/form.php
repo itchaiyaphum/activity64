@@ -19,7 +19,7 @@
     			<div class="uk-form-row">
                     <label class="uk-form-label" for="form-h-it">ภาคการเรียน</label>
                     <div class="uk-form-controls">
-                        <select name="semester_id"  class="uk-width-1-2">
+                        <select name="semester_id"  class="uk-width-small-1-1">
                         	<option value="0">- เลือกภาคการเรียน -</option>
                         	<?php
                             for ($i=0; $i<count($semester_items); $i++) {
@@ -33,25 +33,25 @@
             	<div class="uk-form-row">
                     <label class="uk-form-label" for="form-h-it">สัปดาห์ที่</label>
                     <div class="uk-form-controls">
-                        <input type="text" id="form-h-it" name="week" value="<?php echo $item->week;?>">
+                        <input type="text" class="uk-width-small-1-1" name="week" value="<?php echo $item->week;?>">
                     </div>
                 </div>
             	<div class="uk-form-row">
                     <label class="uk-form-label" for="form-h-it">วันที่เริ่มต้นทำกิจกรรมโฮมรูม</label>
                     <div class="uk-form-controls">
-                        <input type="date" id="form-h-it" name="join_start" value="<?php echo date_format(date_create($item->join_start), 'Y-m-d');?>">
+                        <input type="date" class="uk-width-small-1-1" name="join_start" value="<?php echo date_format(date_create($item->join_start), 'Y-m-d');?>">
                     </div>
                 </div>
             	<div class="uk-form-row">
                     <label class="uk-form-label" for="form-h-it">วันที่สิ้นสุดทำกิจกรรมโฮมรูม</label>
                     <div class="uk-form-controls">
-                        <input type="date" id="form-h-it" name="join_end" value="<?php echo date_format(date_create($item->join_end), 'Y-m-d');?>">
+                        <input type="date" class="uk-width-small-1-1" name="join_end" value="<?php echo date_format(date_create($item->join_end), 'Y-m-d');?>">
                     </div>
                 </div>
                 <div class="uk-form-row">
                     <label class="uk-form-label" for="form-h-it">หมายเหตุ (optional)</label>
                     <div class="uk-form-controls">
-                        <textarea id="w3review" name="remark" rows="3" cols="40"><?php echo $item->remark;?></textarea>
+                        <textarea id="w3review" name="remark" rows="3" cols="40" class="uk-width-small-1-1"><?php echo $item->remark;?></textarea>
                     </div>
                 </div>
                 
