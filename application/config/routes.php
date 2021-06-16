@@ -102,6 +102,13 @@ $route['headdepartment_restricted_access']	= "home/headdepartment_restricted_acc
 $route['headadvisor']	= "headadvisor/home";
 $route['headadvisor/users']	= "headadvisor/userscontroller";
 $route['headadvisor/users/edit']	= "headadvisor/userscontroller/edit";
+
+$route['headadvisor/users/publish']	= "headadvisor/userscontroller/publish";
+$route['headadvisor/users/unpublish']	= "headadvisor/userscontroller/unpublish";
+$route['headadvisor/users/trash']	= "headadvisor/userscontroller/trash";
+$route['headadvisor/users/delete']	= "headadvisor/userscontroller/delete";
+$route['headadvisor/users/restore']	= "headadvisor/userscontroller/restore";
+
 $route['headadvisor_restricted_access']	= "home/headadvisor_restricted_access";
 
 $route['executive']	= "executive/home";

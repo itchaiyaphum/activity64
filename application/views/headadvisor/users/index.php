@@ -14,7 +14,7 @@
 			</div>
 			<hr/>
             <form action="<?php echo base_url('headadvisor/users');?>" method="post" name="adminForm">
-            	<table class="uk-table">
+            	<table class="uk-table uk-table-hover uk-table-responsive uk-table-striped">
             		<tr>
             			<td width="100%">
             				Filter:
@@ -33,7 +33,7 @@
             		</tr>
             	</table>
 
-            	<table class="uk-table" cellpadding="1">
+            	<table class="uk-table uk-table-hover uk-table-responsive uk-table-striped" cellpadding="1">
             		<thead>
             			<tr>
             				<th width="5%" class="title">#</th>
@@ -82,31 +82,61 @@
                             } ?>
             			<tr class="<?php echo "row$k"; ?>">
             				<td>
-            					<?php echo $this->helper_lib->getPaginationIndex($i+1); ?>
+								<div class="uk-grid uk-grid-small">
+									<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">ลำดับที่:</div>
+									<div class="uk-width-small-7-10">
+										<?php echo $this->helper_lib->getPaginationIndex($i+1); ?>
+									</div>
+								</div>
             				</td>
             				<td>
-            					<a href="<?php echo $link_edit; ?>"><?php echo $row->firstname.' '.$row->lastname; ?></a>
+								<div class="uk-grid uk-grid-small">
+									<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">ชื่อ-นามสกุล:</div>
+									<div class="uk-width-small-7-10">
+										<a href="<?php echo $link_edit; ?>"><?php echo $row->firstname.' '.$row->lastname; ?></a>
+									</div>
+								</div>
             				</td>
             				<td>
-            					<a href="<?php echo $link_edit; ?>"><?php echo $row->email; ?></a>
+								<div class="uk-grid uk-grid-small">
+									<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">อีเมล์:</div>
+									<div class="uk-width-small-7-10">
+										<a href="<?php echo $link_edit; ?>"><?php echo $row->email; ?></a>
+									</div>
+								</div>
             				</td>
             				<td>
-            					<?php echo $row->user_type; ?>
+								<div class="uk-grid uk-grid-small">
+									<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">ประเภทผู้ใช้:</div>
+									<div class="uk-width-small-7-10">
+										<?php echo $row->user_type; ?>
+									</div>
+								</div>
             				</td>
             				<td>
-            					<a href="<?php echo $status_link; ?>"><?php echo $this->helper_lib->getStatusIcon($row->activated); ?></a>
+								<div class="uk-grid uk-grid-small">
+									<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">สถานะ:</div>
+									<div class="uk-width-small-7-10">
+										<a href="<?php echo $status_link; ?>"><?php echo $this->helper_lib->getStatusIcon($row->activated); ?></a>
+									</div>
+								</div>
             				</td>
             				<td>
-            					<a href="<?php echo $link_edit; ?>" class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-pencil"></i></a>
-            					<?php
-                                if ($this->helper_lib->getFilterStatus('users_filter_status')=='trash') {
-                                    ?>
-            					<a href="<?php echo $link_restore; ?>" class="uk-button uk-button-primary uk-button-mini"><i class="uk-icon-reply"></i></a>
-            					<a href="<?php echo $link_delete; ?>" class="uk-button uk-button-danger uk-button-mini"><i class="uk-icon-remove"></i></a>
-            					<?php
-                                } else {?>
-            					<a href="<?php echo $link_trash;?>" class="uk-button uk-button-primary uk-button-mini"><i class="uk-icon-trash"></i></a>
-            					<?php } ?>
+								<div class="uk-grid uk-grid-small">
+									<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold"></div>
+									<div class="uk-width-small-7-10">
+										<a href="<?php echo $link_edit; ?>" class="uk-button uk-button-success uk-button-mini"><i class="uk-icon-pencil"></i></a>
+										<?php
+                                        if ($this->helper_lib->getFilterStatus('users_filter_status')=='trash') {
+                                            ?>
+										<a href="<?php echo $link_restore; ?>" class="uk-button uk-button-primary uk-button-mini"><i class="uk-icon-reply"></i></a>
+										<a href="<?php echo $link_delete; ?>" class="uk-button uk-button-danger uk-button-mini"><i class="uk-icon-remove"></i></a>
+										<?php
+                                        } else {?>
+										<a href="<?php echo $link_trash;?>" class="uk-button uk-button-primary uk-button-mini"><i class="uk-icon-trash"></i></a>
+										<?php } ?>
+									</div>
+								</div>
             				</td>
             			</tr>
             		<?php

@@ -24,7 +24,7 @@ $attributes = array('class' => 'uk-form uk-form-horizontal', 'name' => 'adminFor
             	<div class="uk-form-row">
                     <label class="uk-form-label" for="form-h-it">ชื่อ</label>
                     <div class="uk-form-controls">
-                        <input type="text" id="form-h-it" name="firstname" value="<?php echo $item->firstname;?>" class="uk-width-1-2">
+                        <input type="text" class='uk-width-small-1-1' name="firstname" value="<?php echo $item->firstname;?>" class="uk-width-1-2">
                     	<div>
                         <?php echo form_error('firstname'); ?>
                 		<?php echo isset($errors['firstname'])?$errors['firstname']:''; ?>
@@ -34,17 +34,27 @@ $attributes = array('class' => 'uk-form uk-form-horizontal', 'name' => 'adminFor
             	<div class="uk-form-row">
                     <label class="uk-form-label" for="form-h-it">นามสกุล</label>
                     <div class="uk-form-controls">
-                        <input type="text" id="form-h-it" name="lastname" value="<?php echo $item->lastname;?>" class="uk-width-1-2">
+                        <input type="text" class='uk-width-small-1-1' name="lastname" value="<?php echo $item->lastname;?>" class="uk-width-1-2">
                     	<div>
                         <?php echo form_error('lastname'); ?>
                 		<?php echo isset($errors['lastname'])?$errors['lastname']:''; ?>
                 		</div>
                     </div>
                 </div>
+				<div class="uk-form-row">
+                    <label class="uk-form-label" for="form-h-it">อีเมล์</label>
+                    <div class="uk-form-controls">
+                        <input type="text" class='uk-width-small-1-1' name="email" value="<?php echo $item->email;?>" class="uk-width-1-2">
+                        <div>
+                        <?php echo form_error('email'); ?>
+                		<?php echo isset($errors['email'])?$errors['email']:''; ?>
+                		</div>
+                    </div>
+                </div>
             	<div class="uk-form-row">
                     <label class="uk-form-label" for="form-h-it">ประเภทผู้ใช้</label>
                     <div class="uk-form-controls">
-                    	<select name="user_type" class="uk-width-1-2">
+                    	<select name="user_type" class="uk-width-small-1-1">
                         	<option value="advisor" <?php echo ($item->user_type=='advisor')?'selected="selected"':'';?>>อาจารย์ที่ปรึกษา (Advisor)</option>
                         	<option value="headdepartment" <?php echo ($item->user_type=='headdepartment')?'selected="selected"':'';?>>หัวหน้าแผนกฯ (Head of Department)</option>
                         </select>
@@ -57,7 +67,7 @@ $attributes = array('class' => 'uk-form uk-form-horizontal', 'name' => 'adminFor
 				<div class="uk-form-row">
 					<label class="uk-form-label" >สถานศึกษา</label>
 					<div class="uk-form-controls">
-						<select name="college_id" id="college_id">
+						<select name="college_id" id="college_id" class="uk-width-small-1-1">
 						<option value="0">--- เลือกสถานศึกษา ---</option>
 						<?php
                         for ($i=0; $i<count($college_items); $i++) {
@@ -72,7 +82,7 @@ $attributes = array('class' => 'uk-form uk-form-horizontal', 'name' => 'adminFor
 				<div class="uk-form-row">
 					<label class="uk-form-label" >แผนกวิชา</label>
 					<div class="uk-form-controls">
-						<select name="major_id" id="major_id">
+						<select name="major_id" id="major_id" class="uk-width-small-1-1">
 						<option value="0">--- เลือกแผนกวิชา ---</option>
 						<?php
                         for ($i=0; $i<count($college_items); $i++) {
@@ -93,16 +103,7 @@ $attributes = array('class' => 'uk-form uk-form-horizontal', 'name' => 'adminFor
 						</select>
 					</div>
 				</div>
-            	<div class="uk-form-row">
-                    <label class="uk-form-label" for="form-h-it">อีเมล์</label>
-                    <div class="uk-form-controls">
-                        <input type="text" id="form-h-it" name="email" value="<?php echo $item->email;?>" class="uk-width-1-2">
-                        <div>
-                        <?php echo form_error('email'); ?>
-                		<?php echo isset($errors['email'])?$errors['email']:''; ?>
-                		</div>
-                    </div>
-                </div>
+            	
             	<input type="hidden" name="id" value="<?php echo $item->id;?>" />
             <?php echo form_close(); ?>
 		</div>
