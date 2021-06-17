@@ -357,7 +357,7 @@ class Importdata_model extends BaseModel
         // select all data on table: users_student
         $sql = "SELECT * FROM users_student";
         $query = $this->ci->db->query($sql);
-        $advisor_items = $query->result();
+        $student_items = $query->result();
 
         // select all data on table: users
         $sql = "SELECT * FROM users";
@@ -366,18 +366,18 @@ class Importdata_model extends BaseModel
 
         // prepare data
         $prepare_data = array();
-        foreach ($advisor_items as $advisor) {
+        foreach ($student_items as $student) {
             $is_email_exists = false;
             foreach ($users_items as $user) {
-                if ($user->email==$advisor->email) {
+                if ($user->email==$student->email) {
                     $is_email_exists = true;
                 }
             }
             if (!$is_email_exists) {
                 array_push($prepare_data, array(
-                    'firstname' => $advisor->firstname,
-                    'lastname' => $advisor->lastname,
-                    'email' => $advisor->email,
+                    'firstname' => $student->firstname,
+                    'lastname' => $student->lastname,
+                    'email' => $student->email,
                     'user_type' => 'student',
                     'created' => mdate('%Y-%m-%d %H:%i:%s', time()),
                     'modified' => mdate('%Y-%m-%d %H:%i:%s', time()),
@@ -392,11 +392,50 @@ class Importdata_model extends BaseModel
         // print_r($prepare_data);
         // exit();
 
+        //sync user_id from id on table: users
+        $this->syncUserIdToUsersStudent();
+
         // insert_batch data on table: users
         $result = false;
         if (count($prepare_data)) {
             $result = $this->ci->db->insert_batch('users', $prepare_data);
         }
         return $result;
+    }
+
+    //sync user_id from id on table: users
+    private function syncUserIdToUsersStudent()
+    {
+        // select all data on table: users_student
+        $sql = "SELECT * FROM users_student";
+        $query = $this->ci->db->query($sql);
+        $student_items = $query->result();
+
+        // select all data on table: users
+        $sql = "SELECT * FROM users";
+        $query = $this->ci->db->query($sql);
+        $users_items = $query->result();
+
+        // prepare data
+        $prepare_data = array();
+        foreach ($users_items as $user) {
+            foreach ($student_items as $student) {
+                if ($user->email==$student->email) {
+                    array_push($prepare_data, array(
+                        'id' => $student->id,
+                        'user_id' => $user->id
+                    ));
+                }
+            }
+        }
+
+        // echo "<pre>";
+        // print_r($prepare_data);
+        // exit();
+
+        //update data on table: users_student
+        if (count($prepare_data)) {
+            $this->ci->db->update_batch('users_student', $prepare_data, 'id');
+        }
     }
 }
