@@ -1,11 +1,11 @@
 <?php
 
-if (! defined('BASEPATH'))
+if (! defined('BASEPATH')) {
     exit('No direct script access allowed');
+}
 
 class BaseModel
 {
-
     public $ci = null;
     public $table = null;
 
@@ -56,7 +56,7 @@ class BaseModel
     public function renderQueryWhere($wheres = array(), $options = array())
     {
         // render : wheres
-        if(!isset($options['where_type'])){
+        if (!isset($options['where_type'])) {
             $options['where_type'] = 'AND';
         }
         $sql_wheres = (count($wheres) >= 2) ? implode(" {$options['where_type']} ", $wheres) : implode(' ', $wheres);
@@ -69,9 +69,9 @@ class BaseModel
     public function getQueryStatus($options)
     {
         $filter_status = '';
-        if(!isset($options['filter_status'])){
+        if (!isset($options['filter_status'])) {
             $filter_status = $this->ci->input->get_post('filter_status');
-        }else{
+        } else {
             $filter_status = $options['filter_status'];
         }
         $filter_status_value = '0,1';
@@ -104,7 +104,13 @@ class BaseModel
     public function getQueryLimit($options)
     {
         $filter_page = $this->ci->input->get_post('per_page');
+        if (isset($options['per_page'])) {
+            $filter_page = $options['per_page'];
+        }
         $filter_limit = 10;
+        if (isset($options['limit'])) {
+            $filter_limit = $options['limit'];
+        }
         $sql_wheres = "";
         $limit = "";
         if (! empty($filter_limit) && $filter_limit != "all") {

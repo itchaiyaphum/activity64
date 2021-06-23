@@ -20,7 +20,7 @@ class Userstudent extends BaseController
         $data = array();
         $data['leftmenu'] = $this->load->view('admin/menu', '', true);
         $data['pagination'] = $this->userstudent_model->getPagination();
-        $data['items'] = $this->userstudent_model->getItems();
+        $data['items'] = $this->userstudent_model->getItems(array('limit'=>50));
 
         $data['major_items'] = $this->major_model->getItems(array('status'=>'publish', 'no_limit' => true));
         $data['minor_items'] = $this->minor_model->getItems(array('status'=>'publish', 'no_limit' => true));

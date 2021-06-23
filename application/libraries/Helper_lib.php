@@ -58,12 +58,13 @@ class Helper_lib
         return $html;
     }
     
-    public function getPaginationIndex($i=0)
+    public function getPaginationIndex($i=0, $limit=10)
     {
         $page = $this->ci->input->get_post('per_page', 1);
-        $limit = 10;
-        if ($page>=2) {
-            $i = ($limit * $page) + $i;
+        if ($page==2) {
+            return $limit+$i;
+        } elseif ($page>=3) {
+            return ($page-1)*$limit+$i;
         }
         return $i;
     }
