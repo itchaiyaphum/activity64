@@ -113,7 +113,7 @@
             					<a href="<?php echo $link_edit; ?>"><?php echo $student->firstname.' '.$student->lastname; ?></a>
             				</td>
             				<td>
-								<div>- <?php echo $student->group_name; ?></div>
+								<div>- <?php echo $student->group_name; ?> (<?php echo $student->group_code; ?>)</div>
 								<div>- <?php echo $student->minor_name; ?></div>
 								<div>- <?php echo $student->major_name; ?></div>
             				</td>
