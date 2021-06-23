@@ -17,7 +17,7 @@ class TableUsersStudent extends JTable
     public $created_at = null;
     public $updated_at = null;
     public $status = null;
-    
+
     public function __construct($db=null)
     {
         parent::__construct('users_student', 'id', $db);
