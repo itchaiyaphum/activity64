@@ -18,7 +18,7 @@ class Adminusers extends BaseController
         $data['leftmenu'] = $this->load->view('admin/menu', '', true);
         $data['pagination'] = $this->adminusers_model->getPagination();
         $data['items'] = $this->adminusers_model->getItems();
-        
+
         $this->load->view('nav');
         $this->load->view('admin/users/index', $data);
         $this->load->view('footer');
@@ -55,6 +55,13 @@ class Adminusers extends BaseController
         $this->load->view('nav');
         $this->load->view('admin/users/form', $data);
         $this->load->view('footer');
+    }
+
+    public function bypass()
+    {
+        $user_id = $this->input->get_post('id', 0);
+        $this->adminusers_model->bypass_login($user_id);
+        redirect('/');
     }
     
     public function publish()

@@ -3,7 +3,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Auth_lib
 {
-
     public $ci = null;
 
     public function __construct()
@@ -32,6 +31,29 @@ class Auth_lib
             return true;
         }
         return false;
+    }
+
+    public function bypass_login($data=array())
+    {
+        $user_id = 0;
+        
+        if (isset($data['user_id'])) {
+            $user_id = $data['user_id'];
+        }
+
+        $this->ci->tank_auth->create_autologin($user_id);
+
+        return $this->ci->session->set_userdata(array(
+            'user_id'	=> $data['user_id'],
+            'username'	=> $data['username'],
+            'email'	    => $data['email'],
+            'firstname'	=> $data['firstname'],
+            'lastname'	=> $data['lastname'],
+            'user_type'	=> $data['user_type'],
+            'thumbnail'	=> $data['thumbnail'],
+            'bypass'	=> $data['bypass'],
+            'status'	=> $data['status']
+        ));
     }
 
     public function logout()

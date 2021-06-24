@@ -64,6 +64,7 @@ $route['admin/users/publish']	= "admin/adminusers/publish";
 $route['admin/users/unpublish']	= "admin/adminusers/unpublish";
 $route['admin/users/trash']	= "admin/adminusers/trash";
 $route['admin/users/delete']	= "admin/adminusers/delete";
+$route['admin/users/bypass']	= "admin/adminusers/bypass";
 $route['admin/users/restore']	= "admin/adminusers/restore";
 $route['admin_restricted_access']	= "home/admin_restricted_access";
 $route['profile']	= "profile/index";
