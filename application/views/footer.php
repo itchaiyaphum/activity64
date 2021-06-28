@@ -13,7 +13,7 @@
                 	</div>
                 	<br/><br/>
                 </footer>
-                <?php if($this->tank_auth->is_logged_in()){ ?>
+                <?php if ($this->tank_auth->is_logged_in()) { ?>
                 <!-- 
                 <div class="uk-margin-large-top uk-text-center"><a href="<?php echo base_url('admin');?>">จัดการข้อมูลหลังบ้าน</a></div>
                  -->
