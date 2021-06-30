@@ -465,7 +465,7 @@ class Headdepartmentapproving_model extends BaseModel
         ));
         
         // clear old homeroom data
-        $this->ci->db->delete('homeroom_actions', array('homeroom_id' => $homeroom_id, 'user_id' => $user_id));
+        $this->ci->db->delete('homeroom_actions', array('homeroom_id' => $homeroom_id, 'group_id' => $group_id, 'user_id' => $user_id));
         
         // insert activity items
         if (count($confirm_items)) {
