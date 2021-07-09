@@ -60,8 +60,11 @@ class BaseModel
             $options['where_type'] = 'AND';
         }
         $sql_wheres = (count($wheres) >= 2) ? implode(" {$options['where_type']} ", $wheres) : implode(' ', $wheres);
+        // render : orderby
+        $filter_orderby_value = $this->getQueryOrderBy($options);
         // render : limit
         $filter_limit_value = $this->getQueryLimit($options);
+        $sql_wheres .= $filter_orderby_value;
         $sql_wheres .= $filter_limit_value;
         return $sql_wheres;
     }
@@ -99,6 +102,19 @@ class BaseModel
             }
         }
         return $filter_status_value;
+    }
+
+    public function getQueryOrderBy($options)
+    {
+        $filter_orderby = '';
+        if (isset($options['orderby'])) {
+            $filter_orderby = $options['orderby'];
+        }
+        $sql_wheres = "";
+        if (! empty($filter_orderby)) {
+            $sql_wheres = " ORDER BY {$filter_orderby} ";
+        }
+        return $sql_wheres;
     }
 
     public function getQueryLimit($options)

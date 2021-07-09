@@ -24,7 +24,8 @@ class Base_homeroom_model extends BaseModel
         $this->ci->load->model('admin/homeroom_model', 'admin_homeroom_model');
         $homeroom_items = $this->ci->admin_homeroom_model->getItems(array(
             'status' => 1,
-            'no_limit' => true
+            'no_limit' => true,
+            'orderby' => 'homerooms.week DESC'
         ));
 
         //get all groups items
