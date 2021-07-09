@@ -18,7 +18,7 @@ class Homeroom extends BaseController
         $data = array();
         $data['leftmenu'] = $this->load->view('headadvisor/menu', '', true);
         $data['pagination'] = $this->homeroom_model->getPagination();
-        $data['items'] = $this->homeroom_model->getItems();
+        $data['items'] = $this->homeroom_model->getItems(array('limit'=>50));
         
         $this->load->view('nav');
         $this->load->view('headadvisor/homeroom/index', $data);

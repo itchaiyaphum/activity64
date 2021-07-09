@@ -20,7 +20,7 @@ class Group extends BaseController
         $data = array();
         $data['leftmenu'] = $this->load->view('admin/menu', '', true);
         $data['pagination'] = $this->group_model->getPagination();
-        $data['items'] = $this->group_model->getItems();
+        $data['items'] = $this->group_model->getItems(array('limit'=>50));
         
         $this->load->view('nav');
         $this->load->view('admin/group/index', $data);

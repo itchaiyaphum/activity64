@@ -17,7 +17,7 @@ class Adminusers extends BaseController
         $data = array();
         $data['leftmenu'] = $this->load->view('admin/menu', '', true);
         $data['pagination'] = $this->adminusers_model->getPagination();
-        $data['items'] = $this->adminusers_model->getItems();
+        $data['items'] = $this->adminusers_model->getItems(array('limit'=>50));
 
         $this->load->view('nav');
         $this->load->view('admin/users/index', $data);

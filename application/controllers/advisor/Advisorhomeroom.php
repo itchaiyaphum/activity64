@@ -23,7 +23,7 @@ class Advisorhomeroom extends BaseController
     {
         $data = array();
         $data['leftmenu'] = $this->load->view('advisor/menu', '', true);
-        $data['homeroom_items'] = $this->base_homeroom_model->getItems();
+        $data['homeroom_items'] = $this->base_homeroom_model->getItems(array('limit'=>50));
 
         $this->load->view('nav');
         $this->load->view('advisor/homeroom/index', $data);

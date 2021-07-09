@@ -18,7 +18,7 @@ class Major extends BaseController
         $data = array();
         $data['leftmenu'] = $this->load->view('admin/menu', '', true);
         $data['pagination'] = $this->major_model->getPagination();
-        $data['items'] = $this->major_model->getItems();
+        $data['items'] = $this->major_model->getItems(array('limit'=>50));
         
         $this->load->view('nav');
         $this->load->view('admin/major/index', $data);

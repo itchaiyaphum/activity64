@@ -20,7 +20,7 @@ class Group_model extends BaseModel
             'total_rows' => count($this->getItems(array(
                 'no_limit' => true
             ))),
-            'per_page' => 10
+            'per_page' => 50
         ));
     }
 
@@ -54,7 +54,7 @@ class Group_model extends BaseModel
         // filter: search
         if ($filter_search != "") {
             $filter_search_value = $filter_search;
-            $wheres[] = "groups.group_name LIKE '%{$filter_search_value}%'";
+            $wheres[] = "groups.group_name LIKE '%{$filter_search_value}%' OR groups.group_code LIKE '%{$filter_search_value}%'";
         }
         
         // render query

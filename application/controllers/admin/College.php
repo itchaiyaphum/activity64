@@ -4,7 +4,6 @@ require_once APPPATH . 'controllers' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY
 
 class College extends BaseController
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -18,7 +17,7 @@ class College extends BaseController
         $data = array();
         $data['leftmenu'] = $this->load->view('admin/menu', '', true);
         $data['pagination'] = $this->college_model->getPagination();
-        $data['items'] = $this->college_model->getItems();
+        $data['items'] = $this->college_model->getItems(array('limit'=>50));
         
         $this->load->view('nav');
         $this->load->view('admin/college/index', $data);
@@ -35,7 +34,7 @@ class College extends BaseController
             }
         }
             
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         
         $data = array();
         $data['leftmenu'] = $this->load->view('admin/menu', '', true);
@@ -49,37 +48,37 @@ class College extends BaseController
     
     public function publish()
     {
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         $this->college_model->publish($id);
-        $per_page = $this->input->get_post('per_page',1);
+        $per_page = $this->input->get_post('per_page', 1);
         redirect('admin/college/?per_page='.$per_page);
     }
     public function unpublish()
     {
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         $this->college_model->unpublish($id);
-        $per_page = $this->input->get_post('per_page',1);
+        $per_page = $this->input->get_post('per_page', 1);
         redirect('admin/college/?per_page='.$per_page);
     }
     public function trash()
     {
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         $this->college_model->trash($id);
-        $per_page = $this->input->get_post('per_page',1);
+        $per_page = $this->input->get_post('per_page', 1);
         redirect('admin/college/?per_page='.$per_page);
     }
     public function delete()
     {
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         $this->college_model->delete($id);
-        $per_page = $this->input->get_post('per_page',1);
+        $per_page = $this->input->get_post('per_page', 1);
         redirect('admin/college/?per_page='.$per_page);
     }
     public function restore()
     {
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         $this->college_model->restore($id);
-        $per_page = $this->input->get_post('per_page',1);
+        $per_page = $this->input->get_post('per_page', 1);
         redirect('admin/college/?per_page='.$per_page);
     }
 }

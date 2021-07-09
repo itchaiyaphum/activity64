@@ -1,11 +1,11 @@
 <?php
-if (! defined('BASEPATH'))
+if (! defined('BASEPATH')) {
     exit('No direct script access allowed');
+}
 
 class Province_model extends BaseModel
 {
-
-    public $table = NULL;
+    public $table = null;
 
     public function __construct()
     {
@@ -20,7 +20,7 @@ class Province_model extends BaseModel
             'total_rows' => count($this->getItems(array(
                 'no_limit' => true
             ))),
-            'per_page' => 10
+            'per_page' => 50
         ));
     }
 
@@ -54,5 +54,4 @@ class Province_model extends BaseModel
         // render query
         return $this->renderQueryWhere($wheres, $options);
     }
-
 }

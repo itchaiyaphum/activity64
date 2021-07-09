@@ -4,7 +4,6 @@ require_once APPPATH . 'controllers' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY
 
 class Homeroom extends BaseController
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -19,7 +18,7 @@ class Homeroom extends BaseController
         $data = array();
         $data['leftmenu'] = $this->load->view('admin/menu', '', true);
         $data['pagination'] = $this->homeroom_model->getPagination();
-        $data['items'] = $this->homeroom_model->getItems();
+        $data['items'] = $this->homeroom_model->getItems(array('limit'=>50));
         
         $this->load->view('nav');
         $this->load->view('admin/homeroom/index', $data);
@@ -38,7 +37,7 @@ class Homeroom extends BaseController
             }
         }
             
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         
         $data = array();
         $data['leftmenu'] = $this->load->view('admin/menu', '', true);
@@ -53,37 +52,37 @@ class Homeroom extends BaseController
     
     public function publish()
     {
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         $this->homeroom_model->publish($id);
-        $per_page = $this->input->get_post('per_page',1);
+        $per_page = $this->input->get_post('per_page', 1);
         redirect('admin/homeroom/?per_page='.$per_page);
     }
     public function unpublish()
     {
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         $this->homeroom_model->unpublish($id);
-        $per_page = $this->input->get_post('per_page',1);
+        $per_page = $this->input->get_post('per_page', 1);
         redirect('admin/homeroom/?per_page='.$per_page);
     }
     public function trash()
     {
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         $this->homeroom_model->trash($id);
-        $per_page = $this->input->get_post('per_page',1);
+        $per_page = $this->input->get_post('per_page', 1);
         redirect('admin/homeroom/?per_page='.$per_page);
     }
     public function delete()
     {
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         $this->homeroom_model->delete($id);
-        $per_page = $this->input->get_post('per_page',1);
+        $per_page = $this->input->get_post('per_page', 1);
         redirect('admin/homeroom/?per_page='.$per_page);
     }
     public function restore()
     {
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         $this->homeroom_model->restore($id);
-        $per_page = $this->input->get_post('per_page',1);
+        $per_page = $this->input->get_post('per_page', 1);
         redirect('admin/homeroom/?per_page='.$per_page);
     }
 }

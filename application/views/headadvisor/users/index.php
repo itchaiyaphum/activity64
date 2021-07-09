@@ -85,7 +85,7 @@
 								<div class="uk-grid uk-grid-small">
 									<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">ลำดับที่:</div>
 									<div class="uk-width-small-7-10">
-										<?php echo $this->helper_lib->getPaginationIndex($i+1); ?>
+										<?php echo $this->helper_lib->getPaginationIndex($i+1, 50); ?>
 									</div>
 								</div>
             				</td>

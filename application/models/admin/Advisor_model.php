@@ -21,7 +21,7 @@ class Advisor_model extends BaseModel
             'total_rows' => count($this->getItems(array(
                 'no_limit' => true
             ))),
-            'per_page' => 10
+            'per_page' => 50
         ));
     }
 

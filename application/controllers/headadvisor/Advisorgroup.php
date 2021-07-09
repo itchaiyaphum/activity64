@@ -22,7 +22,7 @@ class Advisorgroup extends BaseController
         $data = array();
         $data['leftmenu'] = $this->load->view('headadvisor/menu', '', true);
         $data['pagination'] = $this->advisorgroup_model->getPagination();
-        $data['items'] = $this->advisorgroup_model->getItems();
+        $data['items'] = $this->advisorgroup_model->getItems(array('limit'=>50));
         $data['major_items'] = $this->major_model->getItems(array('status'=>'publish', 'no_limit' => true));
         $data['minor_items'] = $this->minor_model->getItems(array('status'=>'publish', 'no_limit' => true));
         $data['group_items'] = $this->group_model->getItems(array('status'=>'publish', 'no_limit' => true));

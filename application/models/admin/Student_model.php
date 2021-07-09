@@ -68,7 +68,7 @@ class Student_model extends BaseModel
         return $items;
     }
 
-    public function getItems()
+    public function getItems($options=array())
     {
         $sql = "SELECT
                     users_student.id, users_student.student_id, users_student.firstname, users_student.lastname, users_student.group_id,

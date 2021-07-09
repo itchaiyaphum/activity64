@@ -19,7 +19,7 @@ class Userscontroller extends BaseController
         $data = array();
         $data['leftmenu'] = $this->load->view('headadvisor/menu', '', true);
         $data['pagination'] = $this->headadvisorusers_model->getPagination();
-        $data['items'] = $this->headadvisorusers_model->getItems();
+        $data['items'] = $this->headadvisorusers_model->getItems(array('limit'=>50));
         $data['college_items'] = $this->college_model->getItems(array('status'=>1));
         
         $this->load->view('nav');

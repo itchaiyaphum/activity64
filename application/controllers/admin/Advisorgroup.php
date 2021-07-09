@@ -4,7 +4,6 @@ require_once APPPATH . 'controllers' . DIRECTORY_SEPARATOR . 'admin' . DIRECTORY
 
 class Advisorgroup extends BaseController
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -23,7 +22,7 @@ class Advisorgroup extends BaseController
         $data = array();
         $data['leftmenu'] = $this->load->view('admin/menu', '', true);
         $data['pagination'] = $this->advisorgroup_model->getPagination();
-        $data['items'] = $this->advisorgroup_model->getItems();
+        $data['items'] = $this->advisorgroup_model->getItems(array('limit'=>50));
         $data['major_items'] = $this->major_model->getItems(array('status'=>'publish', 'no_limit' => true));
         $data['minor_items'] = $this->minor_model->getItems(array('status'=>'publish', 'no_limit' => true));
         $data['group_items'] = $this->group_model->getItems(array('status'=>'publish', 'no_limit' => true));
@@ -45,7 +44,7 @@ class Advisorgroup extends BaseController
             }
         }
             
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         
         $data = array();
         $data['leftmenu'] = $this->load->view('admin/menu', '', true);
@@ -63,37 +62,37 @@ class Advisorgroup extends BaseController
     
     public function publish()
     {
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         $this->advisorgroup_model->publish($id);
-        $per_page = $this->input->get_post('per_page',1);
+        $per_page = $this->input->get_post('per_page', 1);
         redirect('admin/advisorgroup/?per_page='.$per_page);
     }
     public function unpublish()
     {
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         $this->advisorgroup_model->unpublish($id);
-        $per_page = $this->input->get_post('per_page',1);
+        $per_page = $this->input->get_post('per_page', 1);
         redirect('admin/advisorgroup/?per_page='.$per_page);
     }
     public function trash()
     {
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         $this->advisorgroup_model->trash($id);
-        $per_page = $this->input->get_post('per_page',1);
+        $per_page = $this->input->get_post('per_page', 1);
         redirect('admin/advisorgroup/?per_page='.$per_page);
     }
     public function delete()
     {
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         $this->advisorgroup_model->delete($id);
-        $per_page = $this->input->get_post('per_page',1);
+        $per_page = $this->input->get_post('per_page', 1);
         redirect('admin/advisorgroup/?per_page='.$per_page);
     }
     public function restore()
     {
-        $id = $this->input->get_post('id',0);
+        $id = $this->input->get_post('id', 0);
         $this->advisorgroup_model->restore($id);
-        $per_page = $this->input->get_post('per_page',1);
+        $per_page = $this->input->get_post('per_page', 1);
         redirect('admin/advisorgroup/?per_page='.$per_page);
     }
 }

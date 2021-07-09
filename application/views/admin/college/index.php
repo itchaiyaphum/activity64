@@ -74,7 +74,7 @@
                             } ?>
             			<tr class="<?php echo "row$k"; ?>">
             				<td>
-            					<?php echo $this->helper_lib->getPaginationIndex($i+1); ?>
+            					<?php echo $this->helper_lib->getPaginationIndex($i+1, 50); ?>
             				</td>
             				<td>
             					<a href="<?php echo $link_edit; ?>"><?php echo $row->name; ?></a>

@@ -14,7 +14,7 @@ class Base_homeroom_model extends BaseModel
         $this->ci->load->library('profile_lib');
     }
 
-    public function getItems()
+    public function getItems($option=array())
     {
         $advisor_id = $this->ci->profile_lib->getUserId();
 

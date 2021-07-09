@@ -17,7 +17,7 @@ class Advisor extends BaseController
         $data = array();
         $data['leftmenu'] = $this->load->view('headdepartment/menu', '', true);
         $data['pagination'] = $this->headdepartmentadvisor_model->getPagination();
-        $data['items'] = $this->headdepartmentadvisor_model->getItems();
+        $data['items'] = $this->headdepartmentadvisor_model->getItems(array('limit'=>50));
         
         $this->load->view('nav');
         $this->load->view('headdepartment/advisor/index', $data);
