@@ -8,7 +8,7 @@
             			</div>
                 	</div>
                 	<div class="uk-container uk-container-center uk-text-center uk-margin-top">
-                		ระบบกิจกรรมนักเรียน นักศึกษา<br/>
+						ระบบดูแลผู้เรียนและกิจกรรมนักเรียนนักศึกษา<br/>
 						พัฒนาโดยแผนกเทคโนโลยีสารสนเทศ วิทยาลัยเทคนิคชัยภูมิ
                 	</div>
                 	<br/><br/>

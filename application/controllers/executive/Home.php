@@ -9,7 +9,7 @@ class Home extends BaseController
         $data = array();
         $data['leftmenu'] = $this->load->view('executive/menu', '', true);
         
-        $this->load->view('nav');
+        $this->load->view('nav', array('title'=>'/ ผู้บริหาร / หน้าหลัก'));
         $this->load->view('executive/index', $data);
         $this->load->view('footer');
     }

@@ -46,7 +46,7 @@ class Settings extends CI_Controller
         $data['college_items'] = $this->college_model->getItems(array('status'=>1,'no_limit'=>true));
         $data['major_items'] = $this->major_model->getItems(array('status'=>1,'no_limit'=>true));
                 
-        $this->load->view('nav');
+        $this->load->view('nav', array('title'=>'/ จัดการข้อมูลส่วนตัว / นักเรียน'));
         $this->load->view('settings/profile_student', $data);
         $this->load->view('footer');
     }
@@ -72,7 +72,7 @@ class Settings extends CI_Controller
                 
         $data['college_items'] = $this->college_model->getItems(array('status'=>1,'no_limit' => true));
                 
-        $this->load->view('nav');
+        $this->load->view('nav', array('title'=>'/ จัดการข้อมูลส่วนตัว / ครูที่ปรึกษา'));
         $this->load->view('settings/profile_advisor', $data);
         $this->load->view('footer');
     }
@@ -98,7 +98,7 @@ class Settings extends CI_Controller
                 
         $data['college_items'] = $this->college_model->getItems(array('status'=>1,'no_limit' => true));
                 
-        $this->load->view('nav');
+        $this->load->view('nav', array('title'=>'/ จัดการข้อมูลส่วนตัว / หัวหน้างานครูที่ปรึกษา'));
         $this->load->view('settings/profile_headadvisor', $data);
         $this->load->view('footer');
     }
@@ -124,7 +124,7 @@ class Settings extends CI_Controller
                 
         $data['college_items'] = $this->college_model->getItems(array('status'=>1,'no_limit' => true));
                 
-        $this->load->view('nav');
+        $this->load->view('nav', array('title'=>'/ จัดการข้อมูลส่วนตัว / เจ้าหน้าที่งานครูที่ปรึกษา'));
         $this->load->view('settings/profile_staff', $data);
         $this->load->view('footer');
     }
@@ -151,7 +151,7 @@ class Settings extends CI_Controller
         $data['college_items'] = $this->college_model->getItems(array('status'=>1,'no_limit' => true));
         $data['major_items'] = $this->major_model->getItems(array('status'=>1,'no_limit' => true));
             
-        $this->load->view('nav');
+        $this->load->view('nav', array('title'=>'/ จัดการข้อมูลส่วนตัว / หัวหน้าแผนก'));
         $this->load->view('settings/profile_headdepartment', $data);
         $this->load->view('footer');
     }
@@ -177,7 +177,7 @@ class Settings extends CI_Controller
             
         $data['college_items'] = $this->college_model->getItems(array('status'=>1,'no_limit' => true));
             
-        $this->load->view('nav');
+        $this->load->view('nav', array('title'=>'/ จัดการข้อมูลส่วนตัว / ผู้บริหาร'));
         $this->load->view('settings/profile_executive', $data);
         $this->load->view('footer');
     }
@@ -204,7 +204,7 @@ class Settings extends CI_Controller
             } elseif ($profile->user_type=="executive") {
                 $this->profileExecutive($input_data);
             } else {
-                $this->load->view('nav');
+                $this->load->view('nav', array('title'=>'/ จัดการข้อมูลส่วนตัว / เกิดข้อผิดพลาด'));
                 echo "no this user_type on this platform! please contact administrator!";
                 $this->load->view('footer');
             }
@@ -235,7 +235,7 @@ class Settings extends CI_Controller
                     }
                 }
             }
-            $this->load->view('nav');
+            $this->load->view('nav', array('title'=>'/ จัดการข้อมูลส่วนตัว / เปลี่ยนรหัสผ่าน'));
             $this->load->view('settings/password', $data);
             $this->load->view('footer');
         }

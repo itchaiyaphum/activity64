@@ -27,7 +27,7 @@ class Advisorgroup extends BaseController
         $data['minor_items'] = $this->minor_model->getItems(array('status'=>'publish', 'no_limit' => true));
         $data['group_items'] = $this->group_model->getItems(array('status'=>'publish', 'no_limit' => true));
         
-        $this->load->view('nav');
+        $this->load->view('nav', array('title'=>'/ หัวหน้างานครูที่ปรึกษา / จัดการครูที่ปรึกษาประจำกลุ่ม'));
         $this->load->view('headadvisor/advisorgroup/index', $data);
         $this->load->view('footer');
     }
@@ -55,7 +55,7 @@ class Advisorgroup extends BaseController
         $data['group_items'] = $this->group_model->getItems(array('status'=>'publish', 'no_limit' => true));
         $data['advisor_items'] = $this->advisor_model->getItems(array('status'=>'publish', 'no_limit' => true));
         
-        $this->load->view('nav');
+        $this->load->view('nav', array('title'=>'/ หัวหน้างานครูที่ปรึกษา / จัดการครูที่ปรึกษาประจำกลุ่ม / (เพิ่ม/แก้ไข)'));
         $this->load->view('headadvisor/advisorgroup/form', $data);
         $this->load->view('footer');
     }

@@ -5,28 +5,28 @@ class Home extends CI_Controller
 {
     public function index()
     {
-        $this->load->view('home/nav');
+        $this->load->view('nav', array('title'=>'/ หน้าแรก'));
         $this->load->view('home/index');
         $this->load->view('home/footer');
     }
 
     public function about()
     {
-        $this->load->view('home/nav');
+        $this->load->view('nav', array('title'=>'/ เกี่ยวกับเรา'));
         $this->load->view('home/about');
         $this->load->view('home/footer');
     }
 
     public function contact()
     {
-        $this->load->view('home/nav');
+        $this->load->view('nav', array('title'=>'/ ติดต่อเรา'));
         $this->load->view('home/contact');
         $this->load->view('home/footer');
     }
 
     public function help()
     {
-        $this->load->view('home/nav');
+        $this->load->view('nav', array('title'=>'/ ช่วยเหลือ'));
         $this->load->view('help/student');
         $this->load->view('home/footer');
     }

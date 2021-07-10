@@ -25,7 +25,7 @@ class Headdepartmenthomeroom extends BaseController
         $data['leftmenu'] = $this->load->view('headdepartment/menu', '', true);
         $data['homeroom_items'] = $this->base_homeroom_model->getItems(array('limit'=>50));
 
-        $this->load->view('nav');
+        $this->load->view('nav', array('title'=>'/ หัวหน้าแผนก / บันทึกกิจกรรมโฮมรูม'));
         $this->load->view('headdepartment/homeroom/index', $data);
         $this->load->view('footer');
     }
@@ -40,7 +40,7 @@ class Headdepartmenthomeroom extends BaseController
         $data['homeroom'] = $this->homeroomactivity_model->getActivities($id, $group_id);
         $data['group_id'] = $group_id;
         
-        $this->load->view('nav');
+        $this->load->view('nav', array('title'=>'/ หัวหน้าแผนก / บันทึกกิจกรรมโฮมรูม / step1: เช็คชื่อ'));
         $this->load->view('headdepartment/homeroom/activity', $data);
         $this->load->view('footer');
     }
@@ -80,7 +80,7 @@ class Headdepartmenthomeroom extends BaseController
         $data['homeroom'] = $this->homeroomobedience_model->getObediences($homeroom_id, $group_id);
         $data['group_id'] = $group_id;
         
-        $this->load->view('nav');
+        $this->load->view('nav', array('title'=>'/ หัวหน้าแผนก / บันทึกกิจกรรมโฮมรูม / step2: ให้โอวาท'));
         $this->load->view('headdepartment/homeroom/obedience', $data);
         $this->load->view('footer');
     }
@@ -95,7 +95,7 @@ class Headdepartmenthomeroom extends BaseController
         $data['homeroom'] = $this->homeroomrisk_model->getRisks($homeroom_id, $group_id);
         $data['group_id'] = $group_id;
         
-        $this->load->view('nav');
+        $this->load->view('nav', array('title'=>'/ หัวหน้าแผนก / บันทึกกิจกรรมโฮมรูม / step3: ประเมินความเสี่ยง'));
         $this->load->view('headdepartment/homeroom/risk', $data);
         $this->load->view('footer');
     }
@@ -126,7 +126,7 @@ class Headdepartmenthomeroom extends BaseController
         $data['homeroom_lib'] = $this->homeroom_lib;
         $data['group_id'] = $group_id;
         
-        $this->load->view('nav');
+        $this->load->view('nav', array('title'=>'/ หัวหน้าแผนก / บันทึกกิจกรรมโฮมรูม / step4: ยืนยันข้อมูล'));
         $this->load->view('headdepartment/homeroom/confirm', $data);
         $this->load->view('footer');
     }

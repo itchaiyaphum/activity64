@@ -22,7 +22,7 @@ class Approving extends BaseController
         $data['homerooms'] = $this->headdepartmentapproving_model->getApproving();
         $data['profile'] = $this->profile_lib->getData();
 
-        $this->load->view('nav');
+        $this->load->view('nav', array('title'=>'/ หัวหน้าแผนก / รับรองบันทึกกิจกรรมโฮมรูม'));
         $this->load->view('headdepartment/approving/index', $data);
         $this->load->view('footer');
     }
@@ -43,7 +43,7 @@ class Approving extends BaseController
         //TODO: log (action=viewed)
         // $this->headdepartmentapproving_model->saveAction('viewed', $homeroom_id, $group_id, $advisor_id, 'headdepartment');
 
-        $this->load->view('nav');
+        $this->load->view('nav', array('title'=>'/ หัวหน้าแผนก / รับรองบันทึกกิจกรรมโฮมรูม / ยืนยันบันทึกข้อมูล'));
         $this->load->view('headdepartment/approving/confirm', $data);
         $this->load->view('footer');
     }

@@ -22,7 +22,7 @@ class Userscontroller extends BaseController
         $data['items'] = $this->headadvisorusers_model->getItems(array('limit'=>50));
         $data['college_items'] = $this->college_model->getItems(array('status'=>1));
         
-        $this->load->view('nav');
+        $this->load->view('nav', array('title'=>'/ หัวหน้างานครูที่ปรึกษา / จัดการครูที่ปรึกษา'));
         $this->load->view('headadvisor/users/index', $data);
         $this->load->view('footer');
     }
@@ -58,7 +58,7 @@ class Userscontroller extends BaseController
         $data['college_items'] = $this->college_model->getItems(array('status'=>1,'no_limit' => true));
         $data['major_items'] = $this->major_model->getItems(array('status'=>1,'no_limit' => true));
         
-        $this->load->view('nav');
+        $this->load->view('nav', array('title'=>'/ หัวหน้างานครูที่ปรึกษา / จัดการครูที่ปรึกษา / (เพิ่ม/แก้ไข)'));
         $this->load->view('headadvisor/users/form', $data);
         $this->load->view('footer');
     }

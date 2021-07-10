@@ -25,7 +25,7 @@ class Advisorhomeroom extends BaseController
         $data['leftmenu'] = $this->load->view('advisor/menu', '', true);
         $data['homeroom_items'] = $this->base_homeroom_model->getItems(array('limit'=>50));
 
-        $this->load->view('nav');
+        $this->load->view('nav', array('title'=>'/ ครูที่ปรึกษา / บันทึกข้อมูลกิจกรรมโฮมรูม'));
         $this->load->view('advisor/homeroom/index', $data);
         $this->load->view('footer');
     }
@@ -40,7 +40,7 @@ class Advisorhomeroom extends BaseController
         $data['homeroom'] = $this->homeroomactivity_model->getActivities($id, $group_id);
         $data['group_id'] = $group_id;
         
-        $this->load->view('nav');
+        $this->load->view('nav', array('title'=>'/ ครูที่ปรึกษา / บันทึกกิจกรรมโฮมรูม / step1: เช็คชื่อ'));
         $this->load->view('advisor/homeroom/activity', $data);
         $this->load->view('footer');
     }
@@ -80,7 +80,7 @@ class Advisorhomeroom extends BaseController
         $data['homeroom'] = $this->homeroomobedience_model->getObediences($homeroom_id, $group_id);
         $data['group_id'] = $group_id;
         
-        $this->load->view('nav');
+        $this->load->view('nav', array('title'=>'/ ครูที่ปรึกษา / บันทึกกิจกรรมโฮมรูม / step2: ให้โอวาท'));
         $this->load->view('advisor/homeroom/obedience', $data);
         $this->load->view('footer');
     }
@@ -95,7 +95,7 @@ class Advisorhomeroom extends BaseController
         $data['homeroom'] = $this->homeroomrisk_model->getRisks($homeroom_id, $group_id);
         $data['group_id'] = $group_id;
         
-        $this->load->view('nav');
+        $this->load->view('nav', array('title'=>'/ ครูที่ปรึกษา / บันทึกกิจกรรมโฮมรูม / step3: ประเมินความเสี่ยง'));
         $this->load->view('advisor/homeroom/risk', $data);
         $this->load->view('footer');
     }
@@ -126,7 +126,7 @@ class Advisorhomeroom extends BaseController
         $data['homeroom_lib'] = $this->homeroom_lib;
         $data['group_id'] = $group_id;
         
-        $this->load->view('nav');
+        $this->load->view('nav', array('title'=>'/ ครูที่ปรึกษา / บันทึกกิจกรรมโฮมรูม / step1: ยืนยันการบันทึกข้อมูล'));
         $this->load->view('advisor/homeroom/confirm', $data);
         $this->load->view('footer');
     }

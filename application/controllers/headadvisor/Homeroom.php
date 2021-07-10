@@ -20,7 +20,7 @@ class Homeroom extends BaseController
         $data['pagination'] = $this->homeroom_model->getPagination();
         $data['items'] = $this->homeroom_model->getItems(array('limit'=>50));
         
-        $this->load->view('nav');
+        $this->load->view('nav', array('title'=>'/ หัวหน้างานครูที่ปรึกษา / จัดการตารางโฮมรูม'));
         $this->load->view('headadvisor/homeroom/index', $data);
         $this->load->view('footer');
     }
@@ -45,7 +45,7 @@ class Homeroom extends BaseController
         $data['item'] = $this->homeroom_model->getItem($id);
         $data['semester_items'] = $this->semester_model->getItems(array('status'=>'publish','no_limit'=>true));
         
-        $this->load->view('nav');
+        $this->load->view('nav', array('title'=>'/ หัวหน้างานครูที่ปรึกษา / จัดการตารางโฮมรูม / (เพิ่ม/แก้ไข)'));
         $this->load->view('headadvisor/homeroom/form', $data);
         $this->load->view('footer');
     }
