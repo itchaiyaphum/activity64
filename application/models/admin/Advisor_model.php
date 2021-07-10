@@ -28,7 +28,11 @@ class Advisor_model extends BaseModel
     public function getItems($options = array())
     {
         $where = $this->getQueryWhere($options);
-        $sql = "SELECT * FROM users WHERE (user_type='advisor' || user_type='headdepartment') AND {$where}";
+        $sql = "SELECT users.*,
+                        ua.major_id, ua.college_id
+                    FROM users 
+                    LEFT JOIN users_advisor as ua ON (users.id=ua.user_id)
+                    WHERE (users.user_type='advisor' || users.user_type='headdepartment') AND {$where}";
         $query = $this->ci->db->query($sql);
         $items = $query->result();
         return $items;
@@ -44,12 +48,12 @@ class Advisor_model extends BaseModel
         // filter: status
         $options['filter_status'] = $filter_status;
         $filter_status_value = $this->getQueryStatus($options);
-        $wheres[] = "activated IN({$filter_status_value})";
+        $wheres[] = "users.activated IN({$filter_status_value})";
         
         // filter: search
         if ($filter_search != "") {
             $filter_search_value = $filter_search;
-            $wheres[] = "(firstname LIKE '%{$filter_search_value}%' OR lastname LIKE '%{$filter_search_value}%' OR email LIKE '%{$filter_search_value}%')";
+            $wheres[] = "(users.firstname LIKE '%{$filter_search_value}%' OR users.lastname LIKE '%{$filter_search_value}%' OR email LIKE '%{$filter_search_value}%')";
         }
         
         // render query

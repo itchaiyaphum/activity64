@@ -6,11 +6,29 @@ class Helper_lib
     public function __construct()
     {
         $this->ci = & get_instance();
+        $this->ci->load->library('session');
     }
 
     public function getDate($date='0000-00-00 00:00:00', $format='Y/m/d')
     {
         return date_format(date_create($date), $format);
+    }
+
+    public function getFilter($name='', $default='', $expire=600)
+    {
+        $value = "";
+        $input_data = $this->ci->input->get_post($name);
+        if (!empty($input_data) && $input_data!="") {
+            $this->ci->session->set_userdata($name, $input_data);
+        }
+
+        $value = $this->ci->session->userdata($name);
+        // if (!empty($session_data)) {
+        // $value = $session_data;
+        // echo "session {$name}: ".$session_data.'<br/>';
+        // }
+        
+        return $value;
     }
 
     public function getActiveMenu($check = '')

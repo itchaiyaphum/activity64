@@ -13,6 +13,7 @@ class Group extends BaseController
         $this->load->model('admin/group_model');
         $this->load->model('admin/adminusers_model');
         $this->load->library('form_validation');
+        $this->load->library('helper_lib');
     }
 
     public function index()
@@ -21,7 +22,8 @@ class Group extends BaseController
         $data['leftmenu'] = $this->load->view('admin/menu', '', true);
         $data['pagination'] = $this->group_model->getPagination();
         $data['items'] = $this->group_model->getItems(array('limit'=>50));
-        
+        $data['helper_lib'] = $this->helper_lib;
+
         $this->load->view('nav');
         $this->load->view('admin/group/index', $data);
         $this->load->view('footer');

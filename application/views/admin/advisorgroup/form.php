@@ -8,7 +8,7 @@
             
     			<div class="uk-clearfix">
     				<div class="uk-float-left">
-    					<h1>จัดการข้อมูลสาขางาน [<?php echo (is_null($item->id))?'เพิ่ม':'แก้ไข';?>]</h1>
+    					<h1>จัดการข้อมูลที่ปรึกษาประจำกลุ่ม [<?php echo (is_null($item->id))?'เพิ่ม':'แก้ไข';?>]</h1>
     				</div>
         			<div class="uk-float-right">
         				<input type="submit" value="บันทึกข้อมูล" class="uk-button uk-button-success"/>
@@ -53,12 +53,20 @@
                     <div class="uk-form-controls">
                         <select name="advisor_id"  class="uk-width-1-2">
                         	<option value="0">- เลือกครูที่ปรึกษา -</option>
-                        	<?php
-                            for ($i=0; $i<count($advisor_items); $i++) {
-                                $row = $advisor_items[$i]; ?>
-                        	<option value="<?php echo $row->id; ?>" <?php echo ($row->id==$item->advisor_id)?'selected="selected"':''; ?>><?php echo $row->firstname.' '.$row->lastname; ?></option>
-                        	<?php
-                            } ?>
+                            <?php
+                                foreach ($major_items as $major) {
+                                    ?>
+                            		<option value="0" disabled>-| <?php echo $major->major_name; ?></option>
+                            		<?php
+                                    foreach ($advisor_items as $advisor) {
+                                        if ($advisor->major_id==$major->id) {
+                                            ?>
+                                    <option value="<?php echo $advisor->id; ?>" <?php echo ($advisor->id==$item->advisor_id)?'selected="selected"':''; ?>>---| <?php echo $advisor->firstname.' '.$advisor->lastname; ?></option>
+                                    <?php
+                                        }
+                                    }
+                                }
+                                ?>
                         </select>
                     </div>
                 </div>

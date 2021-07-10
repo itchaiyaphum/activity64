@@ -11,6 +11,7 @@ class Group_model extends BaseModel
     {
         parent::__construct();
         $this->table = $this->ci->factory_lib->getTable('Group');
+        $this->ci->load->library('helper_lib');
     }
 
     public function getPagination()
@@ -41,9 +42,9 @@ class Group_model extends BaseModel
 
     public function getQueryWhere($options)
     {
-        $filter_search = $this->ci->input->get_post('group_filter_search');
-        $filter_status = $this->ci->input->get_post('group_filter_status');
-        
+        $filter_search = $this->ci->helper_lib->getFilter('group_filter_search');
+        $filter_status = $this->ci->helper_lib->getFilter('group_filter_status');
+
         $wheres = array();
         
         // filter: status
