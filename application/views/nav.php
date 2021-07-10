@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>ระบบกิจกรรมนักเรียน <?php echo (isset($title))?$title:""; ?>
-</title>
+<title>ระบบกิจกรรมนักเรียน <?php echo (isset($title))?$title:""; ?></title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -35,6 +34,9 @@ tinymce.init({
 	max-width: 80% !important;
 }
 </style>
+<?php
+if (ENVIRONMENT != 'development') {
+    ?>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-F65WWCELEH"></script>
 	<script>
@@ -44,6 +46,9 @@ tinymce.init({
 
 	gtag('config', 'G-F65WWCELEH');
 </script>
+<?php
+}
+?>
 </head>
 <body>
 	<div class="wrapper">
