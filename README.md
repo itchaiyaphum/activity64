@@ -67,4 +67,4 @@ Clone repo จาก github โดยเอาไฟล์ไปไว้ที�
 - กด build ที่ Job: "activity64.itchaiyaphum.com - deploy"
 - เข้า Browser ไปที่ url (http://activity64.itchaiyaphum.com)
 
-
+Test Commit for linking to JIRA Issue
