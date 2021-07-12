@@ -6,7 +6,7 @@
 		<div class="tm-main uk-width-medium-3-4 uk-margin-top uk-margin-bottom">
 			<div class="uk-clearfix">
 				<div class="uk-float-left">
-					<h1>จัดการประเภทผู้ใช้งาน</h1>
+					<h1>จัดการข้อมูลครูที่ปรึกษา</h1>
 				</div>
     			<div class="uk-float-right">
     				<a href="<?php echo base_url('/headadvisor/users/edit');?>" class="uk-button uk-button-success"><i class="uk-icon-plus"></i> เพิ่ม</a>

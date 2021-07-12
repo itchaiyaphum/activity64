@@ -8,7 +8,7 @@
             
     			<div class="uk-clearfix">
     				<div class="uk-float-left">
-    					<h1>จัดการข้อมูลสาขางาน [<?php echo (is_null($item->id))?'เพิ่ม':'แก้ไข';?>]</h1>
+    					<h1>จัดการครูที่ปรึกษาประจำกลุ่ม [<?php echo (is_null($item->id))?'เพิ่ม':'แก้ไข';?>]</h1>
     				</div>
         			<div class="uk-float-right">
         				<input type="submit" value="บันทึกข้อมูล" class="uk-button uk-button-success"/>

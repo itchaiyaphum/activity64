@@ -8,7 +8,7 @@
             
     			<div class="uk-clearfix">
     				<div class="uk-float-left">
-    					<h1>จัดการข้อมูลกิจกรรมโฮมรูม [<?php echo (is_null($item->id))?'เพิ่ม':'แก้ไข';?>]</h1>
+    					<h1>จัดการตารางกิจกรรมโฮมรูม [<?php echo (is_null($item->id))?'เพิ่ม':'แก้ไข';?>]</h1>
     				</div>
         			<div class="uk-float-right">
         				<input type="submit" value="บันทึกข้อมูล" class="uk-button uk-button-success"/>

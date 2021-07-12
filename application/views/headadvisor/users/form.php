@@ -10,7 +10,7 @@ $attributes = array('class' => 'uk-form uk-form-horizontal', 'name' => 'adminFor
             <?php echo form_open($this->uri->uri_string(), $attributes); ?>
     			<div class="uk-clearfix">
     				<div class="uk-float-left">
-    					<h1>จัดการข้อมูลผู้ใช้ [<?php echo (is_null($item->id))?'เพิ่ม':'แก้ไข';?>]</h1>
+    					<h1>จัดการข้อมูลครูที่ปรึกษา [<?php echo (is_null($item->id))?'เพิ่ม':'แก้ไข';?>]</h1>
     				</div>
         			<div class="uk-float-right">
         				<input type="submit" value="บันทึกข้อมูล" class="uk-button uk-button-success"/>
