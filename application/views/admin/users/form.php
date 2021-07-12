@@ -22,7 +22,7 @@ $attributes = array('class' => 'uk-form uk-form-horizontal', 'name' => 'adminFor
     			<?php echo isset($errors['global'])?$errors['global']:''; ?>
     			</div>
             	<div class="uk-form-row">
-                    <label class="uk-form-label" for="form-h-it">ชื่อ</label>
+                    <label class="uk-form-label" for="form-h-it">ชื่อ *</label>
                     <div class="uk-form-controls">
                         <input type="text" id="form-h-it" name="firstname" value="<?php echo $item->firstname;?>" class="uk-width-1-2">
                     	<div>
@@ -32,7 +32,7 @@ $attributes = array('class' => 'uk-form uk-form-horizontal', 'name' => 'adminFor
                     </div>
                 </div>
             	<div class="uk-form-row">
-                    <label class="uk-form-label" for="form-h-it">นามสกุล</label>
+                    <label class="uk-form-label" for="form-h-it">นามสกุล *</label>
                     <div class="uk-form-controls">
                         <input type="text" id="form-h-it" name="lastname" value="<?php echo $item->lastname;?>" class="uk-width-1-2">
                     	<div>
@@ -42,7 +42,7 @@ $attributes = array('class' => 'uk-form uk-form-horizontal', 'name' => 'adminFor
                     </div>
                 </div>
             	<div class="uk-form-row">
-                    <label class="uk-form-label" for="form-h-it">ประเภทผู้ใช้</label>
+                    <label class="uk-form-label" for="form-h-it">ประเภทผู้ใช้ *</label>
                     <div class="uk-form-controls">
                     	<select name="user_type" class="uk-width-1-2">
                         	<option value="">- เลือกประเภทผู้ใช้ -</option>
@@ -61,12 +61,32 @@ $attributes = array('class' => 'uk-form uk-form-horizontal', 'name' => 'adminFor
                     </div>
                 </div>
             	<div class="uk-form-row">
-                    <label class="uk-form-label" for="form-h-it">อีเมล์</label>
+                    <label class="uk-form-label" for="form-h-it">อีเมล์ *</label>
                     <div class="uk-form-controls">
                         <input type="text" id="form-h-it" name="email" value="<?php echo $item->email;?>" class="uk-width-1-2">
                         <div>
                         <?php echo form_error('email'); ?>
                 		<?php echo isset($errors['email'])?$errors['email']:''; ?>
+                		</div>
+                    </div>
+                </div>
+				<div class="uk-form-row">
+                    <label class="uk-form-label" for="form-h-it">รหัสผ่าน</label>
+                    <div class="uk-form-controls">
+                        <input type="password" id="form-h-it" name="new_password" class="uk-width-1-2">
+                        <div>
+                        <?php echo form_error('new_password'); ?>
+                		<?php echo isset($errors['new_password'])?$errors['new_password']:''; ?>
+                		</div>
+                    </div>
+                </div>
+				<div class="uk-form-row">
+                    <label class="uk-form-label" for="form-h-it">ยืนยันรหัสผ่าน</label>
+                    <div class="uk-form-controls">
+                        <input type="password" id="form-h-it" name="confirm_password" class="uk-width-1-2">
+                        <div>
+                        <?php echo form_error('confirm_password'); ?>
+                		<?php echo isset($errors['confirm_password'])?$errors['confirm_password']:''; ?>
                 		</div>
                     </div>
                 </div>

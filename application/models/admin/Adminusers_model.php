@@ -24,6 +24,21 @@ class Adminusers_model extends BaseModel
             'per_page' => 50
         ));
     }
+
+    public function save($data = null)
+    {
+        $data = $this->ci->input->post();
+        $new_password = $data['new_password'];
+        $confirm_password = $data['confirm_password'];
+
+        if (!empty($new_password) || !empty($confirm_password)) {
+            if ($new_password==$confirm_password) {
+                $data['password'] = md5($new_password);
+            }
+        }
+
+        return parent::save($data);
+    }
     
     public function checkEmailExists($email='')
     {

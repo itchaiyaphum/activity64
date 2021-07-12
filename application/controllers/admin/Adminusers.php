@@ -26,10 +26,17 @@ class Adminusers extends BaseController
     
     public function edit()
     {
+        $confirm_password = $this->input->post('confirm_password');
+
         $this->form_validation->set_rules('firstname', 'ชื่อ', 'trim|required|xss_clean');
         $this->form_validation->set_rules('lastname', 'นามสกุล', 'trim|required|xss_clean');
         $this->form_validation->set_rules('user_type', 'ประเภทผู้ใช้', 'trim|required|xss_clean');
         $this->form_validation->set_rules('email', 'อีเมล์', 'trim|required|xss_clean');
+        
+        $this->form_validation->set_rules('new_password', 'รหัสผ่าน', 'trim|min_length[6]|max_length[30]|xss_clean|matches[confirm_password]');
+        if (!empty($confirm_password)) {
+            $this->form_validation->set_rules('confirm_password', 'ยืนยันรหัสผ่านใหม่', 'trim|min_length[6]|max_length[30]|xss_clean|matches[new_password]');
+        }
         
         $data = array();
         
