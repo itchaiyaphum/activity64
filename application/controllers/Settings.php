@@ -31,6 +31,9 @@ class Settings extends CI_Controller
             $input_data = $this->input->post();
         }
         $input_data['user_id'] = $profile->user_id;
+
+        $data = array();
+        
         if ($this->settings_model->validateStudent()) {
             if ($this->profile_lib->saveStudent($input_data)) {
                 $data['messages'] = 'บันทึกข้อมูลเรียบร้อบ';
@@ -53,15 +56,21 @@ class Settings extends CI_Controller
 
     private function profileAdvisor($input_data=null)
     {
+        $this->form_validation->set_rules('firstname', 'ชื่อ', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('lastname', 'นามสกุล', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('email', 'อีเมล์', 'trim|required|xss_clean');
+
         $profile = $this->profile_lib->getData();
         if (is_null($input_data)) {
             $input_data = $this->input->post();
         }
         $input_data['user_id'] = $profile->user_id;
-        if ($this->settings_model->validateAdvisor()) {
+
+        $data = array();
+
+        if ($this->form_validation->run()) {
             if ($this->profile_lib->saveAdvisor($input_data)) {
-                $data['messages'] = 'บันทึกข้อมูลเรียบร้อบ';
-                redirect('settings/profile');
+                $data['messages'] = "<div class='uk-alert uk-alert-success'>บันทึกข้อมูลเรียบร้อยแล้ว...</div>";
             } else {
                 $errors = $this->tank_auth->get_error_message();
                 foreach ($errors as $k => $v) {
@@ -69,8 +78,6 @@ class Settings extends CI_Controller
                 }
             }
         }
-                
-        $data['college_items'] = $this->college_model->getItems(array('status'=>1,'no_limit' => true));
                 
         $this->load->view('nav', array('title'=>'/ จัดการข้อมูลส่วนตัว / ครูที่ปรึกษา'));
         $this->load->view('settings/profile_advisor', $data);
@@ -84,6 +91,9 @@ class Settings extends CI_Controller
             $input_data = $this->input->post();
         }
         $input_data['user_id'] = $profile->user_id;
+
+        $data = array();
+
         if ($this->settings_model->validateHeadAdvisor()) {
             if ($this->profile_lib->saveHeadAdvisor($input_data)) {
                 $data['messages'] = 'บันทึกข้อมูลเรียบร้อบ';
@@ -110,6 +120,9 @@ class Settings extends CI_Controller
             $input_data = $this->input->post();
         }
         $input_data['user_id'] = $profile->user_id;
+
+        $data = array();
+
         if ($this->settings_model->validateStaff()) {
             if ($this->profile_lib->saveStaff($input_data)) {
                 $data['messages'] = 'บันทึกข้อมูลเรียบร้อบ';
@@ -136,6 +149,9 @@ class Settings extends CI_Controller
             $input_data = $this->input->post();
         }
         $input_data['user_id'] = $profile->user_id;
+
+        $data = array();
+
         if ($this->settings_model->validateHeadDepartment()) {
             if ($this->profile_lib->saveHeadDepartment($input_data)) {
                 $data['messages'] = 'บันทึกข้อมูลเรียบร้อบ';
@@ -163,6 +179,9 @@ class Settings extends CI_Controller
             $input_data = $this->input->post();
         }
         $input_data['user_id'] = $profile->user_id;
+
+        $data = array();
+
         if ($this->settings_model->validateExecutive()) {
             if ($this->profile_lib->saveExecutive($input_data)) {
                 $data['messages'] = 'บันทึกข้อมูลเรียบร้อบ';

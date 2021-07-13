@@ -32,7 +32,7 @@ $attributes = array('class' => 'uk-form uk-form-horizontal', 'id' => 'loginform'
 		</div>
 		<div class="tm-main uk-width-medium-3-4 uk-margin-top uk-margin-bottom">
             <div class="uk-height-1-1 uk-margin-large-bottom">
-            
+                <?php echo (!empty($messages))?$messages:""; ?>
             	<?php echo form_open_multipart($this->uri->uri_string(), $attributes); ?>
            	 		<div class="uk-grid">
            	 			<div class="uk-width-large-3-4">
@@ -66,22 +66,6 @@ $attributes = array('class' => 'uk-form uk-form-horizontal', 'id' => 'loginform'
                                     </div>
                                 </div>
                             </div>
-                            <div class="uk-form-row">
-                                <label class="uk-form-label" >สถานศึกษา</label>
-                                <div class="uk-form-controls">
-                                    <select name="college_id" id="college_id">
-                                	<option value="0">--- เลือกสถานศึกษา ---</option>
-                                    <?php
-                                    for ($i=0; $i<count($college_items); $i++) {
-                                        $college = $college_items[$i]; ?>
-                                        <option value="<?php echo $college->id; ?>" <?php echo ($profile->college_id==$college->id)?' selected="selected" ':''; ?>><?php echo $college->name; ?></option>
-                                        <?php
-                                    }
-                                    ?>
-                                    </select>
-                                </div>
-                            </div>
-                            
                             <hr/>
                             <div class="uk-form-row">
                                 <label class="uk-form-label" >รูปภาพส่วนตัว</label>
