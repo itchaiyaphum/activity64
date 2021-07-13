@@ -15,7 +15,7 @@ if ($this->tank_auth->is_logged_in()) {
 <div class="uk-text-center">สวัสดี <?php echo $profileData->firstname; ?> <?php echo $profileData->lastname; ?></div>
 <a class="uk-button uk-button-large uk-button-success uk-width-1-1" href="<?php echo base_url('profile'); ?>"><i class="uk-icon-user"></i> เข้าหน้าโปรไฟล์ของคุณ</a>
 
-<br/>
+<br/><br/>
 <div class="uk-text-center">ต้องการออกจากระบบ กรุณากดปุ่ม</div>
 <a class="uk-button uk-button-large uk-button-danger uk-width-1-1" href="<?php echo base_url('auth/logout'); ?>"><i class="uk-icon-lock"></i> ออกจากระบบ</a>
 <?php
@@ -24,3 +24,10 @@ if ($this->tank_auth->is_logged_in()) {
 <a class="uk-button uk-button-large uk-button-success uk-width-1-1" href="<?php echo base_url('auth/login'); ?>"><i class="uk-icon-lock"></i> ลงชื่อเข้าสู่ระบบ</a>
 <?php
     } ?>
+
+<br/><br/><br/>
+<div>
+<img src="/assets/imgs/lineoa-itchaiyaphum.png" width="100%" alt="line oa: @itchaiyaphum"/>
+<h3 style="color: white;" class="uk-text-large uk-text-center">LINE: @itchaiyaphum</h3>
+<div class="uk-text-center">ต้องการสอบถามปัญหาในการใช้งาน ขอความช่วยเหลือ ติดต่อทีมงานพัฒนา สามารถ add line และสอบถามโดยตรงได้ค่ะ...</div>
+</div>

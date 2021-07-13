@@ -124,6 +124,8 @@ if (ENVIRONMENT != 'development') {
                         } else { ?>
             				<li><a href="<?php echo base_url('auth/login');?>"><span class="uk-icon-lock"></span> ลงชื่อเข้าสู่ระบบ</a></li>
             			<?php } ?>
+							<li class="uk-nav-divider"></li>
+							<li><a target="_blank" href="https://line.me/R/ti/p/@itchaiyaphum"><i class="uk-icon-support"></i> Line: @itchaiyaphum</a></li>
             		</ul>
             	</div>
             </div>

@@ -9,5 +9,10 @@
 	<li class="<?php echo $this->helper_lib->getActiveMenu('approving');?>">
 		<a href="<?php echo base_url('headdepartment/approving'); ?>"><span class="uk-icon-legal"></span> รับรองการบันทึกกิจกรรมโฮมรูม</a>
 	</li>
-	<br/><br/>
 </ul>
+<br/>
+<div>
+<img src="/assets/imgs/lineoa-itchaiyaphum.png" width="100%" alt="line oa: @itchaiyaphum"/>
+<h3 class="uk-text-large uk-text-center">LINE: @itchaiyaphum</h3>
+<div class="uk-text-center">ต้องการสอบถามปัญหาในการใช้งาน ขอความช่วยเหลือ ติดต่อทีมงานพัฒนา สามารถ add line และสอบถามโดยตรงได้ค่ะ...</div>
+</div>

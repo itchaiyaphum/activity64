@@ -13,4 +13,9 @@ $profileData = $this->profile_lib->getData();
 		<a href="<?php echo base_url('student'); ?>"><span class="uk-icon-home"></span> หน้าหลัก</a>
 	</li>
 </ul>
-<br/><br/>
+<br/>
+<div>
+<img src="/assets/imgs/lineoa-itchaiyaphum.png" width="100%" alt="line oa: @itchaiyaphum"/>
+<h3 class="uk-text-large uk-text-center">LINE: @itchaiyaphum</h3>
+<div class="uk-text-center">ต้องการสอบถามปัญหาในการใช้งาน ขอความช่วยเหลือ ติดต่อทีมงานพัฒนา สามารถ add line และสอบถามโดยตรงได้ค่ะ...</div>
+</div>
