@@ -65,6 +65,47 @@ class Userstudent_model extends BaseModel
         $data['major_id'] = $this->table_group->major_id;
         $data['minor_id'] = $this->table_group->minor_id;
 
+        $email = $data['email'];
+
+        // add or edit data on table: users
+        $sql = "SELECT * FROM users WHERE email='{$email}' ";
+        $query = $this->ci->db->query($sql);
+        $user_items = $query->result();
+
+        if (count($user_items)) {
+            $user_id = 0;
+            foreach ($user_items as $user) {
+                $user_id = $user->id;
+            }
+
+            //set this data for table: users_student
+            $data['user_id'] = $user_id;
+
+            //edit data on table users
+            $prepare_users_data = array(
+                'firstname' => $data['firstname'],
+                'lastname' => $data['lastname'],
+                'email' => $data['email'],
+                'modified' => mdate('%Y-%m-%d %H:%i:%s', time()),
+            );
+            $this->ci->db->update('users', $prepare_users_data, array('id'=>$user_id));
+        } else {
+            //insert data
+            $prepare_data = array(
+                'firstname' => $data['firstname'],
+                'lastname' => $data['lastname'],
+                'email' => $data['email'],
+                'user_type' => 'student',
+                'created' => mdate('%Y-%m-%d %H:%i:%s', time()),
+                'modified' => mdate('%Y-%m-%d %H:%i:%s', time()),
+                'password' => md5('student1234567890'),
+                'activated' => 1,
+            );
+            $this->ci->db->insert('users', $prepare_data);
+
+            $data['user_id'] = $this->ci->db->insert_id(); //get user_id for table: users_student
+        }
+
         return parent::save($data);
     }
     
