@@ -42,13 +42,13 @@
 										<th>
 											กลุ่มการเรียน
 										</th>
-										<th>
+										<th width="25%">
 											สถานะบันทึกกิจกรรมโฮมรูม
 										</th>
-										<th width="20%">
+										<th width="25%">
 											รับรองจากหัวหน้าแผนก
 										</th>
-										<th width="35%">
+										<th>
 											รับรองจากหัวหน้างานครูฯ
 										</th>
 									</tr>
@@ -64,7 +64,7 @@
 										<td>
 											<div class="uk-grid uk-grid-collapse">
 												<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">กลุ่มการเรียน:</div>
-												<div class="uk-width-small-7-10">
+												<div class="uk-width-small-7-10 uk-width-large-1-1">
 													<div><?php echo $group->group_name; ?></div>
 													<?php
                                                     foreach ($group->advisors as $advisor) {
@@ -78,7 +78,7 @@
 										<td>
 											<div class="uk-grid uk-grid-collapse">
 												<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">สถานะบันทึกกิจกรรมโฮมรูม:</div>
-												<div class="uk-width-small-7-10">
+												<div class="uk-width-small-7-10 uk-width-large-1-1">
 													<?php
                                                     $links = array(
                                                         'view' => base_url("headadvisor/approving/confirm/?homeroom_id={$homeroom->id}&group_id={$group->group_id}"),
@@ -91,7 +91,7 @@
 										<td>
 											<div class="uk-grid uk-grid-collapse">
 												<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">รับรองจากหัวหน้าแผนก:</div>
-												<div class="uk-width-small-7-10">
+												<div class="uk-width-small-7-10 uk-width-large-1-1">
 													<?php
                                                     $links = array(
                                                         'view' => base_url("headadvisor/approving/confirm/?homeroom_id={$homeroom->id}&group_id={$group->group_id}"),
@@ -105,7 +105,7 @@
 										<td>
 											<div class="uk-grid uk-grid-collapse">
 												<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">รับรองจากหัวหน้างานครูฯ:</div>
-												<div class="uk-width-small-7-10">
+												<div class="uk-width-small-7-10 uk-width-large-1-1">
 													<?php
                                                         $links = array(
                                                             'view' => base_url("headadvisor/approving/confirm/?homeroom_id={$homeroom->id}&group_id={$group->group_id}"),
