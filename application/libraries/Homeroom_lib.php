@@ -246,7 +246,7 @@ class Homeroom_lib
     public function getStudentItems($group_id=0)
     {
         $sql = "SELECT group_id, user_id, student_id as student_code, firstname, lastname FROM users_student 
-                    WHERE group_id={$group_id} AND status=1";
+                    WHERE group_id={$group_id} AND status=1 ORDER BY student_code ASC";
         $query = $this->ci->db->query($sql);
         $items = $query->result();
         return $items;
