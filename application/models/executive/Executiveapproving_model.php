@@ -139,8 +139,8 @@ class Executiveapproving_model extends BaseModel
 
                             array_push($item_minor->groups, $item_group);
                         }
+                        array_push($item_homeroom->minors, $item_minor);
                     }
-                    array_push($item_homeroom->minors, $item_minor);
                 }
                 array_push($item_major->homerooms, $item_homeroom);
             }
