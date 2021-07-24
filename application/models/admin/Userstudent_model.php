@@ -140,6 +140,8 @@ class Userstudent_model extends BaseModel
             $wheres[] = "groups.group_name LIKE '%{$filter_search_value}%' 
                             OR majors.major_name LIKE '%{$filter_search_value}%' 
                             OR minors.minor_name LIKE '%{$filter_search_value}%' 
+                            OR users_student.student_id LIKE '%{$filter_search_value}%' 
+                            OR users_student.email LIKE '%{$filter_search_value}%' 
                             OR users_student.firstname LIKE '%{$filter_search_value}%' 
                             OR users_student.lastname LIKE '%{$filter_search_value}%' ";
         }
