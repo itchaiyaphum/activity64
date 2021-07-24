@@ -23,6 +23,16 @@
             				<button onclick="document.getElementById('search').value='';this.form.submit();">Reset</button>
             			</td>
             			<td nowrap="nowrap">
+						<select name="minor_filter_major_id" onchange="document.adminForm.submit();">
+                        		<option value="all">- แสดงทุกสาขาวิชา -</option>
+                        		<?php
+                                foreach ($major_items as $major) {
+                                    ?>
+                            		<option value="<?php echo $major->id; ?>" <?php echo set_select('minor_filter_major_id', $major->id); ?>><?php echo $major->major_name; ?></option>
+                                <?php
+                                }
+                                ?>
+                        	</select>
             				<?php echo $this->helper_lib->getStatusHtml('minor_filter_status');?>
             			</td>
             		</tr>

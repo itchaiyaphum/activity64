@@ -39,6 +39,7 @@ class Minor_model extends BaseModel
     public function getQueryWhere($options)
     {
         $filter_search = $this->ci->input->get_post('minor_filter_search');
+        $filter_major_id = $this->ci->input->get_post('minor_filter_major_id');
         $filter_status = $this->ci->input->get_post('minor_filter_status');
         
         $wheres = array();
@@ -52,6 +53,11 @@ class Minor_model extends BaseModel
         if ($filter_search != "") {
             $filter_search_value = $filter_search;
             $wheres[] = "minors.minor_name LIKE '%{$filter_search_value}%'";
+        }
+
+        // filter: major_id
+        if ($filter_major_id != "" && $filter_major_id != "all") {
+            $wheres[] = "minors.major_id IN({$filter_major_id})";
         }
         
         // render query

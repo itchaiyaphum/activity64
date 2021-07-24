@@ -22,6 +22,8 @@ class Group extends BaseController
         $data['leftmenu'] = $this->load->view('admin/menu', '', true);
         $data['pagination'] = $this->group_model->getPagination();
         $data['items'] = $this->group_model->getItems(array('limit'=>50));
+        $data['major_items'] = $this->major_model->getItems(array('status'=>'publish', 'no_limit' => true));
+        $data['minor_items'] = $this->minor_model->getItems(array('status'=>'publish', 'no_limit' => true));
         $data['helper_lib'] = $this->helper_lib;
 
         $this->load->view('nav');

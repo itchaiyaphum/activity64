@@ -19,6 +19,7 @@ class Minor extends BaseController
         $data = array();
         $data['leftmenu'] = $this->load->view('admin/menu', '', true);
         $data['pagination'] = $this->minor_model->getPagination();
+        $data['major_items'] = $this->major_model->getItems(array('status'=>'publish', 'no_limit' => true));
         $data['items'] = $this->minor_model->getItems(array('limit'=>50));
         
         $this->load->view('nav');
