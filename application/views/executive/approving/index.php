@@ -42,13 +42,13 @@
 										<th>
 											กลุ่มการเรียน
 										</th>
-										<th width="25%">
+										<th>
 											รับรองจากหัวหน้าแผนก
 										</th>
-										<th width="25%">
+										<th>
 											รับรองจากหัวหน้างานครูฯ
 										</th>
-										<th width="35%">
+										<th>
 											รับรองจากฝ่ายบริหาร
 										</th>
 									</tr>
@@ -64,7 +64,7 @@
 										<td>
 											<div class="uk-grid uk-grid-collapse">
 												<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">กลุ่มการเรียน:</div>
-												<div class="uk-width-small-7-10">
+												<div class="uk-width-small-7-10 uk-width-large-1-1">
 													<div><?php echo $group->group_name; ?></div>
 													<?php
                                                     foreach ($group->advisors as $advisor) {
