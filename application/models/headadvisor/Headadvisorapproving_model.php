@@ -34,17 +34,17 @@ class Headadvisorapproving_model extends BaseModel
         return $items;
     }
 
-    public function getMinorItems($major_id=0)
+    public function getMinorItems()
     {
-        $sql = "SELECT * FROM minors WHERE major_id={$major_id} AND status=1";
+        $sql = "SELECT * FROM minors WHERE status=1";
         $query = $this->ci->db->query($sql);
         $items = $query->result();
         return $items;
     }
 
-    public function getGroupItems($major_id=0)
+    public function getGroupItems()
     {
-        $sql = "SELECT * FROM groups WHERE major_id={$major_id} AND status=1";
+        $sql = "SELECT * FROM groups WHERE status=1";
         $query = $this->ci->db->query($sql);
         $items = $query->result();
         return $items;
@@ -52,7 +52,8 @@ class Headadvisorapproving_model extends BaseModel
 
     public function getAdvisorGroupItems()
     {
-        $sql = "SELECT advisors_groups.*, users.firstname, users.lastname FROM advisors_groups 
+        $sql = "SELECT advisors_groups.*, users.firstname, users.lastname 
+                    FROM advisors_groups 
                     LEFT JOIN users ON (advisors_groups.advisor_id=users.id)
                     WHERE advisors_groups.status=1 ";
         $query = $this->ci->db->query($sql);
@@ -60,10 +61,9 @@ class Headadvisorapproving_model extends BaseModel
         return $items;
     }
 
-    public function getApproving($major_id=0)
+    public function getApproving()
     {
         $profile = $this->ci->profile_lib->getData();
-        $major_id = 170;
 
         //get homeroom item
         $homeroom_items = $this->getHomeroomItems();
@@ -73,14 +73,13 @@ class Headadvisorapproving_model extends BaseModel
         $major_items = $this->ci->admin_major_model->getItems(array('status'=>1, 'no_limit'=>true));
         
         //get minor items
-        $this->ci->load->model('admin/minor_model', 'admin_minor_model');
-        $minor_items = $this->getMinorItems($major_id);
+        $minor_items = $this->getMinorItems();
         
         //get advisor_group items
         $advisor_group_items = $this->getAdvisorGroupItems();
 
         //get group items
-        $group_items = $this->getGroupItems($major_id);
+        $group_items = $this->getGroupItems();
 
         //get action items
         $action_items = $this->getAllActionItems();
