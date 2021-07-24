@@ -104,44 +104,46 @@ class Headadvisorapproving_model extends BaseModel
 
                 $item_homeroom->minors           = array();
                 foreach ($minor_items as $minor) {
-                    $item_minor                 = new stdClass();
-                    $item_minor->minor_id       = $minor->id;
-                    $item_minor->minor_name     = $minor->minor_name;
+                    if ($minor->major_id==$major->id) {
+                        $item_minor                 = new stdClass();
+                        $item_minor->minor_id       = $minor->id;
+                        $item_minor->minor_name     = $minor->minor_name;
 
-                    $item_minor->groups         = array();
-                    foreach ($group_items as $group) {
-                        if ($group->major_id==$major->id && $group->minor_id==$minor->id) {
-                            $item_group                     = new stdClass();
-                            $item_group->group_id           = $group->id;
-                            $item_group->group_name         = $group->group_name;
+                        $item_minor->groups         = array();
+                        foreach ($group_items as $group) {
+                            if ($group->major_id==$major->id && $group->minor_id==$minor->id) {
+                                $item_group                     = new stdClass();
+                                $item_group->group_id           = $group->id;
+                                $item_group->group_name         = $group->group_name;
 
-                            $item_group->advisors           = array();
-                            foreach ($advisor_group_items as $advisor_group) {
-                                if ($advisor_group->group_id==$group->id) {
-                                    $item_advisor                       = new stdClass();
-                                    $item_advisor->advisor_id           = $advisor_group->advisor_id;
-                                    $item_advisor->advisor_type         = $advisor_group->advisor_type;
-                                    $item_advisor->firstname            = $advisor_group->firstname;
-                                    $item_advisor->lastname             = $advisor_group->lastname;
-                                    array_push($item_group->advisors, $item_advisor);
+                                $item_group->advisors           = array();
+                                foreach ($advisor_group_items as $advisor_group) {
+                                    if ($advisor_group->group_id==$group->id) {
+                                        $item_advisor                       = new stdClass();
+                                        $item_advisor->advisor_id           = $advisor_group->advisor_id;
+                                        $item_advisor->advisor_type         = $advisor_group->advisor_type;
+                                        $item_advisor->firstname            = $advisor_group->firstname;
+                                        $item_advisor->lastname             = $advisor_group->lastname;
+                                        array_push($item_group->advisors, $item_advisor);
+                                    }
                                 }
-                            }
 
-                            $item_group->approving           = array();
-                            foreach ($action_items as $action) {
-                                if ($action->homeroom_id==$homeroom->id && $action->group_id==$group->id) {
-                                    $item_approving                    = new stdClass();
-                                    $item_approving->user_id           = $action->user_id;
-                                    $item_approving->user_type         = $action->user_type;
-                                    $item_approving->user_status       = $action->action_status;
-                                    array_push($item_group->approving, $item_approving);
+                                $item_group->approving           = array();
+                                foreach ($action_items as $action) {
+                                    if ($action->homeroom_id==$homeroom->id && $action->group_id==$group->id) {
+                                        $item_approving                    = new stdClass();
+                                        $item_approving->user_id           = $action->user_id;
+                                        $item_approving->user_type         = $action->user_type;
+                                        $item_approving->user_status       = $action->action_status;
+                                        array_push($item_group->approving, $item_approving);
+                                    }
                                 }
-                            }
 
-                            array_push($item_minor->groups, $item_group);
+                                array_push($item_minor->groups, $item_group);
+                            }
                         }
+                        array_push($item_homeroom->minors, $item_minor);
                     }
-                    array_push($item_homeroom->minors, $item_minor);
                 }
                 array_push($item_major->homerooms, $item_homeroom);
             }
