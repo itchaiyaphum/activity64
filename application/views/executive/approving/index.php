@@ -42,10 +42,10 @@
 										<th>
 											กลุ่มการเรียน
 										</th>
-										<th>
+										<th width="25%">
 											รับรองจากหัวหน้าแผนก
 										</th>
-										<th>
+										<th width="25%">
 											รับรองจากหัวหน้างานครูฯ
 										</th>
 										<th>
@@ -78,7 +78,7 @@
 										<td>
 											<div class="uk-grid uk-grid-collapse">
 												<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">รับรองจากหัวหน้าแผนก:</div>
-												<div class="uk-width-small-7-10">
+												<div class="uk-width-small-7-10 uk-width-large-1-1">
 													<?php
                                                     $links = array(
                                                         'view' => base_url("executive/approving/confirm/?homeroom_id={$homeroom->id}&group_id={$group->group_id}"),
@@ -92,7 +92,7 @@
 										<td>
 											<div class="uk-grid uk-grid-collapse">
 												<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">รับรองจากหัวหน้างานครูฯ:</div>
-												<div class="uk-width-small-7-10">
+												<div class="uk-width-small-7-10 uk-width-large-1-1">
 													<?php
                                                         $links = array(
                                                             'view' => base_url("executive/approving/confirm/?homeroom_id={$homeroom->id}&group_id={$group->group_id}"),
@@ -106,7 +106,7 @@
 										<td>
 										<div class="uk-grid uk-grid-collapse">
 												<div class="uk-width-small-3-10 uk-hidden-large uk-text-bold">รับรองจากฝ่ายบริหาร:</div>
-												<div class="uk-width-small-7-10">
+												<div class="uk-width-small-7-10 uk-width-large-1-1">
 													<?php
                                                         $links = array(
                                                             'view' => base_url("executive/approving/confirm/?homeroom_id={$homeroom->id}&group_id={$group->group_id}"),
