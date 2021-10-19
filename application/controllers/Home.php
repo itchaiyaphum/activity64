@@ -51,3 +51,4 @@ class Home extends CI_Controller
         echo '<a href="/">กลับหน้าหลัก</a>';
     }
 }
+//test
