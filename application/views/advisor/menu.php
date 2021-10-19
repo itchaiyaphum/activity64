@@ -6,6 +6,12 @@
 	<li class="<?php echo $this->helper_lib->getActiveMenu('homeroom');?>">
 		<a href="<?php echo base_url('advisor/homeroom'); ?>"><span class="uk-icon-save"></span> บันทึกข้อมูลกิจกรรมโฮมรูม</a>
 	</li>
+	<li class="<?php echo $this->helper_lib->getActiveMenu('reporthomeroom');?>">
+		<a href="<?php echo base_url('advisor/reporthomeroom'); ?>"><i class="uk-icon-file-text-o"></i> รายงาน คป 06</a>
+	</li>
+	<li class="<?php echo $this->helper_lib->getActiveMenu('summaryhomeroom');?>">
+		<a href="<?php echo base_url('advisor/summaryhomeroom'); ?>"><i class="uk-icon-lightbulb-o"></i> สรุปผลเข้าร่วมกิจกรรมโฮมรูม</a>
+	</li>
 </ul>
 <br/>
 <div>
