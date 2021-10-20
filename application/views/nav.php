@@ -115,7 +115,7 @@ if (ENVIRONMENT != 'development') {
             				<li><a href="<?php echo base_url('headdepartment/');?>"><i class="uk-icon-home"></i> หน้าหลักสำหรับหัวหน้าแผนก</a></li>
             				<li><a href="<?php echo base_url('headdepartment/homeroom/');?>"><i class="uk-icon-save"></i> บันทึกข้อมูลกิจกรรมโฮมรูม</a></li>
             				<li><a href="<?php echo base_url('headdepartment/approving/');?>"><i class="uk-icon-lock"></i> รับรองการบันทึกกิจกรรมโฮมรูม</a></li>
-							<!-- <li><a href="<?php echo base_url('headdepartment/reporthomeroom'); ?>"><i class="uk-icon-file-text-o"></i> รายงาน คป 06</a><li> -->
+							<li><a href="<?php echo base_url('headdepartment/reporthomeroom'); ?>"><i class="uk-icon-file-text-o"></i> รายงาน คป 06</a><li>
 							<li><a href="<?php echo base_url('headdepartment/summaryhomeroom'); ?>"><i class="uk-icon-lightbulb-o"></i> สรุปผลเข้าร่วมกิจกรรมโฮมรูม</a><li>
             				<?php } elseif ($profileData->user_type=='admin') { ?>
             				<li><a href="<?php echo base_url('admin/');?>"><i class="uk-icon-home"></i> เข้าระบบจัดการข้อมูล</a></li>

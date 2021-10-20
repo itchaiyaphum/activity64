@@ -10,7 +10,7 @@
 		<a href="<?php echo base_url('headdepartment/approving'); ?>"><span class="uk-icon-legal"></span> รับรองการบันทึกกิจกรรมโฮมรูม</a>
 	</li>
 	<li class="<?php echo $this->helper_lib->getActiveMenu('reporthomeroom');?>">
-		<!-- <a href="<?php echo base_url('headdepartment/reporthomeroom'); ?>"><i class="uk-icon-file-text-o"></i> รายงาน คป 06</a> -->
+		<a href="<?php echo base_url('headdepartment/reporthomeroom'); ?>"><i class="uk-icon-file-text-o"></i> รายงาน คป 06</a>
 	</li>
 	<li class="<?php echo $this->helper_lib->getActiveMenu('summaryhomeroom');?>">
 		<a href="<?php echo base_url('headdepartment/summaryhomeroom'); ?>"><i class="uk-icon-lightbulb-o"></i> สรุปผลเข้าร่วมกิจกรรมโฮมรูม</a>
