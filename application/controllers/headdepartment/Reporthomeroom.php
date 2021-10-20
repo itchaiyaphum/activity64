@@ -17,13 +17,13 @@ class Reporthomeroom extends BaseController
         $data['data'] = $this->report_model->index();
 
         $this->load->view('nav', array('title' => '/ ครูที่ปรึกษา / รายงาน คป 06'));
-        $this->load->view('advisor/homeroom/reporthomeroom_index', $data);
+        $this->load->view('headdepartment/homeroom/reporthomeroom_index', $data);
         $this->load->view('footer');
     }
     public function report()
     {
         $data = $this->report_model->data();
 
-        $this->load->view('advisor/homeroom/reporthomeroom', $data);
+        $this->load->view('headdepartment/homeroom/reporthomeroom', $data);
     }
 }

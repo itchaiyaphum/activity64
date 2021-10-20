@@ -9,7 +9,6 @@ class Reporthomeroom_model extends CI_Model
     public function index()
     {
         $user_id = $this->session->user_id;
-
         $qr_week = $this->db->query("SELECT * FROM `homerooms` WHERE `status` = 1");
         $data['week'] = $qr_week->result();
 
@@ -21,15 +20,28 @@ class Reporthomeroom_model extends CI_Model
             $week->group = $re_group;
             foreach ($week->group as $group) {
 
-                $qr_advisor = $this->db->query("SELECT * FROM `homeroom_actions` WHERE `group_id` = $group->id AND `homeroom_id` = $week->id AND `user_type` = 'advisor' AND `action_status` = 'confirmed' AND `status` = 1");
-                $advisor_num_rows = $qr_advisor->num_rows();
+                if ($this->session->user_type == 'advisor') {
+                    $qr_advisor = $this->db->query("SELECT * FROM `homeroom_actions` WHERE `group_id` = $group->id AND `homeroom_id` = $week->id AND `user_type` = 'advisor' AND `action_status` = 'confirmed' AND `status` = 1");
+                    $advisor_num_rows = $qr_advisor->num_rows();
 
-                if ($advisor_num_rows == 1) {
-                    $group->advisor_check = '<i class="uk-icon-check uk-text-success"></i>';
-                    $advisor_confirm = TRUE;
-                } else {
-                    $group->advisor_check = '<i class="uk-icon-close uk-text-danger"></i>';
-                    $advisor_confirm = FALSE;
+                    if ($advisor_num_rows == 1) {
+                        $group->advisor_check = '<i class="uk-icon-check uk-text-success"></i>';
+                        $advisor_confirm = TRUE;
+                    } else {
+                        $group->advisor_check = '<i class="uk-icon-close uk-text-danger"></i>';
+                        $advisor_confirm = FALSE;
+                    }
+                } elseif ($this->session->user_type == 'headdepartment') {
+                    $qr_advisor = $this->db->query("SELECT * FROM `homeroom_actions` WHERE `group_id` = $group->id AND `homeroom_id` = $week->id AND `user_type` = 'headdepartment' AND `action_status` = 'confirmed' AND `status` = 1");
+                    $advisor_num_rows = $qr_advisor->num_rows();
+
+                    if ($advisor_num_rows == 1) {
+                        $group->advisor_check = '<i class="uk-icon-check uk-text-success"></i>';
+                        $advisor_confirm = TRUE;
+                    } else {
+                        $group->advisor_check = '<i class="uk-icon-close uk-text-danger"></i>';
+                        $advisor_confirm = FALSE;
+                    }
                 }
 
                 $qr_headdepartment = $this->db->query("SELECT * FROM `homeroom_actions` WHERE `group_id` = $group->id AND `homeroom_id` = $week->id AND `user_type` = 'headdepartment' AND `action_status` = 'confirmed' AND `status` = 1");
