@@ -4,13 +4,45 @@
 			<?php echo $leftmenu;?>
 		</div>
 		<div class="tm-main uk-width-medium-3-4 uk-margin-top uk-margin-bottom">
-			<form action="<?php echo base_url('executive/approving');?>" method="post" name="adminForm">
+			<form action="<?php echo base_url('executive/approving');?>" method="post" name="adminForm" class="uk-form">
 				<div class="uk-clearfix">
 					<div>
 						<h2>อนุมัติการบันทึกข้อมูลกิจกรรมโฮมรูม</h2>
 					</div>
 				</div>
 				<hr/>
+
+				<div class="uk-text-center">
+					<select name="executive_filter_week" onchange="document.adminForm.submit();">
+						<option value="">- กรุณาเลือกสัปดาห์ -</option>
+						<?php
+                            foreach ($filter_weeks as $week) {
+                                ?>
+							<option value="<?php echo $week->id; ?>" <?php echo set_select('executive_filter_week', $week->id); ?>>สัปดาห์ที่ <?php echo $week->name; ?></option>
+						<?php
+                            }
+                        ?>
+					</select>
+					<select name="executive_filter_major" onchange="document.adminForm.submit();">
+						<option value="">- กรุณาเลือกสาขาวิชา -</option>
+						<?php
+                            foreach ($filter_majors as $major) {
+                                ?>
+							<option value="<?php echo $major->id; ?>" <?php echo set_select('executive_filter_major', $major->id); ?>>สาขาวิชา: <?php echo $major->name; ?></option>
+						<?php
+                            }
+                        ?>
+					</select>
+					</div>
+				<hr/>
+
+				<?php
+                if (count($approvings)<=0) {
+                    ?>
+				<div class="uk-alert uk-alert-danger uk-text-center"><h3>กรุณาเลือก สัปดาห์และสาขาวิชา ที่ต้องการ</h3></div>
+				<?php
+                }
+                ?>
 
 				<div class="uk-accordion" data-uk-accordion>
 				<?php

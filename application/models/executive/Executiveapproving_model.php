@@ -16,11 +16,22 @@ class Executiveapproving_model extends BaseModel
         $this->table_obedience = $this->ci->factory_lib->getTable('HomeRoomObedience');
     }
 
-    public function getHomeroomItems()
+    public function getHomeroomItems($options=array())
     {
+        $filter_week = $this->ci->input->get_post('executive_filter_week');
+
+        $wheres = array();
+        $wheres[] = "homerooms.status=1";
+        if ($filter_week != "") {
+            $wheres[] = "homerooms.id IN({$filter_week})";
+        }
+
+        $options = array('orderby' => 'homerooms.week DESC');
+        $wheres_sql = $this->renderQueryWhere($wheres, $options);
+
         $sql = "SELECT homerooms.*, semester.name as semester_name FROM homerooms 
                     LEFT JOIN semester ON (homerooms.semester_id=semester.id)
-                    WHERE homerooms.status=1 ORDER BY homerooms.week DESC";
+                    WHERE {$wheres_sql}";
         $query = $this->ci->db->query($sql);
         $items = $query->result();
         return $items;
@@ -60,16 +71,80 @@ class Executiveapproving_model extends BaseModel
         return $items;
     }
 
+
+    // dependency of getApproving()
+    public function getMajorItems($options=array())
+    {
+        $filter_major = $this->ci->input->get_post('executive_filter_major');
+
+        $wheres = array();
+        $wheres[] = "status=1";
+        if ($filter_major != "") {
+            $wheres[] = "id IN({$filter_major})";
+        }
+
+        $wheres_sql = $this->renderQueryWhere($wheres, $options);
+
+        $sql = "SELECT * FROM majors WHERE {$wheres_sql}";
+        $query = $this->ci->db->query($sql);
+        return $query->result();
+    }
+
+    public function getFilterWeeks()
+    {
+        //get homeroom items
+        $homeroom_items = $this->ci->homeroom_model->getItems(array('status'=>1, 'no_limit'=>true));
+        
+        $items = array();
+
+        foreach ($homeroom_items as $homeroom) {
+            $item_weeks = new stdClass();
+            $item_weeks->id               = $homeroom->id;
+            $item_weeks->name             = $homeroom->week;
+            array_push($items, $item_weeks);
+        }
+
+        // echo "<pre>";
+        // print_r($items);
+        // exit();
+        
+        return $items;
+    }
+
+    public function getFilterMajors()
+    {
+        //get major items
+        $this->ci->load->model('admin/major_model', 'admin_major_model');
+        $major_items = $this->ci->admin_major_model->getItems(array('status'=>1, 'no_limit'=>true));
+        
+        $items = array();
+
+        foreach ($major_items as $major) {
+            $item_majors = new stdClass();
+            $item_majors->id               = $major->id;
+            $item_majors->name             = $major->major_name;
+            array_push($items, $item_majors);
+        }
+
+        // echo "<pre>";
+        // print_r($items);
+        // exit();
+        
+        return $items;
+    }
+
     public function getApproving()
     {
+        $filter_week = $this->ci->input->get_post('executive_filter_week');
+        $filter_major = $this->ci->input->get_post('executive_filter_major');
+
         $profile = $this->ci->profile_lib->getData();
 
         //get homeroom item
-        $homeroom_items = $this->getHomeroomItems();
+        $homeroom_items = $this->getHomeroomItems(array('no_limit'=>true));
         
         //get major item
-        $this->ci->load->model('admin/major_model', 'admin_major_model');
-        $major_items = $this->ci->admin_major_model->getItems(array('status'=>1, 'no_limit'=>true));
+        $major_items = $this->getMajorItems(array('no_limit'=>true));
         
         //get minor items
         $minor_items = $this->getMinorItems();
@@ -84,6 +159,10 @@ class Executiveapproving_model extends BaseModel
         $action_items = $this->getAllActionItems();
 
         $items = array();
+
+        if ($filter_week=="" || $filter_major=="") {
+            return $items;
+        }
 
         foreach ($major_items as $major) {
             $item_major = new stdClass();
