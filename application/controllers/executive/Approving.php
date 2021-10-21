@@ -20,6 +20,8 @@ class Approving extends BaseController
         $data['leftmenu'] = $this->load->view('executive/menu', '', true);
         $data['pagination'] = $this->homeroom_model->getPagination();
         $data['approvings'] = $this->executiveapproving_model->getApproving();
+        $data['filter_weeks'] = $this->executiveapproving_model->getFilterWeeks();
+        $data['filter_majors'] = $this->executiveapproving_model->getFilterMajors();
         $data['profile'] = $this->profile_lib->getData();
 
         $this->load->view('nav', array('title'=>'/ ผู้บริหาร / อนุมัติการส่งกิจกรรมโฮมรูม'));
