@@ -19,4 +19,10 @@ class Summaryhomeroom extends BaseController
         $this->load->view('advisor/homeroom/summaryhomeroom', $data);
         $this->load->view('footer');
     }
+
+    public function report()
+    {
+        $data['group'] = $this->summary->report($this->input->get('id'));
+        $this->load->view('advisor/homeroom/summaryhomeroom_report', $data);
+    }
 }
