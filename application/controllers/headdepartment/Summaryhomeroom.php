@@ -16,7 +16,13 @@ class Summaryhomeroom extends BaseController
 
         $data['leftmenu'] = $this->load->view('headdepartment/menu', '', true);
         $this->load->view('nav', array('title' => '/ ครูที่ปรึกษา / สรุปผลเข้าร่วมกิจกรรมโฮมรูม'));
-        $this->load->view('advisor/homeroom/summaryhomeroom', $data);
+        $this->load->view('headdepartment/homeroom/summaryhomeroom', $data);
         $this->load->view('footer');
+    }
+    
+    public function report()
+    {
+        $data['group'] = $this->summary->report($this->input->get('id'));
+        $this->load->view('advisor/homeroom/summaryhomeroom_report', $data);
     }
 }

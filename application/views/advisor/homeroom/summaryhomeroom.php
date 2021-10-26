@@ -13,6 +13,9 @@
             <?php foreach ($group as $group_row) { ?>
                 <div class="uk-panel uk-panel-box uk-panel-box-default uk-margin-top uk-overflow-container">
                     <h3 class="uk-panel-title uk-text-center">กลุ่ม <?= $group_row->group_name ?> สาขาวิชา <?= $group_row->major_name ?></h3>
+                    <div class="uk-panel-badge">
+                        <a href="<?= site_url('advisor/summaryhomeroom/report').'?id='.$group_row->id ?>" target="_blank"><button type="button" class="uk-button uk-button-primary uk-button-mini submit"><i class="uk-icon-print"></i> Print</button></a>
+                    </div>
                     <hr>
                     <table class="uk-table uk-table-striped" cellpadding="1">
                         <thead>
