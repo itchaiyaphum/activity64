@@ -8,11 +8,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>รายงานการฉีดวัคซีน</title>
+    <title>สรุปผลเข้าร่วมกิจกรรมโฮมรูม</title>
 
     <link rel="stylesheet" href="<?= base_url('assets/font/font.css') ?>">
     <link rel="stylesheet" href="<?= base_url('assets/css/reset.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('assets/css/summaryhomeroom_print.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/css/summaryhomeroom-print.css') ?>">
 
     <script src="<?= base_url('assets/js/jquery-3.6.0.min.js') ?>"></script>
     <script src="<?= base_url('assets/js/print.js') ?>"></script>
