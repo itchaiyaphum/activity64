@@ -12,7 +12,7 @@ class Summaryhomeroom extends BaseController
 
     public function index()
     {
-        $data['group'] = $this->summary->group($this->session->user_id);
+        $data['data'] = $this->summary->index($this->session->user_id);
 
         $data['leftmenu'] = $this->load->view('advisor/menu', '', true);
         $this->load->view('nav', array('title' => '/ ครูที่ปรึกษา / สรุปผลเข้าร่วมกิจกรรมโฮมรูม'));
@@ -22,7 +22,10 @@ class Summaryhomeroom extends BaseController
 
     public function report()
     {
-        $data['group'] = $this->summary->report($this->input->get('id'));
+        $data['data'] = $this->summary->report(
+            $this->input->get('id'),
+            $this->input->get('semester') 
+        );
         $this->load->view('advisor/homeroom/summaryhomeroom_report', $data);
     }
 }

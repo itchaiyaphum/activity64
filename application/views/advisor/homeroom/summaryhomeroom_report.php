@@ -19,18 +19,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
 </head>
 
 <body>
-    <!-- <pre>
-        <?php var_dump($group); ?>
-    </pre> -->
+
     <div class="pagebreak">
         <p class="header">
             สรุปผลเข้าร่วมกิจกรรมโฮมรูม
             <br>
-            <?php $class = strtoupper($group->group_name)[0]; ?>
-            ระดับชั้น <?= $class == 'D' || $class == 'E' ? 'ปวส.' : 'ปวช.'  ?> กลุ่มการเรียน <?= $group->group_name ?>
-            สาขาวิชา <?= $group->major_name ?>
+            <?php $class = strtoupper($data->group_name)[0]; ?>
+            ระดับชั้น <?= $class == 'D' || $class == 'E' ? 'ปวส.' : 'ปวช.'  ?> กลุ่มการเรียน <?= $data->group_name ?>
+            สาขาวิชา <?= $data->major_name ?>
+            <?= $data->semester_name ?>
             <br>
-            ครูที่ปรึกษา <?= $group->firstname . ' ' . $group->lastname ?>
+            ครูที่ปรึกษา <?= $data->firstname . ' ' . $data->lastname ?>
         </p>
         <table class="table-std">
             <thead>
@@ -45,7 +44,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <th>สรุป</th>
             </thead>
             <tbody>
-                <?php foreach ($group->students as $key => $std) { ?>
+                <?php foreach ($data->students as $key => $std) { ?>
                 <tr>
                     <td style="text-align: center;"><?= ++$key ?></td>
                     <td style="text-align: center;"><?= $std->student_id ?></td>
@@ -63,7 +62,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
         </table>
 
         <p style="margin-top: 2em;">
-            สรุป ผ่าน: <?= $group->pass ?> คน ไม่ผ่าน: <?= $group->not_pass ?> คน ทั้งหมด: <?= $group->all ?> คน
+            สรุป ผ่าน: <?= $data->pass ?> คน ไม่ผ่าน: <?= $data->not_pass ?> คน ทั้งหมด: <?= $data->all ?> คน
         <p>
     </div>
 </body>

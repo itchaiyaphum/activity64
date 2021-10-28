@@ -16,7 +16,7 @@ class Reporthomeroom extends BaseController
         $data['leftmenu'] = $this->load->view('headdepartment/menu', '', true);
         $data['data'] = $this->report_model->index();
 
-        $this->load->view('nav', array('title' => '/ ครูที่ปรึกษา / รายงาน คป 06'));
+        $this->load->view('nav', array('title' => '/ หัวหน้าแผนก / รายงาน คป 06'));
         $this->load->view('headdepartment/homeroom/reporthomeroom_index', $data);
         $this->load->view('footer');
     }
@@ -24,6 +24,6 @@ class Reporthomeroom extends BaseController
     {
         $data = $this->report_model->data();
 
-        $this->load->view('headdepartment/homeroom/reporthomeroom', $data);
+        $this->load->view('advisor/homeroom/reporthomeroom', $data);
     }
 }
