@@ -62,6 +62,7 @@ class Profile_lib
             $profile->firstname = $row->firstname;
             $profile->lastname = $row->lastname;
             $profile->user_id = $row->user_id;
+            $profile->major_id = $row->major_id;
             $profile->college_id = $row->college_id;
             $profile->signature = $row->signature;
         }
@@ -510,5 +511,43 @@ class Profile_lib
         } else {
             return false;
         }
+    }
+
+    public function getUserData($user_id, $column = null) {
+        $qr_user = $this->ci->db->query("SELECT `user_type` FROM `users` WHERE `users`.`id`=?", $user_id);
+        $user = $qr_user->row();
+        if (isset($user->user_type)) {
+            $user_type = $user->user_type;
+            switch ($user_type) {
+                case 'student':
+                    $sql = "SELECT * FROM `users_student` WHERE `user_id`=?";
+                break;
+                case 'advisor':
+                    $sql = "SELECT * FROM `users_advisor` WHERE `user_id`=?";
+                break;
+                case 'headdepartment':
+                    $sql = "SELECT * FROM `users_headdepartment` WHERE `user_id`=?";
+                break;
+                case 'headadvisor':
+                    $sql = "SELECT * FROM `users_headadvisor` WHERE `user_id`=?";
+                break;
+                case 'executive':
+                    $sql = "SELECT * FROM `users_executive` WHERE `user_id`=?";
+                break;
+                case 'staff':
+                    $sql = "SELECT * FROM `users_staff` WHERE `user_id`=?";
+                break;
+            }
+
+            if (isset($sql)) {
+                $re = $this->ci->db->query($sql, $user_id)->row();
+                if (isset($column)) {
+                    return isset($re->$column) ? $re->$column : null;
+                } else {
+                    return $re;
+                }
+            }
+        }
+        return null;
     }
 }
