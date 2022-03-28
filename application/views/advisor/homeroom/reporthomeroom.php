@@ -196,7 +196,7 @@ $dot = '..............................................';
             </div>
 
             <div class="pagebreak">
-                <h3 style="text-align: center;">ภาพกิจกรรมโฮมรูม สัปดาห์ที่ 1 กลุ่ม <?= $gr->group_name; ?></h3>
+                <h3 style="text-align: center;">ภาพกิจกรรมโฮมรูม สัปดาห์ที่ <?= $we->week; ?> กลุ่ม <?= $gr->group_name; ?></h3>
 
                 <div class="img-top">
                     <img <?= empty($gr->obediences_img[0]->img) ? '' : ' src="' . base_url($gr->obediences_img[0]->img) . '"'; ?> alt="">
